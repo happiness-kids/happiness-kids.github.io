@@ -1,0 +1,45 @@
+:root {
+  --main-color: #ffe114;
+  --accent-color: #f4a300;
+  --text-color: #333;
+  --sub-text: #666;
+  --bg-color: #fffaf0;
+}
+
+body {
+  margin: 0;
+  font-family: "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+  color: var(--text-color);
+  background: var(--bg-color);
+  line-height: 1.8;
+}
+
+header {
+  background: var(--main-color);
+  color: #333;
+  padding: 2.5rem 1rem;
+  text-align: center;
+}
+
+section h2 {
+  color: var(--accent-color);
+}
+
+.point h3 {
+  color: var(--accent-color);
+}
+
+.cta {
+  background: var(--accent-color);
+  color: #fff;
+}
+
+.cta a {
+  background: #fff;
+  color: var(--accent-color);
+}
+
+footer {
+  background: #f7f7f7;
+  color: var(--sub-text);
+}
