@@ -43,7 +43,6 @@ body {
   display: block;
 }
 
-/* 文字画像（hero-copy.png） */
 .hero-catch {
   position: absolute;
   top: 20%;
@@ -55,7 +54,6 @@ body {
   z-index: 10;
 }
 
-/* スマホ調整 */
 @media screen and (max-width: 768px) {
   .hero-catch {
     top: 18%;
@@ -84,32 +82,19 @@ section p {
 }
 
 /* =====================
-   コンセプト
+   コンセプト・メッセージ
 ===================== */
-.concept {
-  background: #fff;
-  border-radius: 12px;
-  margin-top: 32px;
-}
-
-/* =====================
-   メッセージ
-===================== */
-.message {
-  background: #fff;
-  border-radius: 12px;
-  margin-top: 32px;
-}
-
-/* =====================
-   トップ導線（about）
-===================== */
+.concept,
+.message,
 .links {
   background: #fff;
   border-radius: 12px;
   margin-top: 32px;
 }
 
+/* =====================
+   トップ導線
+===================== */
 .text-link {
   display: inline-block;
   margin-top: 8px;
@@ -139,18 +124,24 @@ section p {
 .point h3 {
   margin-top: 0;
   font-size: 1.2rem;
-  color: var(--text-color);
 }
 
 /* =====================
-   CTA
+   CTA（★修正ポイント）
 ===================== */
 .cta {
-  text-align: center;
   background: var(--main-color);
   border-radius: 12px;
-  margin: 48px 16px;
+  margin: 48px auto;
   padding: 48px 16px;
+  text-align: center;
+}
+
+/* CTA内はすべて中央揃えに固定 */
+.cta h2,
+.cta p,
+.cta a {
+  text-align: center;
 }
 
 .cta-button {
@@ -170,15 +161,4 @@ section p {
 footer {
   text-align: center;
   padding: 24px 16px;
-  font-size: 0.9rem;
-  color: var(--sub-text);
-}
-
-footer a {
-  color: var(--sub-text);
-  text-decoration: none;
-}
-
-footer a:hover {
-  text-decoration: underline;
-}
+  font-size
