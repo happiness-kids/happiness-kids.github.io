@@ -1,7 +1,3 @@
-/* =========================
-   基本設定
-========================= */
-
 :root {
   --main-color: #ffe114;
   --accent-color: #f4a300;
@@ -10,18 +6,23 @@
   --bg-color: #fffaf0;
 }
 
-*,
-*::before,
-*::after {
+/* ---------- base ---------- */
+
+* {
   box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
 }
 
 body {
   margin: 0;
-  font-family: "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Yu Gothic", sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Hiragino Kaku Gothic ProN",
+    "Hiragino Sans", "Noto Sans JP", Meiryo, sans-serif;
   color: var(--text-color);
   background-color: var(--bg-color);
-  line-height: 1.7;
+  line-height: 1.75;
 }
 
 img {
@@ -35,175 +36,139 @@ a {
   text-decoration: none;
 }
 
-/* =========================
-   共通レイアウト
-========================= */
-
-.container {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 3rem 1.5rem;
-}
-
-section h2 {
-  font-size: 1.8rem;
-  text-align: center;
-  margin-bottom: 1.5rem;
-}
-
-section p {
-  max-width: 720px;
-  margin: 0 auto;
-  color: var(--sub-text);
-  font-size: 1rem;
-}
-
-/* =========================
-   ヒーロー
-========================= */
+/* ---------- hero ---------- */
 
 .hero {
   position: relative;
-  width: 100%;
-  height: 70vh;
-  min-height: 420px;
-  overflow: hidden;
 }
 
 .hero img {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  height: auto;
 }
 
 .hero-text {
   position: absolute;
   inset: 0;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
   align-items: center;
-  text-align: center;
+  justify-content: center;
   padding: 1.5rem;
-  background: rgba(0, 0, 0, 0.25);
-  color: #fff;
+  text-align: center;
 }
 
 .hero-text h1 {
-  font-size: clamp(1.7rem, 5vw, 2.8rem);
-  line-height: 1.45;
+  font-size: 1.4rem;
+  line-height: 1.5;
+  font-weight: 700;
+  background: rgba(255, 255, 255, 0.75);
+  padding: 1rem 1.25rem;
+  border-radius: 0.75rem;
+}
+
+/* ---------- layout ---------- */
+
+main {
+  padding: 2.5rem 1.25rem;
+}
+
+section {
+  margin-bottom: 3rem;
+}
+
+h2 {
+  font-size: 1.2rem;
   margin-bottom: 1rem;
-  word-break: keep-all; /* ← スマホでの1文字落ち防止 */
-}
-
-.hero-text p {
-  font-size: 1rem;
-  color: #f5f5f5;
-}
-
-/* =========================
-   コンセプト
-========================= */
-
-.concept {
-  background-color: #fff;
-}
-
-.concept p {
   text-align: center;
 }
 
-/* =========================
-   特徴（3つの柱）
-========================= */
-
-.features {
-  background-color: var(--bg-color);
-}
-
-.feature-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 2rem;
-  margin-top: 2rem;
-}
-
-.feature {
-  background: #fff;
-  padding: 2rem;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-}
-
-.feature h3 {
-  font-size: 1.2rem;
+h3 {
+  font-size: 1.05rem;
   margin-bottom: 0.5rem;
+}
+
+/* ---------- concept ---------- */
+
+.concept-lead {
+  max-width: 34em;
+  margin: 0 auto;
+  text-align: center;
+  font-size: 0.95rem;
+}
+
+/* ---------- message ---------- */
+
+.message {
+  background: #ffffff;
+  padding: 2rem 1.5rem;
+  border-radius: 1rem;
+}
+
+.message h2 {
   color: var(--accent-color);
 }
 
-.feature p {
+.message p {
+  max-width: 34em;
+  margin: 0 auto;
   font-size: 0.95rem;
-  color: var(--sub-text);
 }
 
-/* =========================
-   CTA（採用）
-========================= */
+/* ---------- features ---------- */
 
-.cta {
-  background-color: var(--main-color);
+.features {
   text-align: center;
 }
 
-.cta h2 {
-  margin-bottom: 1rem;
+.feature {
+  max-width: 30em;
+  margin: 0 auto 2rem;
 }
 
-.cta p {
-  margin-bottom: 1.5rem;
-  color: #333;
-}
-
-.cta-button {
-  display: inline-block;
-  background-color: var(--accent-color);
-  color: #fff;
-  padding: 0.8rem 2rem;
-  border-radius: 999px;
-  font-weight: bold;
-  transition: opacity 0.2s;
-}
-
-.cta-button:hover {
-  opacity: 0.85;
-}
-
-/* =========================
-   フッター
-========================= */
-
-.footer {
-  background-color: #f7f7f7;
-  text-align: center;
-  padding: 1.5rem;
+.feature p {
   font-size: 0.9rem;
   color: var(--sub-text);
 }
 
-/* =========================
-   レスポンシブ
-========================= */
+/* ---------- links ---------- */
 
-@media (max-width: 768px) {
-  .hero {
-    height: 60vh;
+.links {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.btn {
+  display: block;
+  text-align: center;
+  padding: 0.9rem;
+  border-radius: 0.75rem;
+  background: var(--main-color);
+  font-weight: 600;
+}
+
+.btn-accent {
+  background: var(--accent-color);
+  color: #fff;
+}
+
+/* ---------- footer ---------- */
+
+footer {
+  text-align: center;
+  padding: 1.5rem;
+  font-size: 0.8rem;
+  color: var(--sub-text);
+}
+
+/* ---------- PC ---------- */
+
+@media (min-width: 768px) {
+  .hero-text h1 {
+    font-size: 1.8rem;
   }
 
-  .container {
-    padding: 2.5rem 1.2rem;
-  }
-
-  section h2 {
-    font-size: 1.6rem;
+  main {
+    padding: 4rem 2rem;
   }
 }
