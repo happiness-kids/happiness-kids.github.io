@@ -1,9 +1,8 @@
 @charset "UTF-8";
 
-/* ==========
-  基本設定
-========== */
-
+/* =====================
+   基本設定
+===================== */
 :root {
   --main-color: #ffe114;
   --accent-color: #f4a300;
@@ -18,126 +17,136 @@
 
 body {
   margin: 0;
-  font-family: "Hiragino Kaku Gothic ProN", "メイリオ", Meiryo, sans-serif;
+  font-family:
+    "BIZ UDPGothic",
+    "BIZ UDゴシック",
+    "Meiryo",
+    "Hiragino Kaku Gothic ProN",
+    sans-serif;
   color: var(--text-color);
   background-color: var(--bg-color);
-  line-height: 1.7;
+  line-height: 1.8;
 }
 
-img {
-  max-width: 100%;
+/* =====================
+   ヒーローエリア
+===================== */
+.hero {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.hero-image {
+  width: 100%;
   height: auto;
   display: block;
 }
 
-/* ==========
-  Hero
-========== */
-
-.hero {
-  position: relative;
-}
-
-.hero > img {
-  width: 100%;
-  display: block;
-}
-
-.hero-copy {
+.hero-catch {
   position: absolute;
-  inset: 0;
-  margin: auto;
-  width: 90%;
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 85%;
   max-width: 900px;
+  height: auto;
+  z-index: 10;
 }
 
-/* ==========
-  セクション共通
-========== */
+/* スマホ微調整 */
+@media screen and (max-width: 768px) {
+  .hero-catch {
+    top: 18%;
+    width: 90%;
+  }
+}
 
+/* =====================
+   セクション共通
+===================== */
 section {
-  padding: 3rem 1.5rem;
+  padding: 48px 16px;
+  max-width: 960px;
+  margin: 0 auto;
 }
 
 section h2 {
-  font-size: 1.3rem;
-  margin-bottom: 1rem;
-  text-align: center;
+  font-size: 1.4rem;
+  margin-bottom: 16px;
+  color: var(--text-color);
 }
 
-/* ==========
-  メッセージ（理念）
-========== */
-
-.message {
-  background-color: #ffffff;
-}
-
-.message-inner {
-  max-width: 36em;
-  margin: 0 auto;
-  text-align: left;
-}
-
-.message-inner h2 {
-  text-align: center;
-  margin-bottom: 1.2rem;
-}
-
-.message-inner p {
+section p {
   margin: 0;
-  font-size: 0.95rem;
-  line-height: 1.9;
+  color: var(--sub-text);
 }
 
-/* ==========
-  CTA
-========== */
+/* =====================
+   コンセプト
+===================== */
+.concept {
+  background: #fff;
+  border-radius: 12px;
+  margin-top: 32px;
+}
 
+/* =====================
+   メッセージ
+===================== */
+.message {
+  background: #fff;
+  border-radius: 12px;
+  margin-top: 32px;
+}
+
+/* =====================
+   支援の柱
+===================== */
+.points {
+  margin-top: 32px;
+}
+
+.point {
+  background: #fff;
+  border-radius: 12px;
+  padding: 24px 16px;
+  margin-bottom: 16px;
+}
+
+.point h3 {
+  margin-top: 0;
+  font-size: 1.2rem;
+  color: var(--text-color);
+}
+
+/* =====================
+   CTA
+===================== */
 .cta {
-  background-color: var(--main-color);
   text-align: center;
+  background: var(--main-color);
+  border-radius: 12px;
+  margin: 48px 16px;
 }
 
-.cta p {
-  margin-bottom: 1rem;
-}
-
-.cta a {
+.cta-button {
   display: inline-block;
-  padding: 0.8rem 1.5rem;
-  background-color: var(--accent-color);
+  margin-top: 16px;
+  padding: 12px 24px;
+  background: var(--accent-color);
   color: #fff;
   text-decoration: none;
   border-radius: 999px;
   font-weight: bold;
 }
 
-/* ==========
-  Footer
-========== */
-
+/* =====================
+   フッター
+===================== */
 footer {
-  padding: 1.5rem;
   text-align: center;
-  font-size: 0.8rem;
+  padding: 24px 16px;
+  font-size: 0.9rem;
   color: var(--sub-text);
-}
-
-/* ==========
-  PC以上
-========== */
-
-@media (min-width: 768px) {
-  section {
-    padding: 4rem 2rem;
-  }
-
-  .hero-copy {
-    max-width: 1100px;
-  }
-
-  .message-inner p {
-    font-size: 1rem;
-  }
 }
