@@ -2,64 +2,36 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>ハピネスキッズ｜公式サイト</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="/assets/css/common.css">
+  <title>放課後等デイサービス ハピネスキッズ</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="assets/css/common.css">
 </head>
 <body>
 
-<header class="hero">
-  <img src="/assets/images/hero.jpg" alt="ハピネスキッズの様子" class="hero-image">
-  <img src="/assets/images/hero-copy.png" alt="たのしいから身につく こころもそだつ" class="hero-catch">
-</header>
+  <main>
 
-<main>
+    <!-- Instagram セクション -->
+    <section class="instagram-section">
+      <div class="container">
 
-<section class="concept">
-  <h2>大切にしていること</h2>
-  <p>
-    「たのしい」という気持ちを出発点に、
-    子どもたち一人ひとりの成長を大切にしています。
-  </p>
-</section>
+        <p class="instagram-note">
+          日々の様子や活動の雰囲気は、<br>
+          Instagramでも発信しています。
+        </p>
 
-<section class="message">
-  <h2>失敗しても大丈夫。チャレンジしていこう。</h2>
-  <p>
-    成功だけでなく、前向きな失敗体験も大切にしながら、
-    子どもたちが安心して挑戦できる環境を支えています。
-  </p>
-</section>
+        <!-- ここに直接埋め込みコードは書かない -->
+        <div class="instagram-embed"></div>
 
-<section class="links">
-  <h2>ハピネスキッズについて</h2>
-  <p>
-    支援の考え方や日々の取り組みについてご紹介します。
-  </p>
-  <p>
-    <a href="/about/" class="text-link">詳しく見る</a>
-  </p>
-</section>
+      </div>
+    </section>
 
-<section class="cta">
-  <h2>採用情報</h2>
-  <p>
-    子どもたちの成長を支える仕事に、あなたも参加しませんか。
-  </p>
-  <a href="/recruit/" class="cta-button">求人情報を見る</a>
-</section>
+  </main>
 
-<!-- =====================
-     Instagram（JS制御）
-===================== -->
-<div id="instagram-area"></div>
+  <!-- Instagram公式JS（1回だけ） -->
+  <script async src="//www.instagram.com/embed.js"></script>
 
-</main>
+  <!-- 制御用JS -->
+  <script src="assets/js/instagram.js"></script>
 
-<footer>
-  <p>&copy; ハピネスキッズ</p>
-</footer>
-
-<script src="/assets/js/instagram.js"></script>
 </body>
 </html>
