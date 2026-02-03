@@ -8,7 +8,7 @@
   --accent-color: #f4a300;
   --text-color: #333;
   --sub-text: #666;
-  --bg-color: #fffaf0;
+  --bg-color: #fff1d6;
 
   --radius-card: 16px;
   --radius-large: 20px;
@@ -194,3 +194,4 @@ footer a:hover {
     margin-right: 12px;
   }
 }
+
