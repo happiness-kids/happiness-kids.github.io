@@ -8,8 +8,6 @@
   --accent-color: #f4a300;
   --text-color: #333;
   --sub-text: #666;
-
-  /* 背景色を変更 */
   --bg-color: #fff1d6;
 
   --radius-card: 16px;
@@ -34,38 +32,73 @@ body {
 }
 
 /* =====================
-   ヒーローエリア
+   グローバルヘッダー
+===================== */
+.site-header {
+  background: var(--accent-color);
+  color: #fff;
+}
+
+.site-header-inner {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 8px 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.site-icon {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+}
+
+.site-title {
+  font-size: 0.95rem;
+  font-weight: bold;
+  letter-spacing: 0.04em;
+}
+
+/* =====================
+   ヒーロー
 ===================== */
 .hero {
   position: relative;
-  width: 100%;
-  overflow: hidden;
+  max-width: 520px;
+  margin: 0 auto;
 }
 
 .hero-image {
   width: 100%;
-  height: auto;
   display: block;
+  border-radius: var(--radius-large);
 }
 
-/* 文字画像（hero-copy.png） */
 .hero-catch {
   position: absolute;
   top: 20%;
   left: 50%;
   transform: translateX(-50%);
-  width: 85%;
-  max-width: 900px;
-  height: auto;
+  width: 90%;
+  max-width: 480px;
   z-index: 10;
 }
 
-/* スマホ調整 */
-@media screen and (max-width: 768px) {
-  .hero-catch {
-    top: 18%;
-    width: 90%;
-  }
+/* =====================
+   ヒーロー補足
+===================== */
+.hero-note {
+  max-width: 640px;
+  margin: 24px auto 0;
+  padding: 0 24px;
+  text-align: center;
+}
+
+.hero-note p {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--sub-text);
 }
 
 /* =====================
@@ -80,7 +113,6 @@ section {
 section h2 {
   font-size: 1.4rem;
   margin-bottom: 16px;
-  color: var(--text-color);
 }
 
 section p {
@@ -89,7 +121,7 @@ section p {
 }
 
 /* =====================
-   コンセプト / メッセージ / 導線
+   カード系セクション
 ===================== */
 .concept,
 .message,
@@ -101,11 +133,9 @@ section p {
 }
 
 /* =====================
-   トップ導線（about）
+   導線
 ===================== */
 .text-link {
-  display: inline-block;
-  margin-top: 8px;
   color: var(--accent-color);
   font-weight: bold;
   text-decoration: none;
@@ -130,31 +160,17 @@ section p {
   box-shadow: 0 4px 12px rgba(0,0,0,0.04);
 }
 
-.point h3 {
-  margin-top: 0;
-  font-size: 1.2rem;
-  color: var(--text-color);
-}
-
 /* =====================
-   採用情報（recruit CTA）
+   採用情報
 ===================== */
 .recruit-cta {
   text-align: center;
-
-  /* 白カード寄りに戻す */
-  background: #ffffff;
-
-  /* 角丸を少し大きく */
+  background: #fff;
   border-radius: var(--radius-large);
-
-  /* 幅を絞る */
-  max-width: 720px;
-
   margin: 48px auto;
   padding: 40px 24px;
-
-  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  max-width: 720px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.04);
 }
 
 .recruit-cta .cta-button {
@@ -183,14 +199,14 @@ footer a {
   text-decoration: none;
 }
 
-footer a:hover {
-  text-decoration: underline;
-}
-
 /* =====================
-   スマホ余白・バランス調整
+   スマホ調整
 ===================== */
 @media screen and (max-width: 768px) {
+  .site-header-inner {
+    padding: 8px 16px;
+  }
+
   section {
     padding: 40px 20px;
   }
@@ -204,19 +220,3 @@ footer a:hover {
     margin-right: 12px;
   }
 }
-
-/* =====================
-   ヒーローサイズ調整（PC）
-===================== */
-@media screen and (min-width: 1024px) {
-  .hero {
-    max-height: 520px;   /* ← ここで高さを制御 */
-  }
-
-  .hero-image {
-    height: 520px;
-    object-fit: cover;
-  }
-}
-
-
