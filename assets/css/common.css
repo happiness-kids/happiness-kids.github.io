@@ -9,9 +9,6 @@
   --text-color: #333;
   --sub-text: #666;
   --bg-color: #fff1d6;
-
-  --radius-card: 16px;
-  --radius-large: 20px;
 }
 
 * {
@@ -70,9 +67,11 @@ body {
    セクション共通
 ===================== */
 section {
-  padding: 48px 24px;
-  max-width: 960px;
-  margin: 0 auto;
+  padding: 40px 20px;
+  max-width: 720px;
+  margin: 0 auto 32px;
+  background: #fff;
+  border-radius: 16px;
 }
 
 section h2 {
@@ -87,20 +86,26 @@ section p {
 }
 
 /* =====================
-   コンセプト / メッセージ / 導線
+   コンセプト
 ===================== */
-.concept,
-.message,
-.links {
-  background: #fff;
-  border-radius: var(--radius-card);
+.concept {
   margin-top: 32px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+}
+
+/* =====================
+   メッセージ
+===================== */
+.message {
+  margin-top: 32px;
 }
 
 /* =====================
    トップ導線（about）
 ===================== */
+.links {
+  margin-top: 32px;
+}
+
 .text-link {
   display: inline-block;
   margin-top: 8px;
@@ -122,10 +127,9 @@ section p {
 
 .point {
   background: #fff;
-  border-radius: var(--radius-card);
+  border-radius: 16px;
   padding: 24px 20px;
   margin-bottom: 16px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.04);
 }
 
 .point h3 {
@@ -135,22 +139,29 @@ section p {
 }
 
 /* =====================
-   採用情報（recruit CTA）
+   採用情報（Recruit CTA）
 ===================== */
 .recruit-cta {
   text-align: center;
-  background: #fff3bf; /* main-color より1トーン落とす */
-  border-radius: var(--radius-large);
+  background: #fff;
+  border-radius: 20px;
   margin: 48px auto;
   padding: 40px 24px;
-  max-width: 960px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+  max-width: 720px;
+}
+
+.recruit-cta h2 {
+  margin-bottom: 16px;
+}
+
+.recruit-cta p {
+  margin-bottom: 16px;
 }
 
 .recruit-cta .cta-button {
   display: inline-block;
   margin-top: 16px;
-  padding: 12px 24px;
+  padding: 12px 28px;
   background: var(--accent-color);
   color: #fff;
   text-decoration: none;
@@ -176,24 +187,3 @@ footer a {
 footer a:hover {
   text-decoration: underline;
 }
-
-/* =====================
-   スマホ余白・バランス調整
-===================== */
-@media screen and (max-width: 768px) {
-  section {
-    padding: 40px 20px;
-  }
-
-  .concept,
-  .message,
-  .links,
-  .point,
-  .recruit-cta {
-    margin-left: 12px;
-    margin-right: 12px;
-  }
-}
-
-
-
