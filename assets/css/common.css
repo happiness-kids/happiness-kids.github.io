@@ -1,164 +1,63 @@
-@charset "UTF-8";
-
-/* =====================
+/* =========================
    基本設定
-===================== */
-:root {
-  --main-color: #ffe114;
-  --accent-color: #f4a300;
-  --text-color: #333;
-  --sub-text: #666;
-  --bg-color: #fffaf0;
-}
-
+========================= */
 * {
   box-sizing: border-box;
 }
 
 body {
   margin: 0;
-  font-family:
-    "BIZ UDPGothic",
-    "BIZ UDゴシック",
-    "Meiryo",
-    "Hiragino Kaku Gothic ProN",
-    sans-serif;
-  color: var(--text-color);
-  background-color: var(--bg-color);
-  line-height: 1.8;
+  font-family: "Biz UDPGothic", "Hiragino Kaku Gothic ProN",
+               "Yu Gothic", "Meiryo", sans-serif;
+  color: #333;
+  line-height: 1.7;
 }
 
-/* =====================
-   ヒーローエリア
-===================== */
-.hero {
-  position: relative;
-  width: 100%;
-  overflow: hidden;
-}
-
-.hero-image {
-  width: 100%;
+img {
+  max-width: 100%;
   height: auto;
   display: block;
 }
 
-.hero-catch {
-  position: absolute;
-  top: 20%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 85%;
-  max-width: 900px;
-  height: auto;
-  z-index: 10;
-}
-
-@media screen and (max-width: 768px) {
-  .hero-catch {
-    top: 18%;
-    width: 90%;
-  }
-}
-
-/* =====================
-   セクション共通
-===================== */
-section {
-  padding: 48px 16px;
-  max-width: 960px;
+/* =========================
+   レイアウト
+========================= */
+.container {
+  max-width: 1100px;
   margin: 0 auto;
+  padding: 0 16px;
 }
 
-section h2 {
-  font-size: 1.4rem;
-  margin-bottom: 16px;
-  color: var(--text-color);
+section {
+  padding: 48px 0;
 }
 
-section p {
-  margin: 0 0 12px;
-  color: var(--sub-text);
-}
-
-/* =====================
-   コンセプト・メッセージ
-===================== */
-.concept,
-.message,
-.links {
-  background: #fff;
-  border-radius: 12px;
-  margin-top: 32px;
-}
-
-/* =====================
-   トップ導線
-===================== */
-.text-link {
-  display: inline-block;
-  margin-top: 8px;
-  color: var(--accent-color);
-  font-weight: bold;
-  text-decoration: none;
-}
-
-.text-link:hover {
-  text-decoration: underline;
-}
-
-/* =====================
-   支援の柱
-===================== */
-.points {
-  margin-top: 32px;
-}
-
-.point {
-  background: #fff;
-  border-radius: 12px;
-  padding: 24px 16px;
-  margin-bottom: 16px;
-}
-
-.point h3 {
-  margin-top: 0;
-  font-size: 1.2rem;
-}
-
-/* =====================
-   CTA（★修正ポイント）
-===================== */
-.cta {
-  background: var(--main-color);
-  border-radius: 12px;
-  margin: 48px auto;
-  padding: 48px 16px;
+/* =========================
+   Instagram セクション
+========================= */
+.instagram-section {
+  background: #fafafa;
   text-align: center;
 }
 
-/* CTA内はすべて中央揃えに固定 */
-.cta h2,
-.cta p,
-.cta a {
-  text-align: center;
+/* JSでOFFにする用 */
+.instagram-section.is-hide {
+  display: none;
 }
 
-.cta-button {
-  display: inline-block;
-  margin-top: 16px;
-  padding: 12px 24px;
-  background: var(--accent-color);
-  color: #fff;
-  text-decoration: none;
-  border-radius: 999px;
-  font-weight: bold;
+.instagram-note {
+  margin-bottom: 20px;
+  font-size: 0.95rem;
+  color: #444;
+  line-height: 1.6;
 }
 
-/* =====================
-   フッター
-===================== */
-footer {
-  text-align: center;
-  padding: 24px 16px;
-  font-size
+.instagram-embed {
+  display: flex;
+  justify-content: center;
+}
+
+/* Instagramのblockquote暴走防止 */
+.instagram-embed blockquote {
+  margin: 0 auto !important;
+}
