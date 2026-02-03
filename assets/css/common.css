@@ -1,4 +1,4 @@
-@charset "UTF-8"; 
+@charset "UTF-8";
 
 /* =====================
    基本設定
@@ -43,7 +43,6 @@ body {
   display: block;
 }
 
-/* 文字画像（hero-copy.png） */
 .hero-catch {
   position: absolute;
   top: 20%;
@@ -55,7 +54,6 @@ body {
   z-index: 10;
 }
 
-/* スマホ調整 */
 @media screen and (max-width: 768px) {
   .hero-catch {
     top: 18%;
@@ -75,7 +73,6 @@ section {
 section h2 {
   font-size: 1.4rem;
   margin-bottom: 16px;
-  color: var(--text-color);
 }
 
 section p {
@@ -84,32 +81,19 @@ section p {
 }
 
 /* =====================
-   コンセプト
+   コンセプト・メッセージ
 ===================== */
-.concept {
-  background: #fff;
-  border-radius: 12px;
-  margin-top: 32px;
-}
-
-/* =====================
-   メッセージ
-===================== */
-.message {
-  background: #fff;
-  border-radius: 12px;
-  margin-top: 32px;
-}
-
-/* =====================
-   トップ導線（about）
-===================== */
+.concept,
+.message,
 .links {
   background: #fff;
   border-radius: 12px;
   margin-top: 32px;
 }
 
+/* =====================
+   about 導線
+===================== */
 .text-link {
   display: inline-block;
   margin-top: 8px;
@@ -139,29 +123,40 @@ section p {
 .point h3 {
   margin-top: 0;
   font-size: 1.2rem;
-  color: var(--text-color);
 }
 
 /* =====================
-   CTA
+   採用情報（Recruit CTA）
 ===================== */
-.cta {
+.recruit-cta {
   text-align: center;
-  background: var(--main-color);
+  background: #fff;
   border-radius: 12px;
-  margin: 48px 16px;
-  padding: 48px 16px;
+  margin: 64px auto;
+  padding: 56px 16px;
+  border: 1px solid #eee;
 }
 
-.cta-button {
+.recruit-cta h2 {
+  margin-bottom: 12px;
+}
+
+.recruit-cta p {
+  margin-bottom: 16px;
+}
+
+.recruit-cta .cta-button {
   display: inline-block;
-  margin-top: 16px;
-  padding: 12px 24px;
-  background: var(--accent-color);
+  padding: 12px 28px;
+  background: #f7b733; /* accent を1トーン落とす */
   color: #fff;
   text-decoration: none;
   border-radius: 999px;
   font-weight: bold;
+}
+
+.recruit-cta .cta-button:hover {
+  opacity: 0.9;
 }
 
 /* =====================
@@ -181,22 +176,4 @@ footer a {
 
 footer a:hover {
   text-decoration: underline;
-}
-
-/* =====================
-   Instagram（追加）
-===================== */
-.instagram {
-  background: #fff;
-  border-radius: 12px;
-  margin-top: 32px;
-}
-
-.instagram #instagram-embed {
-  margin-top: 16px;
-}
-
-/* Instagram iframe の中央寄せ対策 */
-.instagram iframe {
-  max-width: 100% !important;
 }
