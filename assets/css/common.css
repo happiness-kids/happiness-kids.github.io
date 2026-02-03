@@ -204,3 +204,17 @@ footer a:hover {
     margin-right: 12px;
   }
 }
+
+/* =====================
+   ヒーローサイズ調整（PC）
+===================== */
+@media screen and (min-width: 1024px) {
+  .hero {
+    max-height: 520px;   /* ← ここで高さを制御 */
+  }
+
+  .hero-image {
+    height: 520px;
+    object-fit: cover;
+  }
+}
