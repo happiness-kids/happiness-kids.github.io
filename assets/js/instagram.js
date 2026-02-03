@@ -1,27 +1,31 @@
-const INSTAGRAM_ENABLED = true;　// trueで表示、falseの時は非表示
-if (INSTAGRAM_ENABLED) {
-  fetch('/parts/instagram.txt')
-    .then(res => res.text())
+document.addEventListener("DOMContentLoaded", () => {
+
+  // === 設定 ===
+  const ENABLE_INSTAGRAM = true; // ← false にすると非表示
+
+  const section = document.querySelector(".instagram-section");
+  const embedArea = document.querySelector(".instagram-embed");
+
+  if (!ENABLE_INSTAGRAM) {
+    section.classList.add("is-hide");
+    return;
+  }
+
+  fetch("assets/embeds/instagram.txt")
+    .then(response => {
+      if (!response.ok) throw new Error("instagram.txt が読み込めません");
+      return response.text();
+    })
     .then(html => {
-      const area = document.getElementById('instagram-area');
-      if (!area) return;
+      embedArea.innerHTML = html;
 
-      area.innerHTML = html;
-
-      // embed.js が未読み込みなら追加
-      if (!window.instgrm) {
-        const script = document.createElement('script');
-        script.src = "https://www.instagram.com/embed.js";
-        script.async = true;
-        document.body.appendChild(script);
-
-        script.onload = () => {
-          if (window.instgrm && window.instgrm.Embeds) {
-            window.instgrm.Embeds.process();
-          }
-        };
-      } else {
+      // Instagramの描画を明示的に実行
+      if (window.instgrm && window.instgrm.Embeds) {
         window.instgrm.Embeds.process();
       }
+    })
+    .catch(error => {
+      console.error(error);
+      section.classList.add("is-hide");
     });
-}
+});
