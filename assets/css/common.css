@@ -214,7 +214,8 @@ footer a:hover {
   }
 
   .hero-image {
-    height: 520px;
+    height: 480px;
     object-fit: cover;
   }
 }
+
