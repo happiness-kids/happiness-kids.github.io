@@ -3,35 +3,118 @@
 <head>
   <meta charset="UTF-8">
   <title>放課後等デイサービス ハピネスキッズ</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
   <link rel="stylesheet" href="assets/css/common.css">
 </head>
+
 <body>
 
-  <main>
+<!-- =========================
+  HERO
+========================= -->
+<header class="hero">
+  <img src="assets/images/hero.jpg" alt="ハピネスキッズの様子" class="hero-bg">
 
-    <!-- Instagram セクション -->
-    <section class="instagram-section">
-      <div class="container">
+  <!-- ヒーローコピー（画像） -->
+  <div class="hero-copy">
+    <img src="assets/images/hero-copy.png"
+         alt="たのしいから身につく。こころもそだつ。">
+  </div>
+</header>
 
-        <p class="instagram-note">
-          日々の様子や活動の雰囲気は、<br>
-          Instagramでも発信しています。
-        </p>
 
-        <!-- ここに直接埋め込みコードは書かない -->
-        <div class="instagram-embed"></div>
+<!-- =========================
+  コンセプト
+========================= -->
+<section class="concept">
+  <div class="section-inner">
+    <h2>私たちの想い</h2>
+    <p>
+      「失敗しても大丈夫。チャレンジしていこう。」<br>
+      ハピネスキッズでは、この言葉を大切にしながら、
+      子どもたちが安心して挑戦できる環境づくりを行っています。
+    </p>
+    <p>
+      できなかったことに向き合い、少しずつ「できた」に変えていく。
+      成功体験だけでなく、前向きな失敗体験も大切にしながら、
+      こころの成長を支援しています。
+    </p>
+  </div>
+</section>
 
+
+<!-- =========================
+  3つの柱
+========================= -->
+<section class="points">
+  <div class="section-inner">
+    <h2>ハピネスキッズの支援</h2>
+
+    <div class="points-list">
+      <div class="point">
+        <h3>安心できる居場所</h3>
+        <p>子ども一人ひとりが、自分らしく過ごせる環境を大切にしています。</p>
       </div>
-    </section>
 
-  </main>
+      <div class="point">
+        <h3>チャレンジを応援</h3>
+        <p>「やってみたい」という気持ちを尊重し、失敗も成長の一歩と考えます。</p>
+      </div>
 
-  <!-- Instagram公式JS（1回だけ） -->
-  <script async src="//www.instagram.com/embed.js"></script>
+      <div class="point">
+        <h3>こころを育てる</h3>
+        <p>人との関わりや経験を通して、こころの土台づくりを支援します。</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-  <!-- 制御用JS -->
-  <script src="assets/js/instagram.js"></script>
+
+<!-- =========================
+  Instagram
+========================= -->
+<section class="instagram-section" id="instagram-section">
+  <div class="section-inner">
+    <p>
+      日々の様子や活動の雰囲気は、<br>
+      Instagramでも発信しています。
+    </p>
+
+    <!-- Instagram埋め込み表示領域 -->
+    <div class="instagram-embed" id="instagram-embed">
+      <!-- JSで parts/instagram.txt を読み込む -->
+    </div>
+  </div>
+</section>
+
+
+<!-- =========================
+  採用情報
+========================= -->
+<section class="cta">
+  <div class="section-inner">
+    <h2>採用情報</h2>
+    <p>
+      子どもたちの成長を一緒に支える仲間を募集しています。
+    </p>
+    <a href="recruit/index.html">採用情報を見る</a>
+  </div>
+</section>
+
+
+<!-- =========================
+  フッター
+========================= -->
+<footer>
+  <p>© ハピネスキッズ</p>
+</footer>
+
+
+<!-- =========================
+  Instagram 読み込みJS
+========================= -->
+<script src="assets/js/instagram.js"></script>
 
 </body>
 </html>
