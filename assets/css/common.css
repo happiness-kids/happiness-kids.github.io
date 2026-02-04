@@ -122,6 +122,7 @@ section p {
    カード系
 ===================== */
 .concept,
+.message,
 .point,
 .instagram {
   background: #fff;
@@ -130,6 +131,10 @@ section p {
 }
 
 .concept {
+  margin-top: 32px;
+}
+
+.message {
   margin-top: 32px;
 }
 
@@ -206,3 +211,4 @@ footer {
     margin-right: 12px;
   }
 }
+```
