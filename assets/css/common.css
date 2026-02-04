@@ -125,6 +125,13 @@ section p {
   color: var(--sub-text);
 }
 
+/* 支援の柱 見出し位置調整 */
+.points > h2 {
+  max-width: 720px;
+  margin: 0 auto 24px;
+  text-align: center;
+}
+
 /* =====================
    補足
 ===================== */
