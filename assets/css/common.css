@@ -32,20 +32,19 @@ body {
 }
 
 /* =====================
-   グローバルヘッダー
+   ヘッダー（非固定）
 ===================== */
 .site-header {
   background: var(--accent-color);
-  color: #fff;
+  padding: 8px 16px;
 }
 
 .site-header-inner {
   max-width: 960px;
   margin: 0 auto;
-  padding: 8px 24px;
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
 }
 
 .site-icon {
@@ -56,8 +55,8 @@ body {
 
 .site-title {
   font-size: 0.95rem;
+  color: #fff;
   font-weight: bold;
-  letter-spacing: 0.04em;
 }
 
 /* =====================
@@ -65,14 +64,14 @@ body {
 ===================== */
 .hero {
   position: relative;
-  max-width: 520px;
-  margin: 0 auto;
+  width: 100%;
+  overflow: hidden;
 }
 
 .hero-image {
   width: 100%;
+  height: auto;
   display: block;
-  border-radius: var(--radius-large);
 }
 
 .hero-catch {
@@ -80,25 +79,16 @@ body {
   top: 20%;
   left: 50%;
   transform: translateX(-50%);
-  width: 90%;
-  max-width: 480px;
+  width: 85%;
+  max-width: 900px;
   z-index: 10;
 }
 
-/* =====================
-   ヒーロー補足
-===================== */
-.hero-note {
-  max-width: 640px;
-  margin: 24px auto 0;
-  padding: 0 24px;
-  text-align: center;
-}
-
-.hero-note p {
-  margin: 0;
-  font-size: 0.95rem;
-  color: var(--sub-text);
+@media screen and (max-width: 768px) {
+  .hero-catch {
+    top: 18%;
+    width: 90%;
+  }
 }
 
 /* =====================
@@ -121,55 +111,61 @@ section p {
 }
 
 /* =====================
-   カード系セクション
+   補足
+===================== */
+.hero-note {
+  padding-top: 32px;
+  padding-bottom: 0;
+}
+
+/* =====================
+   カード系
 ===================== */
 .concept,
-.message,
-.links {
+.point,
+.instagram {
   background: #fff;
   border-radius: var(--radius-card);
-  margin-top: 32px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.04);
 }
 
-/* =====================
-   導線
-===================== */
-.text-link {
-  color: var(--accent-color);
-  font-weight: bold;
-  text-decoration: none;
+.concept {
+  margin-top: 32px;
 }
 
-.text-link:hover {
-  text-decoration: underline;
-}
-
-/* =====================
-   支援の柱
-===================== */
 .points {
   margin-top: 32px;
 }
 
 .point {
-  background: #fff;
-  border-radius: var(--radius-card);
   padding: 24px 20px;
   margin-bottom: 16px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.04);
 }
 
 /* =====================
-   採用情報
+   Instagram
+===================== */
+.instagram {
+  margin: 32px auto;
+  padding: 32px 24px;
+  max-width: 720px;
+}
+
+.instagram-note {
+  font-size: 0.9rem;
+  margin-bottom: 16px;
+}
+
+/* =====================
+   採用情報 CTA
 ===================== */
 .recruit-cta {
-  text-align: center;
   background: #fff;
-  border-radius: var(--radius-large);
+  border-radius: 16px;
   margin: 48px auto;
   padding: 40px 24px;
   max-width: 720px;
+  text-align: center;
   box-shadow: 0 4px 12px rgba(0,0,0,0.04);
 }
 
@@ -194,30 +190,19 @@ footer {
   color: var(--sub-text);
 }
 
-footer a {
-  color: var(--sub-text);
-  text-decoration: none;
-}
-
 /* =====================
    スマホ調整
 ===================== */
 @media screen and (max-width: 768px) {
-  .site-header-inner {
-    padding: 8px 16px;
-  }
-
   section {
     padding: 40px 20px;
   }
 
   .concept,
-  .message,
-  .links,
   .point,
+  .instagram,
   .recruit-cta {
     margin-left: 12px;
     margin-right: 12px;
   }
 }
-
