@@ -144,39 +144,22 @@ section p {
 .links,
 .point,
 .instagram {
-  background: #fff;
-  border-radius: var(--radius-card);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.04);
-}
-
-.concept,
-.message,
-.links {
-  margin-top: 32px;
-  padding: 32px 24px;
-}
-
-.points {
-  margin-top: 32px;
-}
-
-.point {
-  padding: 24px 20px;
-  margin-bottom: 16px;
-}
-
-/* =====================
-   Instagram
-===================== */
-.instagram {
   margin: 32px auto;
   padding: 32px 24px;
   max-width: 720px;
+  overflow: hidden; /* 埋め込みのはみ出し防止 */
 }
 
 .instagram-note {
   font-size: 0.9rem;
   margin-bottom: 16px;
+}
+
+/* Instagram 埋め込み共通調整 */
+.instagram iframe,
+.instagram blockquote {
+  max-width: 100% !important;
+  width: 100% !important;
 }
 
 /* =====================
