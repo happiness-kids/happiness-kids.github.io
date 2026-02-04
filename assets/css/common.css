@@ -126,9 +126,23 @@ section p {
 .links,
 .point,
 .instagram {
+  padding: 48px 24px;
+
   background: #fff;
   border-radius: var(--radius-card);
   box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+}
+
+.concept {
+  margin-top: 32px;
+}
+
+.message {
+  margin-top: 32px;
+}
+
+.links {
+  margin-top: 32px;
 }
 
 .concept {
@@ -213,4 +227,3 @@ footer {
   }
 }
 ```
-
