@@ -1,21 +1,6 @@
 @charset "UTF-8";
 
-/*
-==================================================
-BASELINE v1.0（2026-02-05）
 
-【このCSSを正とする】
-・PCのみ hero 高さ 520px 制限（object-fit: cover）
-・カード系（concept / message / links / point / instagram / recruit-cta）は
-  max-width: 720px / 白背景 / 角丸 / 影 を共通仕様とする
-・スマホ時の横余白は左右 12px で統一
-・Instagram 埋め込みはカード内に収め、はみ出し禁止
-・points 見出し（支援の柱）は中央揃え
-
-以降の修正は、この BASELINE v1.0 からの
-「差分のみ」を追加・調整すること
-==================================================
-*/
 
 /* =====================
    基本設定
@@ -93,10 +78,10 @@ body {
 
 .hero-catch {
   position: absolute;
-  top: 28%; /* 20% → 少し下へ */
+  top: 58%;
   left: 50%;
   transform: translateX(-50%);
-  width: 78%; /* やや小さく */
+  width: 78%;
   max-width: 820px;
   z-index: 10;
 }
