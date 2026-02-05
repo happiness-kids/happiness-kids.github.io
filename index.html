@@ -1,179 +1,246 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-  <meta charset="UTF-8">
-  <title>ハピネスキッズ｜公式サイト</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+@charset "UTF-8";
 
-  <link rel="stylesheet" href="/assets/css/common.css">
-</head>
+/*
+==================================================
+BASELINE v1.0（2026-02-05）
 
-<body>
+【このCSSを正とする】
+・PCのみ hero 高さ 520px 制限（object-fit: cover）
+・カード系（concept / message / links / point / instagram / recruit-cta）は
+  max-width: 720px / 白背景 / 角丸 / 影 を共通仕様とする
+・スマホ時の横余白は左右 12px で統一
+・Instagram 埋め込みはカード内に収め、はみ出し禁止
+・points 見出し（支援の柱）は中央揃え
 
-  <!-- =====================
-       グローバルヘッダー
-  ====================== -->
-  <div class="site-header">
-    <div class="site-header-inner">
-      <img
-        src="/assets/images/icon.png"
-        alt="ハピネスキッズ アイコン"
-        class="site-icon"
-      >
-      <span class="site-title">
-        放課後等デイサービス　ハピネスキッズ
-      </span>
-    </div>
-  </div>
+以降の修正は、この BASELINE v1.0 からの
+「差分のみ」を追加・調整すること
+==================================================
+*/
 
-  <!-- =====================
-       ヒーローエリア
-  ====================== -->
-  <header class="hero">
-    <img
-      src="/assets/images/hero.jpg"
-      alt="子どもたちが安心して過ごす様子"
-      class="hero-image"
-    >
+/* =====================
+   基本設定
+===================== */
+:root {
+  --main-color: #ffe114;
+  --accent-color: #f4a300;
+  --text-color: #333;
+  --sub-text: #666;
+  --bg-color: #fff1d6;
 
-    <img
-      src="/assets/images/hero-copy.png"
-      alt="“たのしい”から 身につく。“こころ”も そだつ。"
-      class="hero-catch"
-    >
-  </header>
+  --radius-card: 16px;
+  --radius-large: 20px;
+}
 
-  <!-- =====================
-       ヒーロー補足
-  ====================== -->
-  <section class="hero-note">
-    <p>
-      ハピネスキッズは、子ども一人ひとりの気持ちに寄り添いながら、
-      安心して「たのしい」に挑戦できる放課後等デイサービスです。
-    </p>
-  </section>
+* {
+  box-sizing: border-box;
+}
 
-  <!-- =====================
-       コンセプト
-  ====================== -->
-  <section class="concept">
-    <h2>ハピネスキッズの想い</h2>
-    <p>
-      「たのしい」という気持ちは、
-      子どもが前に進むための大切な力です。<br>
-      ハピネスキッズでは、安心できる環境の中で、
-      子どもたち一人ひとりの気持ちに寄り添いながら、
-      心と成長の土台を育てることを大切にしています。
-    </p>
-  </section>
+body {
+  margin: 0;
+  font-family:
+    "BIZ UDPGothic",
+    "BIZ UDゴシック",
+    "Meiryo",
+    "Hiragino Kaku Gothic ProN",
+    sans-serif;
+  color: var(--text-color);
+  background-color: var(--bg-color);
+  line-height: 1.8;
+}
 
-  <!-- =====================
-       メッセージ
-  ====================== -->
-  <section class="message">
-    <h2>失敗しても大丈夫。チャレンジしていこう。</h2>
-    <p>
-      新しいことに挑戦するとき、
-      「できない」「失敗したらどうしよう」と
-      不安になることがあります。
-    </p>
-    <p>
-      ハピネスキッズでは、
-      失敗は悪いことではなく、
-      できるようになるための大切な一歩だと考えています。
-    </p>
-    <p>
-      成功体験だけでなく、
-      前向きな失敗体験も大切にしながら、
-      子どもたちが安心してチャレンジできる支援を行っています。
-    </p>
-  </section>
+/* =====================
+   ヘッダー（非固定）
+===================== */
+.site-header {
+  background: var(--accent-color);
+  padding: 8px 16px;
+}
 
-  <!-- =====================
-       about 導線
-  ====================== -->
-  <section class="links">
-    <h2>ハピネスキッズについて</h2>
-    <p>
-      ハピネスキッズの考え方や、
-      日々の支援で大切にしていることについて
-      まとめています。
-    </p>
-    <p>
-      <a href="/about/" class="text-link">
-        ハピネスキッズについて詳しく見る
-      </a>
-    </p>
-  </section>
+.site-header-inner {
+  max-width: 960px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
 
-  <!-- =====================
-       支援の柱
-  ====================== -->
-  <section class="points">
-    <h2>ハピネスキッズの支援の柱</h2>
+.site-icon {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
 
-    <div class="point">
-      <h3>こころを大切に</h3>
-      <p>
-        子どもの気持ちを受け止め、
-        安心できる関係づくりを大切にしています。
-      </p>
-    </div>
+.site-title {
+  font-size: 0.95rem;
+  color: #fff;
+  font-weight: bold;
+}
 
-    <div class="point">
-      <h3>個別療育</h3>
-      <p>
-        一人ひとりの発達や特性に合わせ、
-        無理のない支援を行います。
-      </p>
-    </div>
+/* =====================
+   ヒーロー
+===================== */
+.hero {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
 
-    <div class="point">
-      <h3>社会性・自立</h3>
-      <p>
-        日々の関わりや集団活動を通して、
-        社会性や自立心を育みます。
-      </p>
-    </div>
-  </section>
+.hero-image {
+  width: 100%;
+  height: auto;
+  display: block;
+}
 
-  <!-- =====================
-       Instagram
-  ====================== -->
-  <section class="instagram">
-    <h2>Instagram</h2>
-    <p>
-      日々の様子や活動の雰囲気は、
-      Instagramでも発信しています。
-    </p>
-    <div id="instagram-embed"></div>
-  </section>
+.hero-catch {
+  position: absolute;
+  top: 28%; /* 20% → 少し下へ */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 78%; /* やや小さく */
+  max-width: 820px;
+  z-index: 10;
+}
 
-  <!-- =====================
-       採用情報
-  ====================== -->
-  <section class="recruit-cta">
-    <h2>採用情報</h2>
-    <p>
-      私たちと一緒に、
-      子どもたちの成長を支える仕事をしませんか。
-    </p>
-    <a href="/recruit/" class="cta-button">
-      求人情報を見る
-    </a>
-  </section>
+/* PCのみ hero 高さ制限 */
+@media screen and (min-width: 769px) {
+  .hero {
+    max-height: 520px;
+  }
 
-  <!-- =====================
-       フッター
-  ====================== -->
-  <footer>
-    <p>&copy; ハピネスキッズ</p>
-    <p>
-      <a href="/disclosure/">情報公開</a>
-    </p>
-  </footer>
+  .hero-image {
+    height: 520px;
+    object-fit: cover;
+  }
+}
 
-  <script src="/assets/js/instagram.js"></script>
+  .concept,
+  .message,
+  .links,
+  .point,
+  .instagram,
+  .recruit-cta {
+    margin-left: 12px;
+    margin-right: 12px;
+  }
+}
 
-</body>
-</html>
+
+/* =====================
+   セクション共通
+===================== */
+section {
+  padding: 48px 24px;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+section h2 {
+  font-size: 1.4rem;
+  margin-bottom: 16px;
+}
+
+section p {
+  margin: 0 0 12px;
+  color: var(--sub-text);
+}
+
+/* 支援の柱 見出し位置調整 */
+.points > h2 {
+  max-width: 720px;
+  margin: 0 auto 24px;
+  text-align: center;
+}
+
+/* =====================
+   補足
+===================== */
+.hero-note {
+  padding-top: 32px;
+  padding-bottom: 0;
+}
+
+/* =====================
+   カード系
+===================== */
+/*
+  section 自体に padding があるため、
+  カード側では上下マージンのみを管理する
+*/
+.concept,
+.message,
+.links,
+.point,
+.instagram {
+  background: #fff;
+  border-radius: var(--radius-card);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+  margin: 32px auto;
+  padding: 32px 24px;
+  max-width: 720px;
+  overflow: hidden; /* 埋め込みのはみ出し防止 */
+}
+
+.instagram-note {
+  font-size: 0.9rem;
+  margin-bottom: 16px;
+}
+
+/* Instagram 埋め込み共通調整 */
+.instagram iframe,
+.instagram blockquote {
+  max-width: 100% !important;
+  width: 100% !important;
+}
+
+/* =====================
+   採用情報 CTA
+===================== */
+.recruit-cta {
+  background: #fff;
+  border-radius: 16px;
+  margin: 48px auto;
+  padding: 40px 24px;
+  max-width: 720px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+}
+
+.recruit-cta .cta-button {
+  display: inline-block;
+  margin-top: 16px;
+  padding: 12px 24px;
+  background: var(--accent-color);
+  color: #fff;
+  text-decoration: none;
+  border-radius: 999px;
+  font-weight: bold;
+}
+
+/* =====================
+   フッター
+===================== */
+footer {
+  text-align: center;
+  padding: 24px 16px;
+  font-size: 0.9rem;
+  color: var(--sub-text);
+}
+
+/* =====================
+   スマホ調整（統一）
+===================== */
+@media screen and (max-width: 768px) {
+  section {
+    padding: 40px 20px;
+  }
+
+  .concept,
+  .message,
+  .links,
+  .point,
+  .instagram,
+  .recruit-cta {
+    margin-left: 12px;
+    margin-right: 12px;
+  }
+}
