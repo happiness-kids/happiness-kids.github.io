@@ -78,7 +78,7 @@ body {
 
 .hero-catch {
   position: absolute;
-  top: 58%;
+  top: 54%;
   left: 50%;
   transform: translateX(-50%);
   width: 78%;
@@ -229,3 +229,4 @@ footer {
     margin-right: 12px;
   }
 }
+
