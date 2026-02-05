@@ -98,10 +98,20 @@ body {
 
 /* スマホ調整 */
 @media screen and (max-width: 768px) {
-  .hero-catch {
-    top: 18%;
-    width: 90%;
+  section {
+    padding: 40px 20px;
   }
+
+  .concept,
+  .message,
+  .links,
+  .point,
+  .instagram,
+  .recruit-cta {
+    margin-left: 12px;
+    margin-right: 12px;
+  }
+}
 }
 
 }
