@@ -2,7 +2,7 @@
 
 /* =====================
    BASELINE v1.1 継承
-   hero / header は変更しない
+   hero / header は一切変更しない
 ===================== */
 
 /* =====================
@@ -15,8 +15,11 @@
   --sub-text: #666;
   --bg-color: #fff1d6;
 
+  /* intro 用のごく薄い水色（白に近い） */
+  --intro-bg: #f4f9fc;
+
   --radius-card: 16px;
-  --radius-large: 20px;
+  --radius-large: 24px;
 }
 
 * {
@@ -37,7 +40,7 @@ body {
 }
 
 /* =====================
-   ヘッダー（変更なし）
+   ヘッダー（確定・触らない）
 ===================== */
 .site-header {
   background: var(--accent-color);
@@ -65,7 +68,7 @@ body {
 }
 
 /* =====================
-   hero（完全固定・変更なし）
+   ヒーロー（確定・触らない）
 ===================== */
 .hero {
   position: relative;
@@ -130,41 +133,36 @@ section p {
 }
 
 /* =====================
-   intro（主役セクション）
-   ★ここが一番大きな変更点
+   intro（主役：水色背景）
 ===================== */
 .intro {
-  background: linear-gradient(
-    to bottom,
-    #fff7e3,
-    #fff1d6
-  );
-  padding: 72px 24px;
-  margin: 72px auto 88px;
-}
-
-/* intro 内の文章ブロック */
-.intro > * {
+  background: var(--intro-bg);
+  border-radius: var(--radius-large);
+  padding: 56px 32px;
   max-width: 760px;
-  margin-left: auto;
-  margin-right: auto;
+  margin: 64px auto 72px;
 }
 
+/* intro 見出しは一段強く */
 .intro h2 {
   font-size: 1.6rem;
   margin-bottom: 28px;
   color: var(--text-color);
 }
 
+/* intro 内の本文は読みやすく */
 .intro p {
-  font-size: 1.05rem;
+  max-width: 640px;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 1rem;
 }
 
 /* =====================
-   支援の柱
+   支援の柱（白カード・主張控えめ）
 ===================== */
 .pillars {
-  margin-top: 0;
+  margin-top: 32px;
 }
 
 .pillar-cards {
@@ -178,16 +176,14 @@ section p {
   background: #fff;
   border-radius: var(--radius-card);
   padding: 32px 24px;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.04);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.04);
 }
 
 .pillar h3 {
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   margin-bottom: 12px;
   color: var(--text-color);
 }
-
-/* ★オレンジ強調は削除（意図的に何もしない） */
 
 /* =====================
    about / contact 導線
@@ -201,7 +197,7 @@ section p {
 .contact-cta a {
   display: inline-block;
   margin-top: 16px;
-  padding: 12px 28px;
+  padding: 10px 26px;
   background: var(--accent-color);
   color: #fff;
   text-decoration: none;
@@ -217,7 +213,7 @@ section p {
 }
 
 .footer-link-item {
-  background: #fffaf0;
+  background: #fff;
   border-radius: var(--radius-card);
   padding: 32px 24px;
   max-width: 720px;
@@ -251,8 +247,8 @@ footer {
   }
 
   .intro {
-    padding: 56px 20px;
-    margin: 56px auto 64px;
+    padding: 44px 22px;
+    margin: 56px 12px 64px;
   }
 
   .pillar-cards {
