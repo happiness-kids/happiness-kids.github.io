@@ -1,6 +1,33 @@
-/* =========================
-   RESET / BASE
-========================= */
+@charset "UTF-8";
+
+/* =====================
+   BASELINE v1.1（公式基準CSS）
+   ・index.html v2.2 前提
+   ・hero / header 構造は確定済み
+   ・以後このCSSを基準に調整
+===================== */
+
+/* =====================
+   カラーパレット / 変数
+===================== */
+:root {
+  --main-color: #ffe114;
+  --accent-color: #f4a300;
+  --text-color: #333;
+  --sub-text: #666;
+  --bg-color: #fff1d6;
+
+  --radius-card: 16px;
+  --radius-large: 20px;
+}
+
+/* =====================
+   リセット / 基本
+===================== */
+* {
+  box-sizing: border-box;
+}
+
 html, body {
   margin: 0;
   padding: 0;
@@ -8,10 +35,15 @@ html, body {
 }
 
 body {
-  font-family: "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
-  color: #333;
+  font-family:
+    "BIZ UDPGothic",
+    "BIZ UDゴシック",
+    "Meiryo",
+    "Hiragino Kaku Gothic ProN",
+    sans-serif;
+  color: var(--text-color);
+  background-color: var(--bg-color);
   line-height: 1.8;
-  background-color: #fff;
 }
 
 img {
@@ -20,95 +52,199 @@ img {
   display: block;
 }
 
-/* =========================
-   HERO（確定・余白なし）
-========================= */
+/* =====================
+   ヘッダー（確定・非固定）
+===================== */
+.site-header {
+  background: var(--accent-color);
+  padding: 8px 16px;
+}
+
+.site-header-inner {
+  max-width: 960px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.site-icon {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+.site-title {
+  font-size: 0.95rem;
+  color: #fff;
+  font-weight: bold;
+}
+
+/* =====================
+   HERO（完全確定・余白なし）
+===================== */
 .hero {
   position: relative;
   width: 100vw;
-  height: 100vh;
   margin: 0;
   padding: 0;
   overflow: hidden;
 }
 
-.hero img.hero-bg {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+.hero-image {
+  width: 100vw;
+  height: auto;
+  display: block;
 }
 
-.hero img.hero-copy {
+.hero-catch {
   position: absolute;
-  left: 50%;
   top: 54%;
-  transform: translate(-50%, -50%);
-  max-width: 80%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 78%;
+  max-width: 820px;
+  z-index: 10;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (min-width: 769px) {
   .hero {
-    height: 85vh;
+    max-height: 520px;
   }
 
-  .hero img.hero-copy {
-    max-width: 90%;
-    top: 56%;
+  .hero-image {
+    height: 520px;
+    object-fit: cover;
   }
 }
 
-/* =========================
-   INTRO（白に戻す）
-========================= */
-.intro {
-  background-color: #ffffff;
-  padding: 4rem 1.5rem 4.5rem;
-}
-
-.intro-inner {
-  max-width: 880px;
+/* =====================
+   セクション共通
+===================== */
+section {
+  padding: 48px 24px;
+  max-width: 960px;
   margin: 0 auto;
 }
 
+section h2 {
+  font-size: 1.4rem;
+  margin-bottom: 16px;
+}
+
+section p {
+  margin: 0 0 12px;
+  color: var(--sub-text);
+}
+
+/* =====================
+   hero-note
+===================== */
+.hero-note {
+  padding-top: 32px;
+  padding-bottom: 0;
+  text-align: center;
+}
+
+/* =====================
+   INTRO（主役・白カード）
+===================== */
+.intro {
+  background: #fff;
+  border-radius: var(--radius-large);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+  padding: 40px 28px;
+  max-width: 720px;
+  margin: 56px auto;
+}
+
 .intro h2 {
-  font-size: 1.6rem;
-  margin-bottom: 1.5rem;
-  font-weight: 600;
+  font-size: 1.5rem;
+  margin-bottom: 20px;
 }
 
-.intro p {
-  font-size: 1rem;
-  margin-bottom: 0;
+/* =====================
+   支援の柱
+===================== */
+.pillars > h2 {
+  text-align: center;
+  margin-bottom: 32px;
 }
 
-@media screen and (max-width: 768px) {
-  .intro {
-    padding: 3rem 1.25rem 3.5rem;
-  }
+.pillar-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
 }
 
-/* =========================
-   BUTTON（採用情報／情報公開）
-========================= */
-.link-buttons {
-  display: flex;
-  gap: 1rem;
-  flex-wrap: wrap;
+.pillar {
+  background: #fff;
+  border-radius: var(--radius-card);
+  padding: 32px 24px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.04);
 }
 
-.link-buttons a {
+.pillar h3 {
+  font-size: 1.1rem;
+  margin-bottom: 12px;
+}
+
+/* =====================
+   ボタン共通（contact / footer）
+===================== */
+.button-link {
   display: inline-block;
-  padding: 0.75rem 1.5rem;
-  border-radius: 999px;
-  background-color: #f3981d;
+  margin-top: 16px;
+  padding: 12px 28px;
+  background: var(--accent-color);
   color: #fff;
   text-decoration: none;
-  font-weight: 600;
-  transition: background-color 0.2s ease;
+  border-radius: 999px;
+  font-weight: bold;
 }
 
-.link-buttons a:hover {
-  background-color: #d87f0f;
+/* =====================
+   フッター直前リンク
+===================== */
+.footer-links {
+  margin-top: 64px;
+}
+
+.footer-link-item {
+  background: #fff;
+  border-radius: var(--radius-card);
+  padding: 32px 24px;
+  max-width: 720px;
+  margin: 24px auto;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+}
+
+.footer-link-item .note {
+  font-size: 0.9rem;
+  color: var(--sub-text);
+  margin-top: 8px;
+}
+
+/* =====================
+   フッター
+===================== */
+footer {
+  text-align: center;
+  padding: 24px 16px;
+  font-size: 0.9rem;
+  color: var(--sub-text);
+}
+
+/* =====================
+   スマホ調整
+===================== */
+@media screen and (max-width: 768px) {
+  section {
+    padding: 40px 20px;
+  }
+
+  .pillar-cards {
+    grid-template-columns: 1fr;
+  }
 }
