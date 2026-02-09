@@ -90,7 +90,7 @@ body {
   position: absolute;
   top: 54%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translateX(-50%);
   width: 78%;
   max-width: 820px;
   height: auto;
@@ -251,3 +251,4 @@ section p {
     width: 86%;
   }
 }
+
