@@ -1,7 +1,7 @@
 @charset "UTF-8";
 
 /* =====================
-   BASELINE v1.1 継承 + hero修正
+   BASELINE v1.1 + hero幅修正
 ===================== */
 
 /* =====================
@@ -36,7 +36,7 @@ body {
 }
 
 /* =====================
-   ヘッダー（固定しない）
+   ヘッダー
 ===================== */
 .site-header {
   background: var(--accent-color);
@@ -54,7 +54,6 @@ body {
 .site-icon {
   width: 24px;
   height: 24px;
-  object-fit: contain;
 }
 
 .site-title {
@@ -64,17 +63,22 @@ body {
 }
 
 /* =====================
-   hero（表示崩れ修正）
+   hero（★ここが重要）
 ===================== */
 .hero {
   position: relative;
-  width: 100%;
+  width: 100vw;          /* 画面幅いっぱい */
   margin: 0;
   padding: 0;
+  max-width: none;       /* section制約を解除 */
   overflow: hidden;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;    /* フルブリード */
+  margin-right: -50vw;
 }
 
-/* 背景画像 */
+/* hero 背景画像 */
 .hero-image {
   width: 100%;
   height: auto;
@@ -93,10 +97,10 @@ body {
   z-index: 10;
 }
 
-/* PC時 hero 高さ固定 */
+/* PC */
 @media screen and (min-width: 769px) {
   .hero {
-    max-height: 520px;
+    height: 520px;
   }
 
   .hero-image {
@@ -106,7 +110,7 @@ body {
 }
 
 /* =====================
-   セクション共通
+   セクション共通（hero以外）
 ===================== */
 section {
   padding: 48px 24px;
@@ -135,7 +139,7 @@ section p {
 }
 
 /* =====================
-   intro（想い＋メッセージ）
+   intro
 ===================== */
 .intro {
   background: #fff;
@@ -167,13 +171,6 @@ section p {
   box-shadow: 0 6px 18px rgba(0,0,0,0.04);
 }
 
-.pillar h3 {
-  font-size: 1.1rem;
-  margin-bottom: 12px;
-  color: var(--text-color);
-}
-
-/* 主軸カード（居場所） */
 .pillar:first-child {
   position: relative;
   background: #fff;
@@ -192,7 +189,7 @@ section p {
 }
 
 /* =====================
-   about / contact ボタン
+   about / contact
 ===================== */
 .about-link,
 .contact-cta {
@@ -206,24 +203,14 @@ section p {
   padding: 12px 28px;
   background: var(--accent-color);
   color: #fff;
-  text-decoration: none;
   border-radius: 999px;
+  text-decoration: none;
   font-weight: bold;
-  transition: opacity 0.2s ease;
-}
-
-.about-link a:hover,
-.contact-cta a:hover {
-  opacity: 0.85;
 }
 
 /* =====================
-   採用情報・情報公開（ボタン化）
+   フッター直前ボタン
 ===================== */
-.footer-links {
-  margin-top: 64px;
-}
-
 .footer-link-item {
   background: #fffaf0;
   border-radius: var(--radius-card);
@@ -231,20 +218,16 @@ section p {
   max-width: 720px;
   margin: 24px auto;
   text-align: center;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.04);
 }
 
-/* ★ここがボタン見えの本体 */
 .footer-link-item a {
   display: inline-block;
   padding: 12px 28px;
-  background: #fff;
-  color: var(--accent-color);
   border: 2px solid var(--accent-color);
   border-radius: 999px;
+  color: var(--accent-color);
   font-weight: bold;
   text-decoration: none;
-  transition: background 0.2s ease, color 0.2s ease;
 }
 
 .footer-link-item a:hover {
@@ -252,24 +235,8 @@ section p {
   color: #fff;
 }
 
-.footer-link-item .note {
-  font-size: 0.9rem;
-  color: var(--sub-text);
-  margin-top: 12px;
-}
-
 /* =====================
-   フッター
-===================== */
-.site-footer {
-  text-align: center;
-  padding: 24px 16px;
-  font-size: 0.9rem;
-  color: var(--sub-text);
-}
-
-/* =====================
-   スマホ調整
+   スマホ
 ===================== */
 @media screen and (max-width: 768px) {
   section {
@@ -278,10 +245,6 @@ section p {
 
   .pillar-cards {
     grid-template-columns: 1fr;
-  }
-
-  .pillar {
-    margin: 0 12px;
   }
 
   .hero-catch {
