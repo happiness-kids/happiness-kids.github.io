@@ -81,14 +81,20 @@ img {
 }
 
 /* =====================
-   HERO（完全確定・余白なし）
+   HERO（完全確定・余白なし・フルブリード確定）
+   ※ここは"固め" 宣言済み。以後変更しない
 ===================== */
 .hero {
   position: relative;
-  width: 100vw;
+  width: 100vw;          /* 画面幅いっぱい */
   margin: 0;
   padding: 0;
+  max-width: none;       /* section制約を解除 */
   overflow: hidden;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;    /* フルブリード */
+  margin-right: -50vw;
 }
 
 .hero-image {
@@ -99,7 +105,7 @@ img {
 
 .hero-catch {
   position: absolute;
-  top: 54%;
+  top: 54%;              /* ここも確定 */
   left: 50%;
   transform: translateX(-50%);
   width: 78%;
