@@ -196,7 +196,7 @@ section p {
 }
 
 /* =====================
-   ボタン共通（contact / footer）
+   ボタン共通（about / contact / 採用 / 情報公開）
 ===================== */
 .button-link {
   display: inline-block;
@@ -207,6 +207,28 @@ section p {
   text-decoration: none;
   border-radius: 999px;
   font-weight: bold;
+  transition: transform .15s ease, box-shadow .15s ease, opacity .15s ease;
+}
+
+.button-link:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.12);
+  opacity: .95;
+}
+
+.button-link.sub {
+  background: #fff;
+  color: var(--accent-color);
+  border: 2px solid var(--accent-color);
+}
+
+/* ボタン横並び用 */
+.button-group {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 24px;
 }
 
 /* =====================
