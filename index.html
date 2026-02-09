@@ -7,10 +7,12 @@
   <meta name="description" content="ハピネスキッズは、子ども一人ひとりの『たのしい』気持ちを大切にしながら、安心して過ごせる放課後の時間を支援する放課後等デイサービスです。" />
   <link rel="stylesheet" href="/assets/css/common.css" />
 </head>
+
 <body>
 
   <!-- =====================
        header（サイト上部）
+       ※BASELINE v1.1 構造踏襲
   ====================== -->
   <header class="site-header">
     <div class="site-header-inner">
@@ -20,8 +22,8 @@
   </header>
 
   <!-- =====================
-       hero（最初に伝えたい世界観）
-       BASELINE v1.1 構造に復帰
+       hero（世界観）
+       ※ hero.jpg + hero-copy.png 構造をHTMLで確定
   ====================== -->
   <section class="hero">
     <img
@@ -29,17 +31,15 @@
       alt=""
       class="hero-image"
     >
-
-    <div class="hero-catch">
-      <img
-        src="/assets/images/hero-copy.png"
-        alt="“たのしい”から身につく。“こころ”も そだつ。"
-      >
-    </div>
+    <img
+      src="/assets/images/hero-copy.png"
+      alt="“たのしい”から身につく。こころも そだつ。"
+      class="hero-catch"
+    >
   </section>
 
   <!-- =====================
-       hero note（やさしい補足説明）
+       hero-note（補足）
   ====================== -->
   <section class="hero-note">
     <p>
@@ -53,24 +53,28 @@
   ====================== -->
   <section class="intro">
     <h2>失敗しても大丈夫。チャレンジしていこう。</h2>
+
     <p>
-      新しいことに挑戦するとき、
+      新しいことに挑戦するとき、<br>
       不安になったり、立ち止まってしまうことがあります。
     </p>
+
     <p>
-      うまくいくことだけでなく、
-      思うようにいかなかった経験も、
+      うまくいくことだけでなく、<br>
+      思うようにいかなかった経験も、<br>
       次の一歩につながる大切なプロセスだと、私たちは考えています。
     </p>
+
     <p>
-      そのためにハピネスキッズでは、
-      「たのしい」と感じられる雰囲気の中で、
+      そのためにハピネスキッズでは、<br>
+      「たのしい」と感じられる雰囲気の中で、<br>
       子ども一人ひとりが安心してチャレンジできる環境づくりを大切にしています。
     </p>
   </section>
 
   <!-- =====================
        pillars（支援の柱）
+       ※公式表現として固定
   ====================== -->
   <section class="pillars">
     <h2>ハピネスキッズの支援の柱</h2>
@@ -79,7 +83,7 @@
       <div class="pillar">
         <h3>居場所（安心できる場所）</h3>
         <p>
-          子どもが「ここにいて大丈夫」と感じられる、
+          子どもが「ここにいて大丈夫」と感じられる、<br>
           落ち着いた関係性と環境づくりを大切にしています。
         </p>
       </div>
@@ -87,7 +91,7 @@
       <div class="pillar">
         <h3>「たのしい」から始める</h3>
         <p>
-          「やってみたい」「おもしろそう」という気持ちを大切にし、
+          「やってみたい」「おもしろそう」という気持ちを大切にし、<br>
           たのしさから自然に経験が広がる支援を行います。
         </p>
       </div>
@@ -95,7 +99,7 @@
       <div class="pillar">
         <h3>こころが動く経験</h3>
         <p>
-          成功も、思うようにいかなかった体験も含めて、
+          成功も、思うようにいかなかった体験も含めて、<br>
           子ども自身の気持ちや考えが動く経験を大切にしています。
         </p>
       </div>
@@ -106,13 +110,11 @@
        about 導線
   ====================== -->
   <section class="about-link">
-    <p class="link">
-      <a href="/about/">▶ ハピネスキッズについて詳しく見る</a>
-    </p>
+    <a href="/about/">ハピネスキッズについて詳しく見る</a>
   </section>
 
   <!-- =====================
-       contact
+       contact（主要導線）
   ====================== -->
   <section class="contact-cta">
     <h2>お問い合わせ・ご相談</h2>
@@ -120,28 +122,22 @@
       ご質問やご相談だけでも構いません。<br>
       どうぞお気軽にご連絡ください。
     </p>
-    <p class="link">
-      <a href="/contact/">▶ お問い合わせはこちら</a>
-    </p>
+    <a href="/contact/">お問い合わせはこちら</a>
   </section>
 
   <!-- =====================
-       footer links
+       footer links（補助導線）
   ====================== -->
   <section class="footer-links">
     <div class="footer-link-item">
-      <p class="link">
-        <a href="/recruit/">▶ 採用情報</a>
-      </p>
+      <a href="/recruit/">採用情報</a>
       <p class="note">
         子どもたちのチャレンジを、いっしょに支える仲間を募集しています。
       </p>
     </div>
 
     <div class="footer-link-item">
-      <p class="link">
-        <a href="/disclosure/">▶ 情報公開</a>
-      </p>
+      <a href="/disclosure/">情報公開</a>
       <p class="note">
         運営体制や事業内容についての情報を公開しています。
       </p>
