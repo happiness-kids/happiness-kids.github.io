@@ -1,7 +1,8 @@
 @charset "UTF-8";
 
 /* =====================
-   BASELINE v1.1 + hero幅修正
+   BASELINE v1.1 継承
+   hero / header は変更しない
 ===================== */
 
 /* =====================
@@ -36,7 +37,7 @@ body {
 }
 
 /* =====================
-   ヘッダー
+   ヘッダー（変更なし）
 ===================== */
 .site-header {
   background: var(--accent-color);
@@ -54,6 +55,7 @@ body {
 .site-icon {
   width: 24px;
   height: 24px;
+  object-fit: contain;
 }
 
 .site-title {
@@ -63,29 +65,20 @@ body {
 }
 
 /* =====================
-   hero（★ここが重要）
+   hero（完全固定・変更なし）
 ===================== */
 .hero {
   position: relative;
-  width: 100vw;          /* 画面幅いっぱい */
-  margin: 0;
-  padding: 0;
-  max-width: none;       /* section制約を解除 */
+  width: 100%;
   overflow: hidden;
-  left: 50%;
-  right: 50%;
-  margin-left: -50vw;    /* フルブリード */
-  margin-right: -50vw;
 }
 
-/* hero 背景画像 */
 .hero-image {
   width: 100%;
   height: auto;
   display: block;
 }
 
-/* hero-copy.png */
 .hero-catch {
   position: absolute;
   top: 54%;
@@ -93,14 +86,12 @@ body {
   transform: translateX(-50%);
   width: 78%;
   max-width: 820px;
-  height: auto;
   z-index: 10;
 }
 
-/* PC */
 @media screen and (min-width: 769px) {
   .hero {
-    height: 520px;
+    max-height: 520px;
   }
 
   .hero-image {
@@ -110,7 +101,7 @@ body {
 }
 
 /* =====================
-   セクション共通（hero以外）
+   セクション共通
 ===================== */
 section {
   padding: 48px 24px;
@@ -125,7 +116,7 @@ section h2 {
 }
 
 section p {
-  margin: 0 0 12px;
+  margin: 0 0 14px;
   color: var(--sub-text);
 }
 
@@ -139,22 +130,41 @@ section p {
 }
 
 /* =====================
-   intro
+   intro（主役セクション）
+   ★ここが一番大きな変更点
 ===================== */
 .intro {
-  background: #fff;
-  border-radius: var(--radius-large);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.04);
-  padding: 40px 28px;
-  max-width: 720px;
-  margin: 48px auto;
+  background: linear-gradient(
+    to bottom,
+    #fff7e3,
+    #fff1d6
+  );
+  padding: 72px 24px;
+  margin: 72px auto 88px;
+}
+
+/* intro 内の文章ブロック */
+.intro > * {
+  max-width: 760px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.intro h2 {
+  font-size: 1.6rem;
+  margin-bottom: 28px;
+  color: var(--text-color);
+}
+
+.intro p {
+  font-size: 1.05rem;
 }
 
 /* =====================
    支援の柱
 ===================== */
 .pillars {
-  margin-top: 64px;
+  margin-top: 0;
 }
 
 .pillar-cards {
@@ -165,31 +175,22 @@ section p {
 }
 
 .pillar {
-  background: rgba(255,255,255,0.95);
+  background: #fff;
   border-radius: var(--radius-card);
   padding: 32px 24px;
   box-shadow: 0 6px 18px rgba(0,0,0,0.04);
 }
 
-.pillar:first-child {
-  position: relative;
-  background: #fff;
-  box-shadow: 0 10px 24px rgba(0,0,0,0.06);
+.pillar h3 {
+  font-size: 1.1rem;
+  margin-bottom: 12px;
+  color: var(--text-color);
 }
 
-.pillar:first-child::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 6px;
-  width: 100%;
-  background: var(--accent-color);
-  border-radius: 16px 16px 0 0;
-}
+/* ★オレンジ強調は削除（意図的に何もしない） */
 
 /* =====================
-   about / contact
+   about / contact 導線
 ===================== */
 .about-link,
 .contact-cta {
@@ -203,14 +204,18 @@ section p {
   padding: 12px 28px;
   background: var(--accent-color);
   color: #fff;
-  border-radius: 999px;
   text-decoration: none;
+  border-radius: 999px;
   font-weight: bold;
 }
 
 /* =====================
-   フッター直前ボタン
+   フッター直前リンク
 ===================== */
+.footer-links {
+  margin-top: 64px;
+}
+
 .footer-link-item {
   background: #fffaf0;
   border-radius: var(--radius-card);
@@ -218,37 +223,43 @@ section p {
   max-width: 720px;
   margin: 24px auto;
   text-align: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.04);
 }
 
-.footer-link-item a {
-  display: inline-block;
-  padding: 12px 28px;
-  border: 2px solid var(--accent-color);
-  border-radius: 999px;
-  color: var(--accent-color);
-  font-weight: bold;
-  text-decoration: none;
-}
-
-.footer-link-item a:hover {
-  background: var(--accent-color);
-  color: #fff;
+.footer-link-item .note {
+  font-size: 0.9rem;
+  color: var(--sub-text);
+  margin-top: 8px;
 }
 
 /* =====================
-   スマホ
+   フッター
+===================== */
+footer {
+  text-align: center;
+  padding: 24px 16px;
+  font-size: 0.9rem;
+  color: var(--sub-text);
+}
+
+/* =====================
+   スマホ調整
 ===================== */
 @media screen and (max-width: 768px) {
   section {
     padding: 40px 20px;
   }
 
+  .intro {
+    padding: 56px 20px;
+    margin: 56px auto 64px;
+  }
+
   .pillar-cards {
     grid-template-columns: 1fr;
   }
 
-  .hero-catch {
-    width: 86%;
+  .pillar {
+    margin: 0 12px;
   }
 }
-
