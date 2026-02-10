@@ -29,12 +29,6 @@
 }
 
 html, body {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-}
-
-body {
   font-family:
     "BIZ UDPGothic",
     "BIZ UDゴシック",
@@ -44,12 +38,22 @@ body {
   color: var(--text-color);
   background-color: var(--bg-color);
   line-height: 1.8;
+  overflow-x: hidden; /* hero 100vwによる横崩れ防止 */
 }
 
 img {
   max-width: 100%;
   height: auto;
   display: block;
+}
+
+/* =====================
+   セクション共通（PC幅崩れ防止）
+===================== */
+section {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 48px 24px;
 }
 
 /* =====================
