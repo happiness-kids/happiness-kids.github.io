@@ -113,62 +113,26 @@ img {
 }
 
 @media screen and (min-width: 769px) {
-  .hero {
-    max-height: 520px;
+  .intro {
+    padding: 40px 36px 44px;
   }
 
-  .hero-image {
-    height: 520px;
-    object-fit: cover;
+  .intro-inner {
+    display: flex;
+    align-items: flex-start;
+    gap: 24px;
   }
-}
 
-/* =====================
-   セクション共通
-===================== */
-section {
-  padding: 48px 24px;
-  max-width: 960px;
-  margin: 0 auto;
-}
+  .intro-icon {
+    width: 96px;
+    height: 96px;
+    margin: 0;
+    flex-shrink: 0;
+  }
 
-section h2 {
-  font-size: 1.4rem;
-  margin-bottom: 16px;
-}
-
-section p {
-  margin: 0 0 12px;
-  color: var(--sub-text);
-}
-
-/* =====================
-   INTRO（主役・白カード）
-===================== */
-.intro {
-  background: #fff;
-  border-radius: var(--radius-large);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.06);
-  padding: 40px 28px 44px;
-  max-width: 720px;
-  margin: 56px auto;
-}
-
-.intro-inner {
-  display: block;
-}
-
-.intro-icon {
-  width: 64px;
-  height: 64px;
-  margin: 0 auto 20px;
-  opacity: 0.9;
-}
-
-.intro h2 {
-  font-size: 1.5rem;
-  margin-bottom: 20px;
-  text-align: center;
+  .intro h2 {
+    text-align: left;
+  }
 }
 
 .intro p {
@@ -203,7 +167,7 @@ section p {
 ===================== */
 .pillars > h2 {
   text-align: center;
-  margin-bottom: 32px;
+  margin-bottom: 24px;
 }
 
 .pillar-cards {
@@ -215,7 +179,7 @@ section p {
 .pillar {
   background: #fff;
   border-radius: var(--radius-card);
-  padding: 32px 24px;
+  padding: 24px 20px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.04);
 }
 
@@ -235,7 +199,7 @@ section p {
 ===================== */
 .about-link {
   text-align: center;
-  margin-top: 40px;
+  margin-top: 28px;
 }
 
 /* =====================
@@ -275,9 +239,9 @@ section p {
   border-radius: var(--radius-large);
   box-shadow: 0 8px 20px rgba(0,0,0,0.06);
   text-align: center;
-  padding: 48px 28px;
+  padding: 40px 24px;
   max-width: 720px;
-  margin: 72px auto 56px;
+  margin: 56px auto 48px;
 }
 
 /* =====================
