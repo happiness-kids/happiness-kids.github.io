@@ -1,10 +1,10 @@
 @charset "UTF-8";
 
 /* =====================
-   BASELINE v1.1（公式基準CSS）
-   ・index.html v2.2 前提
-   ・hero / header 構造は確定済み
-   ・以後このCSSを基準に調整
+   BASELINE v1.2（公式基準CSS）
+   ・index.html v2.3 前提
+   ・header / hero は完全固定（触らない）
+   ・現在は intro / 支援の柱のバランス調整フェーズ
 ===================== */
 
 /* =====================
@@ -53,7 +53,7 @@ img {
 }
 
 /* =====================
-   ヘッダー（確定・非固定）
+   ヘッダー（確定）
 ===================== */
 .site-header {
   background: var(--accent-color);
@@ -81,19 +81,18 @@ img {
 }
 
 /* =====================
-   HERO（完全確定・余白なし・フルブリード確定）
-   ※ここは"固め" 宣言済み。以後変更しない
+   HERO（完全固定・余白なし・フルブリード）
 ===================== */
 .hero {
   position: relative;
-  width: 100vw;          /* 画面幅いっぱい */
+  width: 100vw;
   margin: 0;
   padding: 0;
-  max-width: none;       /* section制約を解除 */
+  max-width: none;
   overflow: hidden;
   left: 50%;
   right: 50%;
-  margin-left: -50vw;    /* フルブリード */
+  margin-left: -50vw;
   margin-right: -50vw;
 }
 
@@ -105,7 +104,7 @@ img {
 
 .hero-catch {
   position: absolute;
-  top: 54%;              /* ここも確定 */
+  top: 54%;
   left: 50%;
   transform: translateX(-50%);
   width: 78%;
@@ -144,15 +143,6 @@ section p {
 }
 
 /* =====================
-   hero-note
-===================== */
-.hero-note {
-  padding-top: 32px;
-  padding-bottom: 0;
-  text-align: center;
-}
-
-/* =====================
    INTRO（主役・白カード）
 ===================== */
 .intro {
@@ -162,31 +152,50 @@ section p {
   padding: 40px 28px 44px;
   max-width: 720px;
   margin: 56px auto;
-  text-align: center; /* ★主役感を出す */
 }
 
-/* intro アイコン（象徴） */
-.intro-icon {
-  width: 56px;
-  height: 56px;
-  margin: 0 auto 20px;
+.intro-inner {
   display: block;
-  opacity: 0.9; /* 主張しすぎない */
+}
+
+.intro-icon {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 20px;
+  opacity: 0.9;
 }
 
 .intro h2 {
   font-size: 1.5rem;
   margin-bottom: 20px;
+  text-align: center;
 }
 
 .intro p {
-  text-align: left; /* 文章は読みやすく */
+  text-align: left;
 }
 
+@media screen and (min-width: 769px) {
+  .intro {
+    padding: 48px 40px 52px;
+  }
 
-.intro h2 {
-  font-size: 1.5rem;
-  margin-bottom: 20px;
+  .intro-inner {
+    display: flex;
+    align-items: flex-start;
+    gap: 28px;
+  }
+
+  .intro-icon {
+    width: 96px;
+    height: 96px;
+    margin: 0;
+    flex-shrink: 0;
+  }
+
+  .intro h2 {
+    text-align: left;
+  }
 }
 
 /* =====================
@@ -215,53 +224,40 @@ section p {
   margin-bottom: 12px;
 }
 
-/* =====================
-   about-link（センタリング用ラッパー）
-===================== */
-.about-link {
-  text-align: center;
+@media screen and (max-width: 768px) {
+  .pillar-cards {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* =====================
-   ボタン共通（about / contact / 採用 / 情報公開）
+   about-link（弱めだが芯のある導線）
+===================== */
+.about-link {
+  text-align: center;
+  margin-top: 40px;
+}
+
+/* =====================
+   ボタン共通
 ===================== */
 .button-link {
   display: inline-block;
-  margin: 16px auto 0;        /* ★センタリング */
+  margin: 16px auto 0;
   padding: 12px 28px;
   background: var(--accent-color);
   color: #fff;
   text-decoration: none;
   border-radius: 999px;
   font-weight: bold;
-  transition: transform .15s ease, box-shadow .15s ease, opacity .15s ease;
-}
-
-.button-link:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 6px 14px rgba(0,0,0,0.12);
-  opacity: .95;
 }
 
 .button-link.sub {
-  background: #fff;
+  background: transparent;
   color: var(--accent-color);
   border: 2px solid var(--accent-color);
 }
 
-.button-link:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 6px 14px rgba(0,0,0,0.12);
-  opacity: .95;
-}
-
-.button-link.sub {
-  background: #fff;
-  color: var(--accent-color);
-  border: 2px solid var(--accent-color);
-}
-
-/* ボタン横並び用 */
 .button-group {
   display: flex;
   gap: 16px;
@@ -271,7 +267,7 @@ section p {
 }
 
 /* =====================
-   contact-cta（主要導線）★追加
+   contact-cta（主導線・ただし今は触らない）
 ===================== */
 .contact-cta {
   background: #fff;
@@ -283,53 +279,6 @@ section p {
   margin: 72px auto 56px;
 }
 
-.contact-cta h2 {
-  margin-bottom: 16px;
-}
-
-.contact-cta p {
-  margin-bottom: 20px;
-}
-
-/* =====================
-   フッター直前リンク
-===================== */
-.footer-links {
-  margin-top: 64px;
-}
-
-.footer-link-item {
-  background: #fff;
-  border-radius: var(--radius-card);
-  padding: 32px 24px;
-  max-width: 720px;
-  margin: 24px auto;
-  text-align: center;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.04);
-}
-
-.footer-link-item .note {
-  font-size: 0.9rem;
-  color: var(--sub-text);
-  margin-top: 8px;
-}
-
-.footer-link-item {
-  background: #fff;
-  border-radius: var(--radius-card);
-  padding: 32px 24px;
-  max-width: 720px;
-  margin: 24px auto;
-  text-align: center;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.04);
-}
-
-.footer-link-item .note {
-  font-size: 0.9rem;
-  color: var(--sub-text);
-  margin-top: 8px;
-}
-
 /* =====================
    フッター
 ===================== */
@@ -338,17 +287,4 @@ footer {
   padding: 24px 16px;
   font-size: 0.9rem;
   color: var(--sub-text);
-}
-
-/* =====================
-   スマホ調整
-===================== */
-@media screen and (max-width: 768px) {
-  section {
-    padding: 40px 20px;
-  }
-
-  .pillar-cards {
-    grid-template-columns: 1fr;
-  }
 }
