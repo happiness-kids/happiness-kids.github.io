@@ -159,10 +159,30 @@ section p {
   background: #fff;
   border-radius: var(--radius-large);
   box-shadow: 0 8px 20px rgba(0,0,0,0.06);
-  padding: 40px 28px;
+  padding: 40px 28px 44px;
   max-width: 720px;
   margin: 56px auto;
+  text-align: center; /* ★主役感を出す */
 }
+
+/* intro アイコン（象徴） */
+.intro-icon {
+  width: 56px;
+  height: 56px;
+  margin: 0 auto 20px;
+  display: block;
+  opacity: 0.9; /* 主張しすぎない */
+}
+
+.intro h2 {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+}
+
+.intro p {
+  text-align: left; /* 文章は読みやすく */
+}
+
 
 .intro h2 {
   font-size: 1.5rem;
