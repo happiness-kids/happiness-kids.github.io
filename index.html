@@ -11,8 +11,7 @@
 <body>
 
   <!-- =====================
-       header（サイト上部）
-       ※BASELINE v1.1 構造踏襲
+       header（固定）
   ====================== -->
   <header class="site-header">
     <div class="site-header-inner">
@@ -22,15 +21,10 @@
   </header>
 
   <!-- =====================
-       hero（世界観）
-       ※ hero.jpg + hero-copy.png 構造をHTMLで確定
+       hero（完全固定）
   ====================== -->
   <section class="hero">
-    <img
-      src="/assets/images/hero.jpg"
-      alt=""
-      class="hero-image"
-    >
+    <img src="/assets/images/hero.jpg" alt="" class="hero-image">
     <img
       src="/assets/images/hero-copy.png"
       alt="“たのしい”から身につく。こころも そだつ。"
@@ -39,7 +33,7 @@
   </section>
 
   <!-- =====================
-       hero-note（補足）
+       hero-note
   ====================== -->
   <section class="hero-note">
     <p>
@@ -49,32 +43,41 @@
   </section>
 
   <!-- =====================
-       intro（想い＋メッセージ）
+       intro（主役）
   ====================== -->
   <section class="intro">
-    <h2>失敗しても大丈夫。チャレンジしていこう。</h2>
+    <div class="intro-inner">
+      <img
+        src="/assets/images/icon.png"
+        alt=""
+        class="intro-icon"
+      >
 
-    <p>
-      新しいことに挑戦するとき、<br>
-      不安になったり、立ち止まってしまうことがあります。
-    </p>
+      <div class="intro-text">
+        <h2>失敗しても大丈夫。チャレンジしていこう。</h2>
 
-    <p>
-      うまくいくことだけでなく、<br>
-      思うようにいかなかった経験も、<br>
-      次の一歩につながる大切なプロセスだと、私たちは考えています。
-    </p>
+        <p>
+          新しいことに挑戦するとき、<br>
+          不安になったり、立ち止まってしまうことがあります。
+        </p>
 
-    <p>
-      そのためにハピネスキッズでは、<br>
-      「たのしい」と感じられる雰囲気の中で、<br>
-      子ども一人ひとりが安心してチャレンジできる環境づくりを大切にしています。
-    </p>
+        <p>
+          うまくいくことだけでなく、<br>
+          思うようにいかなかった経験も、<br>
+          次の一歩につながる大切なプロセスだと、私たちは考えています。
+        </p>
+
+        <p>
+          そのためにハピネスキッズでは、<br>
+          「たのしい」と感じられる雰囲気の中で、<br>
+          子ども一人ひとりが安心してチャレンジできる環境づくりを大切にしています。
+        </p>
+      </div>
+    </div>
   </section>
 
   <!-- =====================
        pillars（支援の柱）
-       ※公式表現として固定
   ====================== -->
   <section class="pillars">
     <h2>ハピネスキッズの支援の柱</h2>
@@ -107,14 +110,16 @@
   </section>
 
   <!-- =====================
-       about 導線
+       about-link
   ====================== -->
   <section class="about-link">
-    <a href="/about/">ハピネスキッズについて詳しく見る</a>
+    <a href="/about/" class="button-link sub">
+      ハピネスキッズについて詳しく見る
+    </a>
   </section>
 
   <!-- =====================
-       contact（主要導線）
+       contact-cta
   ====================== -->
   <section class="contact-cta">
     <h2>お問い合わせ・ご相談</h2>
@@ -122,11 +127,13 @@
       ご質問やご相談だけでも構いません。<br>
       どうぞお気軽にご連絡ください。
     </p>
-    <a href="/contact/">お問い合わせはこちら</a>
+    <a href="/contact/" class="button-link">
+      お問い合わせはこちら
+    </a>
   </section>
 
   <!-- =====================
-       footer links（補助導線）
+       footer links
   ====================== -->
   <section class="footer-links">
     <div class="footer-link-item">
