@@ -242,7 +242,8 @@ section p {
    ボタン共通
 ===================== */
 .button-link {
-  display: inline-block;
+  display: block;
+  width: fit-content;
   margin: 16px auto 0;
   padding: 12px 28px;
   background: var(--accent-color);
