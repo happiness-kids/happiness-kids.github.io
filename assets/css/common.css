@@ -112,6 +112,19 @@ img {
   z-index: 10;
 }
 
+/* =====================
+   INTRO（白背景の担保）
+===================== */
+.intro {
+  background: #fff;
+  padding: 36px 24px 40px;
+}
+
+.intro-inner {
+  max-width: 960px;
+  margin: 0 auto;
+}
+
 @media screen and (min-width: 769px) {
   .intro {
     padding: 40px 36px 44px;
