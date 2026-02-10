@@ -1,10 +1,15 @@
 @charset "UTF-8";
 
 /* =====================
-   BASELINE v1.2
-   index.html v2.3 前提
+   BASELINE v1.2（公式基準CSS）
+   ・index.html v2.3 前提
+   ・header / hero は完全固定（触らない）
+   ・現在は intro / 支援の柱のバランス調整フェーズ
 ===================== */
 
+/* =====================
+   カラーパレット / 変数
+===================== */
 :root {
   --main-color: #ffe114;
   --accent-color: #f4a300;
@@ -16,6 +21,9 @@
   --radius-large: 20px;
 }
 
+/* =====================
+   リセット / 基本
+===================== */
 * {
   box-sizing: border-box;
 }
@@ -44,7 +52,9 @@ img {
   display: block;
 }
 
-/* header */
+/* =====================
+   ヘッダー（確定）
+===================== */
 .site-header {
   background: var(--accent-color);
   padding: 8px 16px;
@@ -61,6 +71,7 @@ img {
 .site-icon {
   width: 24px;
   height: 24px;
+  object-fit: contain;
 }
 
 .site-title {
@@ -69,7 +80,9 @@ img {
   font-weight: bold;
 }
 
-/* hero（固定） */
+/* =====================
+   HERO（完全固定・余白なし・フルブリード）
+===================== */
 .hero {
   position: relative;
   width: 100vw;
@@ -85,6 +98,7 @@ img {
 
 .hero-image {
   width: 100vw;
+  height: auto;
   display: block;
 }
 
@@ -98,50 +112,78 @@ img {
   z-index: 10;
 }
 
-@media (min-width: 769px) {
+@media screen and (min-width: 769px) {
+  .hero {
+    max-height: 520px;
+  }
+
   .hero-image {
     height: 520px;
     object-fit: cover;
   }
 }
 
-/* section 共通 */
+/* =====================
+   セクション共通
+===================== */
 section {
   padding: 48px 24px;
   max-width: 960px;
   margin: 0 auto;
 }
 
-/* intro（主役） */
+section h2 {
+  font-size: 1.4rem;
+  margin-bottom: 16px;
+}
+
+section p {
+  margin: 0 0 12px;
+  color: var(--sub-text);
+}
+
+/* =====================
+   INTRO（主役・白カード）
+===================== */
 .intro {
   background: #fff;
   border-radius: var(--radius-large);
   box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+  padding: 40px 28px 44px;
   max-width: 720px;
   margin: 56px auto;
 }
 
 .intro-inner {
-  padding: 40px 28px;
+  display: block;
 }
 
 .intro-icon {
   width: 64px;
   height: 64px;
   margin: 0 auto 20px;
+  opacity: 0.9;
 }
 
 .intro h2 {
-  text-align: center;
+  font-size: 1.5rem;
   margin-bottom: 20px;
+  text-align: center;
 }
 
-@media (min-width: 769px) {
+.intro p {
+  text-align: left;
+}
+
+@media screen and (min-width: 769px) {
+  .intro {
+    padding: 48px 40px 52px;
+  }
+
   .intro-inner {
     display: flex;
-    gap: 28px;
     align-items: flex-start;
-    padding: 48px 40px;
+    gap: 28px;
   }
 
   .intro-icon {
@@ -156,7 +198,14 @@ section {
   }
 }
 
-/* pillars */
+/* =====================
+   支援の柱
+===================== */
+.pillars > h2 {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
 .pillar-cards {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -167,22 +216,39 @@ section {
   background: #fff;
   border-radius: var(--radius-card);
   padding: 32px 24px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.04);
 }
 
-@media (max-width: 768px) {
+.pillar h3 {
+  font-size: 1.1rem;
+  margin-bottom: 12px;
+}
+
+@media screen and (max-width: 768px) {
   .pillar-cards {
     grid-template-columns: 1fr;
   }
 }
 
-/* buttons */
+/* =====================
+   about-link（弱めだが芯のある導線）
+===================== */
+.about-link {
+  text-align: center;
+  margin-top: 40px;
+}
+
+/* =====================
+   ボタン共通
+===================== */
 .button-link {
   display: inline-block;
+  margin: 16px auto 0;
   padding: 12px 28px;
-  border-radius: 999px;
   background: var(--accent-color);
   color: #fff;
   text-decoration: none;
+  border-radius: 999px;
   font-weight: bold;
 }
 
@@ -192,19 +258,33 @@ section {
   border: 2px solid var(--accent-color);
 }
 
-/* contact */
+.button-group {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 24px;
+}
+
+/* =====================
+   contact-cta（主導線・ただし今は触らない）
+===================== */
 .contact-cta {
   background: #fff;
   border-radius: var(--radius-large);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.06);
   text-align: center;
   padding: 48px 28px;
   max-width: 720px;
   margin: 72px auto 56px;
 }
 
-/* footer */
+/* =====================
+   フッター
+===================== */
 footer {
   text-align: center;
   padding: 24px 16px;
+  font-size: 0.9rem;
   color: var(--sub-text);
 }
