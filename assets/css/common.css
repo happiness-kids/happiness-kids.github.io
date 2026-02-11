@@ -200,9 +200,20 @@ section {
 }
 
 @media screen and (max-width: 768px) {
-  .pillar-cards {
-    grid-template-columns: 1fr;
+  .intro,
+  .contact-cta {
+    margin-left: 16px;
+    margin-right: 16px;
+    padding: 32px 20px;
   }
+
+  /* introアイコン調整（スマホ） */
+  .intro-icon {
+    width: 76px;
+    height: auto;
+    margin: 0 auto 12px;
+  }
+}
 }
 
 /* =====================
