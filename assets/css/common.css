@@ -213,7 +213,11 @@ section {
     height: auto;
     margin: 0 auto 12px;
   }
-}
+
+  /* 支援の柱：スマホでは縦並び */
+  .pillar-cards {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* =====================
