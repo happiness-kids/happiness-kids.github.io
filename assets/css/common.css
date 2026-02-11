@@ -220,10 +220,16 @@ section {
 
 /* =====================
    支援の柱
+   ・introから自然につなぐ
+   ・見出しとカードの関係性は維持
 ===================== */
+.pillars {
+  padding-top: 32px; /* section共通48px→やや圧縮 */
+}
+
 .pillars > h2 {
   text-align: center;
-  margin-bottom: 24px;
+  margin: 0 0 20px; /* 上の余白を削り、下も少しだけ圧縮 */
 }
 
 .pillar-cards {
