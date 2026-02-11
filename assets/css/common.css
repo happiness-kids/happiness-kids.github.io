@@ -1,12 +1,21 @@
 @charset "UTF-8";
 
 /* =====================
-   BASELINE v1.5（完全復旧安定版）
-   ・header復旧
-   ・hero完全ロック
-   ・pillarカード復旧
-   ・button系復旧
-   ・footer-links復旧
+   BASELINE v1.6（正式固定版）
+
+   🔒 固定宣言：
+   ・header
+   ・hero（PC 520px / フルブリード）
+   ・hero-note
+   ・intro
+   ・支援の柱（pillars）
+
+   上記「header〜支援の柱」までは
+   2026-02-11時点の完成確定デザインとして固定。
+   原則この範囲は今後触らない。
+
+   ・button系復旧済
+   ・footer-links復旧済
    ・スマホ軽量化維持
 ===================== */
 
@@ -202,6 +211,19 @@ section {
 .about-link {
   text-align: center;
   margin-top: 28px;
+  max-width: 720px;
+}
+
+.about-lead {
+  margin: 0 0 8px;
+  font-size: 0.95rem;
+  color: var(--sub-text);
+}
+
+.about-sub {
+  margin: 8px 0 0;
+  font-size: 0.9rem;
+  color: var(--sub-text);
 }
 
 /* =====================
