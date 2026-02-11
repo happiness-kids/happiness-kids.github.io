@@ -86,10 +86,12 @@ section {
 
 /* =====================
    HERO（完全固定・余白なし・フルブリード）
+   ・PC表示時 高さ520px固定
 ===================== */
 .hero {
   position: relative;
   width: 100vw;
+  height: auto;
   margin: 0;
   padding: 0;
   max-width: none;
@@ -104,6 +106,18 @@ section {
   width: 100vw;
   height: auto;
   display: block;
+}
+
+/* PC時：高さ520px固定＋トリミング */
+@media screen and (min-width: 769px) {
+  .hero {
+    height: 520px;
+  }
+
+  .hero-image {
+    height: 520px;
+    object-fit: cover;
+  }
 }
 
 .hero-catch {
