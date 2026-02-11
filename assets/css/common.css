@@ -58,6 +58,13 @@ section {
   padding: 48px 24px;
 }
 
+/* スマホ時は左右に少し余白を増やして軽く見せる */
+@media screen and (max-width: 768px) {
+  section {
+    padding: 48px 28px; /* 24px → 28px に微増（圧迫感軽減） */
+  }
+}
+
 /* =====================
    ヘッダー（固定）
 ===================== */
