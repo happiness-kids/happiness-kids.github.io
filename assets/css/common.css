@@ -145,33 +145,18 @@ section {
   margin: 0 auto;
 }
 
-@media screen and (min-width: 769px) {
-  .intro {
-    padding: 40px 36px 44px;
-  }
-
-  .intro-inner {
-    display: flex;
-    align-items: flex-start;
-    gap: 24px;
-  }
-
-  .intro-icon {
-    width: 96px;
-    height: 96px;
-    margin: 0;
-    flex-shrink: 0;
-  }
-
-  .intro h2 {
-    text-align: left;
-  }
+/* スマホ：アイコン中央・小さめ */
+.intro-icon {
+  width: 48px; /* 現在の約半分 */
+  height: 48px;
+  margin: 0 auto 16px;
 }
 
 .intro p {
   text-align: left;
 }
 
+/* PCレイアウト */
 @media screen and (min-width: 769px) {
   .intro {
     padding: 48px 40px 52px;
@@ -186,7 +171,9 @@ section {
   .intro-icon {
     width: 96px;
     height: 96px;
-    margin: 0;
+    margin-top: 0.6em; /* 1文字分程度下へ */
+    margin-left: 0;
+    margin-right: 0;
     flex-shrink: 0;
   }
 
@@ -197,6 +184,7 @@ section {
 
 /* =====================
    支援の柱
+===================== */
 ===================== */
 .pillars > h2 {
   text-align: center;
