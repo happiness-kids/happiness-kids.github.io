@@ -1,10 +1,10 @@
 @charset "UTF-8";
 
 /* =====================
-   BASELINE v1.2（公式基準CSS）
+   BASELINE v1.3（安定復旧版）
    ・index.html v2.3 前提
-   ・header / hero は完全固定（触らない）
-   ・現在は intro / 支援の柱のバランス調整フェーズ
+   ・header / hero 固定
+   ・intro 調整済み（スマホ76px / PC120px中央揃え）
 ===================== */
 
 /* =====================
@@ -40,7 +40,7 @@ html, body {
   color: var(--text-color);
   background-color: var(--bg-color);
   line-height: 1.8;
-  overflow-x: hidden; /* hero 100vwによる横崩れ防止 */
+  overflow-x: hidden;
 }
 
 img {
@@ -50,7 +50,7 @@ img {
 }
 
 /* =====================
-   セクション共通（PC幅崩れ防止）
+   セクション共通
 ===================== */
 section {
   max-width: 960px;
@@ -59,7 +59,7 @@ section {
 }
 
 /* =====================
-   ヘッダー（確定）
+   ヘッダー（固定）
 ===================== */
 .site-header {
   background: var(--accent-color);
@@ -87,43 +87,83 @@ section {
 }
 
 /* =====================
-   HERO（完全固定・余白なし・フルブリード）
-   ・PC表示時 高さ520px固定
+   HERO（完全固定）
+   ・フルブリード
+   ・PC高さ520px
 ===================== */
 .hero {
   position: relative;
   width: 100vw;
-  height: auto;
   margin: 0;
   padding: 0;
   max-width: none;
   overflow: hidden;
   left: 50%;
-  right: 50%;
   margin-left: -50vw;
-  margin-right: -50vw;
 }
 
 .hero-image {
   width: 100vw;
   height: auto;
-  display: block;
 }
 
-/* PC時：高さ520px固定＋トリミング */
+.hero-catch {
+  position: absolute;
+  top: 54%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 78%;
+  max-width: 820px;
+  z-index: 10;
+}
+
 @media screen and (min-width: 769px) {
-  .intro {
-    padding: 48px 40px 52px;
+  .hero {
+    height: 520px;
   }
 
+  .hero-image {
+    height: 520px;
+    object-fit: cover;
+  }
+}
+
+/* =====================
+   INTRO（白カード）
+===================== */
+.intro {
+  background: #fff;
+  border-radius: var(--radius-large);
+  max-width: 720px;
+  margin: 56px auto 0;
+  padding: 40px 28px;
+}
+
+.intro-inner {
+  margin: 0 auto;
+}
+
+/* スマホ */
+.intro-icon {
+  width: 76px;
+  height: 76px;
+  margin: 0 auto 20px;
+}
+
+.intro p {
+  text-align: left;
+}
+
+/* PC */
+@media screen and (min-width: 769px) {
   .intro-inner {
     display: flex;
-    align-items: center; /* 上下中央揃え */
+    align-items: center;
     gap: 32px;
   }
 
   .intro-icon {
-    width: 120px; /* もう一回り大きく */
+    width: 120px;
     height: 120px;
     margin: 0;
     flex-shrink: 0;
@@ -167,7 +207,7 @@ section {
 }
 
 /* =====================
-   about-link（弱めだが芯のある導線）
+   about-link
 ===================== */
 .about-link {
   text-align: center;
@@ -175,7 +215,7 @@ section {
 }
 
 /* =====================
-   ボタン共通
+   ボタン
 ===================== */
 .button-link {
   display: block;
@@ -195,16 +235,8 @@ section {
   border: 2px solid var(--accent-color);
 }
 
-.button-group {
-  display: flex;
-  gap: 16px;
-  justify-content: center;
-  flex-wrap: wrap;
-  margin-top: 24px;
-}
-
 /* =====================
-   contact-cta（主導線・ただし今は触らない）
+   contact-cta
 ===================== */
 .contact-cta {
   background: #fff;
