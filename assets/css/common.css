@@ -87,7 +87,9 @@ section {
 }
 
 /* =====================
-   HERO（完全固定）
+   HERO（🔒 完全ロック領域）
+   ※今後このブロックは変更しない
+   ※高さ・フルブリード・配置は確定
    ・フルブリード
    ・PC高さ520px
 ===================== */
@@ -128,6 +130,32 @@ section {
   }
 }
 
+.hero-image {
+  width: 100vw;
+  height: auto;
+}
+
+.hero-catch {
+  position: absolute;
+  top: 54%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 78%;
+  max-width: 820px;
+  z-index: 10;
+}
+
+@media screen and (min-width: 769px) {
+  .hero {
+    height: 520px;
+  }
+
+  .hero-image {
+    height: 520px;
+    object-fit: cover;
+  }
+}
+
 /* =====================
    INTRO（白カード）
 ===================== */
@@ -135,8 +163,8 @@ section {
   background: #fff;
   border-radius: var(--radius-large);
   max-width: 720px;
-  margin: 56px auto 0;
-  padding: 40px 28px;
+  margin: 28px auto 0;
+  padding: 24px 28px;
 }
 
 .intro-inner {
