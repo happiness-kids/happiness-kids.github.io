@@ -306,6 +306,26 @@ section {
 }
 
 /* =====================
+   スマホ時：白カードの圧迫感を軽減
+   （左右にオレンジ背景を少し見せる）
+===================== */
+@media screen and (max-width: 768px) {
+  .intro,
+  .contact-cta {
+    margin-left: 16px;
+    margin-right: 16px; /* 背景を少し見せる */
+  }
+
+  .intro {
+    padding: 32px 20px; /* 少し軽くする */
+  }
+
+  .contact-cta {
+    padding: 32px 20px;
+  }
+}
+
+/* =====================
    フッター
 ===================== */
 footer {
