@@ -1,303 +1,160 @@
-@charset "UTF-8";
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ハピネスキッズ｜放課後等デイサービス</title>
+  <meta name="description" content="ハピネスキッズは、子ども一人ひとりの『たのしい』気持ちを大切にしながら、安心して過ごせる放課後の時間を支援する放課後等デイサービスです。" />
+  <link rel="stylesheet" href="/assets/css/common.css" />
+</head>
 
-/* =====================
-   BASELINE v1.3（安定復旧版）
-   ・index.html v2.3 前提
-   ・header / hero 固定
-   ・intro 調整済み（スマホ76px / PC120px中央揃え）
-===================== */
+<body>
 
-/* =====================
-   カラーパレット / 変数
-===================== */
-:root {
-  --main-color: #ffe114;
-  --accent-color: #f4a300;
-  --text-color: #333;
-  --sub-text: #666;
-  --bg-color: #fff1d6;
+  <!-- =====================
+       header（サイト上部）
+       ※確定・触らない
+  ====================== -->
+  <header class="site-header">
+    <div class="site-header-inner">
+      <img src="/assets/images/icon.png" alt="ハピネスキッズ" class="site-icon">
+      <span class="site-title">放課後等デイサービス　ハピネスキッズ</span>
+    </div>
+  </header>
 
-  --radius-card: 16px;
-  --radius-large: 20px;
-}
+  <!-- =====================
+       hero（世界観）
+       ※完全固定
+  ====================== -->
+  <section class="hero">
+    <img
+      src="/assets/images/hero.jpg"
+      alt=""
+      class="hero-image"
+    >
+    <img
+      src="/assets/images/hero-copy.png"
+      alt="“たのしい”から身につく。こころも そだつ。"
+      class="hero-catch"
+    >
+  </section>
 
-/* =====================
-   リセット / 基本
-===================== */
-* {
-  box-sizing: border-box;
-}
+  <!-- =====================
+       hero-note（補足）
+  ====================== -->
+  <section class="hero-note">
+    <p>
+      ハピネスキッズは、子ども一人ひとりの気持ちに寄り添いながら、安心して「たのしい」に挑戦できる放課後等デイサービスです。
+    </p>
+  </section>
 
-html, body {
-  margin: 0;
-  padding: 0;
-  font-family:
-    "BIZ UDPGothic",
-    "BIZ UDゴシック",
-    "Meiryo",
-    "Hiragino Kaku Gothic ProN",
-    sans-serif;
-  color: var(--text-color);
-  background-color: var(--bg-color);
-  line-height: 1.8;
-  overflow-x: hidden;
-}
+  <!-- =====================
+       intro（想い＋メッセージ）
+  ====================== -->
+  <section class="intro">
+    <div class="intro-inner">
+      <img
+        src="/assets/images/icon.png"
+        alt=""
+        class="intro-icon"
+      >
 
-img {
-  max-width: 100%;
-  height: auto;
-  display: block;
-}
+      <div class="intro-text">
+        <h2>失敗しても大丈夫。チャレンジしていこう。</h2>
 
-/* =====================
-   セクション共通
-===================== */
-section {
-  max-width: 960px;
-  margin: 0 auto;
-  padding: 48px 24px;
-}
+        <p>
+          新しいことに挑戦するとき、不安になったり、立ち止まってしまうことがあります。
+        </p>
 
-/* =====================
-   ヘッダー（固定）
-===================== */
-.site-header {
-  background: var(--accent-color);
-  padding: 8px 16px;
-}
+        <p>
+          うまくいくことだけでなく、思うようにいかなかった経験も、次の一歩につながる大切なプロセスだと、私たちは考えています。
+        </p>
 
-.site-header-inner {
-  max-width: 960px;
-  margin: 0 auto;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
+        <p>
+          そのためにハピネスキッズでは、「たのしい」と感じられる雰囲気の中で、子ども一人ひとりが安心してチャレンジできる環境づくりを大切にしています。
+        </p>
+      </div>
+    </div>
+  </section>
 
-.site-icon {
-  width: 24px;
-  height: 24px;
-  object-fit: contain;
-}
+  <!-- =====================
+       pillars（支援の柱）
+       ※公式表現として固定
+  ====================== -->
+  <section class="pillars">
+    <h2>ハピネスキッズの支援の柱</h2>
 
-.site-title {
-  font-size: 0.95rem;
-  color: #fff;
-  font-weight: bold;
-}
+    <div class="pillar-cards">
+      <div class="pillar">
+        <h3>居場所（安心できる場所）</h3>
+        <p>
+          子どもが「ここにいて大丈夫」と感じられる、落ち着いた関係性と環境づくりを大切にしています。
+        </p>
+      </div>
 
-/* =====================
-   HERO（🔒 完全ロック領域）
-   ※今後このブロックは変更しない
-   ※高さ・フルブリード・配置は確定
-   ・フルブリード
-   ・PC高さ520px
-===================== */
-.hero {
-  position: relative;
-  width: 100vw;
-  margin: 0;
-  padding: 0;
-  max-width: none;
-  overflow: hidden;
-  left: 50%;
-  margin-left: -50vw;
-}
+      <div class="pillar">
+        <h3>「たのしい」から始める</h3>
+        <p>
+          「やってみたい」「おもしろそう」という気持ちを大切にし、たのしさから自然に経験が広がる支援を行います。
+        </p>
+      </div>
 
-.hero-image {
-  width: 100vw;
-  height: auto;
-}
+      <div class="pillar">
+        <h3>こころが動く経験</h3>
+        <p>
+          成功も、思うようにいかなかった体験も含めて、子ども自身の気持ちや考えが動く経験を大切にしています。
+        </p>
+      </div>
+    </div>
+  </section>
 
-.hero-catch {
-  position: absolute;
-  top: 54%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 78%;
-  max-width: 820px;
-  z-index: 10;
-}
+  <!-- =====================
+       about 導線
+  ====================== -->
+  <section class="about-link">
+    <a href="/about/" class="button-link">
+      ハピネスキッズについて詳しく見る
+    </a>
+  </section>
 
-@media screen and (min-width: 769px) {
-  .hero {
-    height: 520px;
-  }
+  <!-- =====================
+       contact（主要導線）
+  ====================== -->
+  <section class="contact-cta">
+    <h2>お問い合わせ・ご相談</h2>
+    <p>
+      ご質問やご相談だけでも構いません。どうぞお気軽にご連絡ください。
+    </p>
+    <a href="/contact/" class="button-link">
+      お問い合わせはこちら
+    </a>
+  </section>
 
-  .hero-image {
-    height: 520px;
-    object-fit: cover;
-  }
-}
+  <!-- =====================
+       footer links（控えめ）
+  ====================== -->
+  <section class="footer-links">
+    <div class="footer-link-item">
+      <a href="/recruit/" class="button-link sub">
+        採用情報
+      </a>
+      <p class="note">
+        子どもたちのチャレンジを、いっしょに支える仲間を募集しています。
+      </p>
+    </div>
 
-.hero-image {
-  width: 100vw;
-  height: auto;
-}
+    <div class="footer-link-item">
+      <a href="/disclosure/" class="button-link sub">
+        情報公開
+      </a>
+      <p class="note">
+        運営体制や事業内容についての情報を公開しています。
+      </p>
+    </div>
+  </section>
 
-.hero-catch {
-  position: absolute;
-  top: 54%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 78%;
-  max-width: 820px;
-  z-index: 10;
-}
+  <footer class="site-footer">
+    <p>&copy; ハピネスキッズ</p>
+  </footer>
 
-@media screen and (min-width: 769px) {
-  .hero {
-    height: 520px;
-  }
-
-  .hero-image {
-    height: 520px;
-    object-fit: cover;
-  }
-}
-
-/* =====================
-   HERO NOTE（hero直下テキスト）
-   ・heroとの距離は最小限
-   ・introへ自然に流す
-===================== */
-.hero-note {
-  max-width: 720px;
-  margin: 16px auto 8px; /* 上を詰め、下もintroへ近づける */
-  padding: 12px 24px;   /* 縦余白を控えめに */
-  text-align: center;
-}
-
-.hero-note p {
-  margin: 0;
-}
-
-/* =====================
-   INTRO（白カード）
-===================== */
-.intro {
-  background: #fff;
-  border-radius: var(--radius-large);
-  max-width: 720px;
-  margin: 24px auto 0;
-  padding: 40px 28px;
-}
-
-.intro-inner {
-  margin: 0 auto;
-}
-
-/* スマホ */
-.intro-icon {
-  width: 76px;
-  height: 76px;
-  margin: 0 auto 20px;
-}
-
-.intro p {
-  text-align: left;
-}
-
-/* PC */
-@media screen and (min-width: 769px) {
-  .intro-inner {
-    display: flex;
-    align-items: center;
-    gap: 32px;
-  }
-
-  .intro-icon {
-    width: 120px;
-    height: 120px;
-    margin: 0;
-    flex-shrink: 0;
-  }
-
-  .intro h2 {
-    text-align: left;
-  }
-}
-
-/* =====================
-   支援の柱
-===================== */
-.pillars > h2 {
-  text-align: center;
-  margin-bottom: 24px;
-}
-
-.pillar-cards {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
-}
-
-.pillar {
-  background: #fff;
-  border-radius: var(--radius-card);
-  padding: 24px 20px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.04);
-}
-
-.pillar h3 {
-  font-size: 1.1rem;
-  margin-bottom: 12px;
-}
-
-@media screen and (max-width: 768px) {
-  .pillar-cards {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* =====================
-   about-link
-===================== */
-.about-link {
-  text-align: center;
-  margin-top: 28px;
-}
-
-/* =====================
-   ボタン
-===================== */
-.button-link {
-  display: block;
-  width: fit-content;
-  margin: 16px auto 0;
-  padding: 12px 28px;
-  background: var(--accent-color);
-  color: #fff;
-  text-decoration: none;
-  border-radius: 999px;
-  font-weight: bold;
-}
-
-.button-link.sub {
-  background: transparent;
-  color: var(--accent-color);
-  border: 2px solid var(--accent-color);
-}
-
-/* =====================
-   contact-cta
-===================== */
-.contact-cta {
-  background: #fff;
-  border-radius: var(--radius-large);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.06);
-  text-align: center;
-  padding: 40px 24px;
-  max-width: 720px;
-  margin: 56px auto 48px;
-}
-
-/* =====================
-   フッター
-===================== */
-footer {
-  text-align: center;
-  padding: 24px 16px;
-  font-size: 0.9rem;
-  color: var(--sub-text);
-}
+</body>
+</html>
