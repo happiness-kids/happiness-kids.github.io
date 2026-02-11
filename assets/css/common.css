@@ -157,14 +157,30 @@ section {
 }
 
 /* =====================
+   HERO NOTE（hero直下テキスト）
+   ・heroとの距離は最小限
+   ・introへ自然に流す
+===================== */
+.hero-note {
+  max-width: 720px;
+  margin: 16px auto 8px; /* 上を詰め、下もintroへ近づける */
+  padding: 12px 24px;   /* 縦余白を控えめに */
+  text-align: center;
+}
+
+.hero-note p {
+  margin: 0;
+}
+
+/* =====================
    INTRO（白カード）
 ===================== */
 .intro {
   background: #fff;
   border-radius: var(--radius-large);
   max-width: 720px;
-  margin: 28px auto 0;
-  padding: 24px 28px;
+  margin: 24px auto 0;
+  padding: 40px 28px;
 }
 
 .intro-inner {
