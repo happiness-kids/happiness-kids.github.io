@@ -1,11 +1,13 @@
 @charset "UTF-8";
 
 /* =====================
-   BASELINE v1.4（復旧安定版）
+   BASELINE v1.5（完全復旧安定版）
+   ・header復旧
    ・hero完全ロック
-   ・hero-note確定
-   ・intro→柱距離確定
-   ・スマホ白カード軽量化
+   ・pillarカード復旧
+   ・button系復旧
+   ・footer-links復旧
+   ・スマホ軽量化維持
 ===================== */
 
 :root {
@@ -49,6 +51,34 @@ section {
   max-width: 960px;
   margin: 0 auto;
   padding: 48px 24px;
+}
+
+/* =====================
+   HEADER（復旧）
+===================== */
+.site-header {
+  background: var(--accent-color);
+  padding: 8px 16px;
+}
+
+.site-header-inner {
+  max-width: 960px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.site-icon {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+.site-title {
+  font-size: 0.95rem;
+  color: #fff;
+  font-weight: bold;
 }
 
 /* =====================
@@ -110,13 +140,88 @@ section {
   padding: 40px 28px;
 }
 
+.intro-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.intro h2 { margin-top: 0; }
+
+@media screen and (min-width: 769px) {
+  .intro-inner {
+    flex-direction: row;
+    align-items: center;
+    gap: 32px;
+  }
+
+  .intro-icon {
+    width: 110px;
+    height: 110px;
+    flex-shrink: 0;
+  }
+}
+
 /* =====================
    支援の柱
 ===================== */
 .pillars { padding-top: 32px; }
+
 .pillars > h2 {
   text-align: center;
   margin: 0 0 20px;
+}
+
+.pillar-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.pillar {
+  background: #fff;
+  border-radius: var(--radius-card);
+  padding: 24px 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+}
+
+.pillar h3 {
+  font-size: 1.1rem;
+  margin-bottom: 12px;
+}
+
+@media screen and (max-width: 768px) {
+  .pillar-cards {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =====================
+   about-link
+===================== */
+.about-link {
+  text-align: center;
+  margin-top: 28px;
+}
+
+/* =====================
+   ボタン共通（復旧）
+===================== */
+.button-link {
+  display: inline-block;
+  margin: 16px auto 0;
+  padding: 12px 28px;
+  background: var(--accent-color);
+  color: #fff;
+  text-decoration: none;
+  border-radius: 999px;
+  font-weight: bold;
+}
+
+.button-link.sub {
+  background: transparent;
+  color: var(--accent-color);
+  border: 2px solid var(--accent-color);
 }
 
 /* =====================
@@ -130,6 +235,25 @@ section {
   padding: 40px 24px;
   max-width: 720px;
   margin: 56px auto 48px;
+}
+
+/* =====================
+   footer-links（復旧）
+===================== */
+.footer-links {
+  max-width: 720px;
+  margin: 0 auto 32px;
+  text-align: center;
+}
+
+.footer-link-item {
+  margin-bottom: 24px;
+}
+
+.note {
+  font-size: 0.9rem;
+  color: var(--sub-text);
+  margin-top: 8px;
 }
 
 /* =====================
