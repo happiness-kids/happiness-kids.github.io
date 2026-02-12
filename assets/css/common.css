@@ -246,11 +246,20 @@ section {
   border-radius:999px;
 }
 
-/* CTAボタン強調（最重要導線） */
-.contact-cta .button-link {
-  font-size: 1.1rem;
-  padding: 16px 36px;
-  box-shadow: 0 6px 0 rgba(0,0,0,0.12);
+$1
+
+/* CTA内アイコン（introと同一アイコン使用：段階進行の視覚演出） */
+.contact-cta-icon{
+  width:84px;
+  margin:0 auto 18px;
+  display:block;
+}
+
+@media screen and (min-width:769px){
+  .contact-cta-icon{
+    width:96px;
+    margin-bottom:22px;
+  }
 }
 
 .footer-links {
