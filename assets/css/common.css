@@ -289,7 +289,8 @@ footer {
 ===================== */
 @media screen and (max-width: 768px) {
   .intro,
-  .contact-cta {
+  .contact-cta,
+  .about-link {
     margin-left: 16px;
     margin-right: 16px;
     padding: 32px 20px;
