@@ -355,3 +355,9 @@ footer {
     grid-template-columns: 1fr;
   }
 }
+
+/* ===== footer説明文 非表示（空気化方針）===== */
+.footer-links-description{
+  display:none;
+}
+
