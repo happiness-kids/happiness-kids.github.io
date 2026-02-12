@@ -3,20 +3,8 @@
 /* =====================================================
    ハピネスキッズ Common.css
    再構成版 v2.0（安全・整理・可読性重視）
-
-   ■ 設計方針
-   1. 構造を上から順に並べる
-   2. メディアクエリは最後にまとめる（分断しない）
-   3. 各セクションごとに明確なコメントを記載
-   4. 依存関係が分かるよう説明を明示
-
-   ※ 現在の表示仕様は維持しています
-   ※ デザイン変更はしていません（構造整理のみ）
 ===================================================== */
 
-/* =====================================================
-   01. 変数定義（サイト全体で使用する色・角丸）
-===================================================== */
 :root {
   --main-color: #ffe114;
   --accent-color: #f4a300;
@@ -28,26 +16,18 @@
   --radius-large: 20px;
 }
 
-/* =====================================================
-   02. リセット・基本設定
-===================================================== */
 * {
-  box-sizing: border-box; /* padding込みで幅計算 */
+  box-sizing: border-box;
 }
 
 html, body {
   margin: 0;
   padding: 0;
-  font-family:
-    "BIZ UDPGothic",
-    "BIZ UDゴシック",
-    "Meiryo",
-    "Hiragino Kaku Gothic ProN",
-    sans-serif;
+  font-family: "BIZ UDPGothic", "BIZ UDゴシック", "Meiryo", "Hiragino Kaku Gothic ProN", sans-serif;
   color: var(--text-color);
   background-color: var(--bg-color);
   line-height: 1.8;
-  overflow-x: hidden; /* 横スクロール防止（hero対策） */
+  overflow-x: hidden;
 }
 
 img {
@@ -56,20 +36,12 @@ img {
   display: block;
 }
 
-/* =====================================================
-   03. セクション共通設定
-   ・通常のsectionは中央寄せ
-   ・heroのみ例外（フルブリード）
-===================================================== */
 section {
   max-width: 960px;
   margin: 0 auto;
   padding: 48px 24px;
 }
 
-/* =====================================================
-   04. HEADER
-===================================================== */
 .site-header {
   background: var(--accent-color);
   padding: 8px 16px;
@@ -95,11 +67,6 @@ section {
   font-weight: bold;
 }
 
-/* =====================================================
-   05. HERO（フルブリード領域）
-   ・画面幅いっぱい表示
-   ・PC時高さ520px固定
-===================================================== */
 .hero {
   position: relative;
   width: 100vw;
@@ -108,7 +75,7 @@ section {
   max-width: none;
   overflow: hidden;
   left: 50%;
-  margin-left: -50vw; /* 中央基準で左右均等にはみ出させる */
+  margin-left: -50vw;
 }
 
 .hero-image {
@@ -125,9 +92,6 @@ section {
   z-index: 10;
 }
 
-/* =====================================================
-   06. HERO NOTE（hero直下の補足テキスト）
-===================================================== */
 .hero-note {
   max-width: 720px;
   margin: 16px auto 8px;
@@ -139,9 +103,6 @@ section {
   margin: 0;
 }
 
-/* =====================================================
-   07. INTRO（白カード）
-===================================================== */
 .intro {
   background: #fff;
   border-radius: var(--radius-large);
@@ -160,9 +121,6 @@ section {
   margin-top: 0;
 }
 
-/* =====================================================
-   08. 支援の柱（カード3列）
-===================================================== */
 .pillars {
   padding-top: 32px;
 }
@@ -190,15 +148,8 @@ section {
   margin-bottom: 12px;
 }
 
-/* =====================================================
-   09. aboutリンク領域（薄オレンジカード化）
-   ・白カードばかりにならないよう変化をつける
-   ・流す場所に徹するため主張は控えめ
-   ・contactより弱く、introより軽い設計
-   ・フォントサイズをintro/pillarと揃えて1remに変更
-===================================================== */
 .about-link {
-  background: #ffd49c; /* 少し濃めのオレンジに調整 */
+  background: #ffe8c2; /* 元の薄オレンジに修正 */
   border-radius: var(--radius-large);
   padding: 32px 24px;
   text-align: center;
@@ -208,20 +159,17 @@ section {
 
 .about-lead {
   margin: 0 0 8px;
-  font-size: 1rem; /* intro/pillarと同サイズに揃える */
-  color: var(--text-color); /* コントラスト確保 */
+  font-size: 1rem;
+  color: var(--text-color);
 }
 
 .about-sub {
   margin: 8px 0 0;
   font-size: 0.9rem;
   color: var(--sub-text);
-  display: none; /* 非表示維持 */
+  display: none;
 }
 
-/* =====================================================
-   10. ボタン共通
-===================================================== */
 .button-link {
   display: inline-block;
   margin: 16px auto 0;
@@ -239,9 +187,6 @@ section {
   border: 2px solid var(--accent-color);
 }
 
-/* =====================================================
-   11. contact CTA（白カード）
-===================================================== */
 .contact-cta {
   background: #fff;
   border-radius: var(--radius-large);
@@ -252,9 +197,6 @@ section {
   margin: 56px auto 48px;
 }
 
-/* =====================================================
-   12. footerリンク領域
-===================================================== */
 .footer-links {
   max-width: 720px;
   margin: 0 auto 32px;
@@ -271,9 +213,6 @@ section {
   margin-top: 8px;
 }
 
-/* =====================================================
-   13. フッター本体
-===================================================== */
 footer {
   text-align: center;
   padding: 24px 16px;
@@ -281,12 +220,6 @@ footer {
   color: var(--sub-text);
 }
 
-/* =====================================================
-   14. レスポンシブ設定（まとめて記載）
-   ※ メディアクエリは分断しない
-===================================================== */
-
-/* --- PC時（769px以上） --- */
 @media screen and (min-width: 769px) {
   .hero {
     height: 520px;
@@ -310,10 +243,7 @@ footer {
   }
 }
 
-/* --- スマホ時（768px以下） --- */
 @media screen and (max-width: 768px) {
-
-  /* 白カードを少し内側に寄せて軽量化 */
   .intro,
   .contact-cta {
     margin-left: 16px;
@@ -321,13 +251,11 @@ footer {
     padding: 32px 20px;
   }
 
-  /* introアイコン小型化 */
   .intro-icon {
     width: 76px;
     margin: 0 auto 12px;
   }
 
-  /* 支援の柱は縦並び */
   .pillar-cards {
     grid-template-columns: 1fr;
   }
