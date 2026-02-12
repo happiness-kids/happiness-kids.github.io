@@ -2,7 +2,7 @@
 
 /* =====================================================
    ハピネスキッズ Common.css
-   再構成版 v2.0（安全・整理・可読性重視）
+   再構成版 v2.1（header〜about固定版・安全設計確定）
    コメント復活済み
 ===================================================== */
 
@@ -224,11 +224,19 @@ section {
 .contact-cta {
   background: #fff;
   border-radius: var(--radius-large);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.08); /* CTA強調：影を強め視線誘導 */
+  border: 2px solid var(--accent-color); /* CTAを最終導線として視覚認識させる */
   text-align: center;
-  padding: 40px 24px;
+  padding: 48px 24px; /* 少し拡張して主役感を出す */
   max-width: 720px;
   margin: 56px auto 48px;
+}
+
+/* CTAボタン強調（最重要導線） */
+.contact-cta .button-link {
+  font-size: 1.1rem;
+  padding: 16px 36px;
+  box-shadow: 0 6px 0 rgba(0,0,0,0.12);
 }
 
 .footer-links {
