@@ -148,6 +148,7 @@ section {
 ===================== */
 .pillars {
   padding-top: 32px;
+  padding-bottom: 32px; /* 下余白を調整：aboutとの距離バランス最適化（ロック対象） */
 }
 
 .pillars > h2 {
