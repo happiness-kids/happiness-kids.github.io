@@ -197,7 +197,7 @@ section {
    ・contactより弱く、introより軽い設計
 ===================================================== */
 .about-link {
-  background: #fff6e5; /* 薄いオレンジ系（背景より少しだけ濃い） */
+  background: #ffe8c2; /* 少し濃いオレンジ（視認性を一段上げる） */
   border-radius: var(--radius-large);
   padding: 32px 24px;
   text-align: center;
