@@ -2,7 +2,7 @@
 
 /* =====================================================
    ハピネスキッズ Common.css
-   再構成版（安全・整理・可読性重視）
+   再構成版 v2.0（安全・整理・可読性重視）
 
    ■ 設計方針
    1. 構造を上から順に並べる
@@ -191,24 +191,39 @@ section {
 }
 
 /* =====================================================
-   09. aboutリンク領域
+   09. aboutリンク領域（薄オレンジカード化）
+   ・白カードばかりにならないよう変化をつける
+   ・流す場所に徹するため主張は控えめ
+   ・contactより弱く、introより軽い設計
 ===================================================== */
 .about-link {
+  background: #fff6e5; /* 薄いオレンジ系（背景より少しだけ濃い） */
+  border-radius: var(--radius-large);
+  padding: 32px 24px;
   text-align: center;
-  margin-top: 28px;
+  margin: 40px auto 0;
   max-width: 720px;
 }
 
 .about-lead {
   margin: 0 0 8px;
   font-size: 0.95rem;
-  color: var(--sub-text);
+  color: var(--text-color); /* コントラスト確保 */
 }
 
 .about-sub {
   margin: 8px 0 0;
   font-size: 0.9rem;
   color: var(--sub-text);
+}
+
+/* --- 一時対応：about-subを非表示（HTMLは触らない） ---
+   ・構造は維持
+   ・崩れリスクを回避
+   ・必要になればdisplayを戻すだけで復活可能
+*/
+.about-sub {
+  display: none;
 }
 
 /* =====================================================
