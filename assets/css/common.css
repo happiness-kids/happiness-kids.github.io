@@ -180,7 +180,8 @@ section {
    判断基準："理解"ではなく"興味"を作れれば成功
 ===================== */
 .about-link {
-  background: #ffe8c2; /* 元の薄オレンジ */
+  background: #fff; /* 背景は白に戻し主張を抑える */
+  border: 2px solid var(--accent-color); /* 枠線で導線セクションと認識させる */
   border-radius: var(--radius-large);
   padding: 32px 24px;
   text-align: center;
