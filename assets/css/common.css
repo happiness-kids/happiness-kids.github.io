@@ -195,9 +195,10 @@ section {
    ・白カードばかりにならないよう変化をつける
    ・流す場所に徹するため主張は控えめ
    ・contactより弱く、introより軽い設計
+   ・フォントサイズをintro/pillarと揃えて1remに変更
 ===================================================== */
 .about-link {
-  background: #ffe8c2; /* 少し濃いオレンジ（視認性を一段上げる） */
+  background: #ffd49c; /* 少し濃めのオレンジに調整 */
   border-radius: var(--radius-large);
   padding: 32px 24px;
   text-align: center;
@@ -207,7 +208,7 @@ section {
 
 .about-lead {
   margin: 0 0 8px;
-  font-size: 0.95rem;
+  font-size: 1rem; /* intro/pillarと同サイズに揃える */
   color: var(--text-color); /* コントラスト確保 */
 }
 
@@ -215,15 +216,7 @@ section {
   margin: 8px 0 0;
   font-size: 0.9rem;
   color: var(--sub-text);
-}
-
-/* --- 一時対応：about-subを非表示（HTMLは触らない） ---
-   ・構造は維持
-   ・崩れリスクを回避
-   ・必要になればdisplayを戻すだけで復活可能
-*/
-.about-sub {
-  display: none;
+  display: none; /* 非表示維持 */
 }
 
 /* =====================================================
