@@ -3,6 +3,7 @@
 /* =====================================================
    ハピネスキッズ Common.css
    再構成版 v2.0（安全・整理・可読性重視）
+   コメント復活済み
 ===================================================== */
 
 :root {
@@ -42,6 +43,10 @@ section {
   padding: 48px 24px;
 }
 
+/* =====================
+   ヘッダー部分
+   固定済み
+===================== */
 .site-header {
   background: var(--accent-color);
   padding: 8px 16px;
@@ -67,6 +72,10 @@ section {
   font-weight: bold;
 }
 
+/* =====================
+   hero 部分
+   固定済み
+===================== */
 .hero {
   position: relative;
   width: 100vw;
@@ -103,6 +112,10 @@ section {
   margin: 0;
 }
 
+/* =====================
+   intro（想い＋メッセージ）
+   固定済み
+===================== */
 .intro {
   background: #fff;
   border-radius: var(--radius-large);
@@ -121,6 +134,10 @@ section {
   margin-top: 0;
 }
 
+/* =====================
+   pillars（支援の柱）
+   固定済み
+===================== */
 .pillars {
   padding-top: 32px;
 }
@@ -148,8 +165,11 @@ section {
   margin-bottom: 12px;
 }
 
+/* =====================
+   about 導線カード化
+===================== */
 .about-link {
-  background: #ffe8c2; /* 元の薄オレンジに修正 */
+  background: #ffe8c2; /* 元の薄オレンジ */
   border-radius: var(--radius-large);
   padding: 32px 24px;
   text-align: center;
@@ -163,6 +183,7 @@ section {
   color: var(--text-color);
 }
 
+/* 非表示にして流す場所専用 */
 .about-sub {
   margin: 8px 0 0;
   font-size: 0.9rem;
@@ -220,6 +241,9 @@ footer {
   color: var(--sub-text);
 }
 
+/* =====================
+   PC向けスタイル
+===================== */
 @media screen and (min-width: 769px) {
   .hero {
     height: 520px;
@@ -243,6 +267,9 @@ footer {
   }
 }
 
+/* =====================
+   スマホ向けスタイル
+===================== */
 @media screen and (max-width: 768px) {
   .intro,
   .contact-cta {
