@@ -235,18 +235,6 @@ section {
   position: relative;
 }
 
-/* CTA最終導線サイン（視線停止用ライン） */
-.contact-cta::before{
-  content:"";
-  position:absolute;
-  top:-3px;
-  left:50%;
-  transform:translateX(-50%);
-  width:120px;
-  height:6px;
-  background:var(--accent-color);
-  border-radius:999px;
-}
 
 
 
@@ -254,7 +242,7 @@ section {
 img.contact-cta-icon{
   width:72px;
   height:auto;
-  margin:0 auto 18px;
+  margin:0 auto 22px;
   display:block;
 }
 
@@ -262,7 +250,7 @@ img.contact-cta-icon{
   img.contact-cta-icon{
     width:72px;
     height:auto;
-    margin-bottom:22px;
+    margin-bottom:26px;
   }
 }
 
