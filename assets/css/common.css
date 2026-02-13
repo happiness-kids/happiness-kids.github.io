@@ -357,7 +357,7 @@ footer {
 }
 
 /* ===== footer説明文 非表示（空気化方針）===== */
-.footer-links-description{
+.footer-links .note{
   display:none;
 }
 
