@@ -271,9 +271,7 @@ img.contact-cta-icon{
   align-items: center;
   gap: 16px;
   font-size: 0.82rem;
-
-  /* 視覚には見えないが脳は認識する境界 */
-  box-shadow: 0 0 0 1px rgba(0,0,0,0.04);
+  /* 境界完全削除：純粋な空気化状態 */
 }
 
 .footer-link-item {
@@ -281,14 +279,17 @@ img.contact-cta-icon{
 }
 
 .footer-links .button-link.sub {
-  padding: 5px 12px;
-  font-size: 0.8rem;
-  border-width: 1px;
-  opacity: 0.82;
+  padding: 8px 18px;
+  font-size: 0.82rem;
+  border: none;
+  background: var(--accent-color);
+  color: #fff;
+  opacity: 0.95;
 }
 
 .footer-links .button-link.sub:hover {
   opacity: 1;
+  filter: brightness(1.05);
 }
 
 footer {
