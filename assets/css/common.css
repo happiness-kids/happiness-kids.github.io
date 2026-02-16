@@ -260,14 +260,24 @@ img.contact-cta-icon{
    設計意図：空気のように存在させる（最終完成形）
    方針：視線を止めない・構造だけ残す
 ===================== */
+
+/* 横並び制御（崩れ防止の本体指定） */
+.footer-links{
+  display:flex;
+  justify-content:center;
+  gap:40px;
+  flex-wrap:wrap;
+}
+
+/* コピーライト直前帯（終端ライン演出：細め） */
 .footer-end{
   margin-top:24px;
-  padding:8px 0;
-  background: var(--accent);
+  padding:6px 0;
+  background: var(--accent-color);
   text-align:center;
 }
 .footer-end small{
-  color: var(--bg);
+  color: var(--bg-color);
   font-size:12px;
   letter-spacing:.08em;
 }
