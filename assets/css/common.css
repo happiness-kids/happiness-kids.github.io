@@ -302,11 +302,10 @@ img.contact-cta-icon{
 
 footer {
   text-align: center;
-  padding: 12px 16px; /* 距離を少し詰める */
-  font-size: 0.75rem;
+  padding: 6px 0; /* 帯を細くして主張を弱める */
+  font-size: 0.7rem;
   color: #fff;
-  background: var(--accent-color); /* ヘッダーと同系統の帯で終端を明示 */
-  opacity: 1;
+  background: var(--accent-color);
 }
 
 /* =====================
