@@ -2,26 +2,27 @@
 
 /* =====================
    Footerリンクボタン領域
-   役割：補助導線（採用・情報公開など）
-   設計意図：主張せず整列だけさせる
-===================== */
+   ===================== */
 
 .footer-links{
   display:flex;
   justify-content:center;
-  gap:18px;
+  align-items:center;
+  gap:14px;
   flex-wrap:wrap;
   margin-top:8px;
 }
 
 .footer-links a{
+  display:inline-block;
   font-size:.78rem;
   color:var(--accent-color);
   text-decoration:none;
-  padding:6px 14px;
+  padding:5px 12px;
   border:1.5px solid var(--accent-color);
   border-radius:999px;
   background:#fff;
+  line-height:1.2;
   transition:.2s ease;
 }
 
@@ -30,26 +31,32 @@
   color:#fff;
 }
 
+
 /* =====================
    コピーライトバー
-   役割：最下層情報表示
-   設計方針：存在感を消す細帯
+   → 細く・主張しない帯に調整
 ===================== */
 
 .site-footer{
   text-align:center;
-  padding:4px 0;
-  font-size:0.68rem;
+  padding:2px 0;            /* ← 帯を細く */
+  font-size:0.65rem;        /* ← 少しだけ小さく */
   letter-spacing:.05em;
   color:#fff;
   background:var(--accent-color);
+  line-height:1.4;
+  margin-top:14px;          /* ← 上との距離だけ少し確保 */
 }
+
+.site-footer p{
+  margin:0;
+}
+
 
 /* =====================
    PC表示調整
-   方針：横幅増加による間延び防止
-   調整対象：主に配置のみ（色・余白思想は維持）
 ===================== */
+
 @media screen and (min-width: 769px) {
   .hero {
     height: 520px;
@@ -73,12 +80,11 @@
   }
 }
 
+
 /* =====================
    スマホ最適化
-   方針：可読性＞装飾
-   調整内容：余白圧縮＋縦積み化
-   ※スマホ体験を基準設計として扱う
 ===================== */
+
 @media screen and (max-width: 768px) {
   .intro,
   .contact-cta,
@@ -96,7 +102,9 @@
   .pillar-cards {
     grid-template-columns: 1fr;
   }
+
+  /* フッターリンク崩れ防止 */
+  .footer-links{
+    gap:10px;
+  }
 }
-
-
-
