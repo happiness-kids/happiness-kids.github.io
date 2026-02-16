@@ -276,7 +276,7 @@ img.contact-cta-icon{
 
   .intro-icon{
     width:110px;
-    height:110px;
+    height:auto;
     flex-shrink:0;
   }
 }
