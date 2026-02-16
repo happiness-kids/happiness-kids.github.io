@@ -260,17 +260,16 @@ img.contact-cta-icon{
    設計意図：空気のように存在させる（最終完成形）
    方針：視線を止めない・構造だけ残す
 ===================== */
-.footer-links {
-  max-width: 720px;
-  margin: 24px auto 28px; /* contactからの距離を少し拡張 */
-  padding: 10px 14px;
-  background: transparent;
-  border-radius: 14px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 16px;
-  font-size: 0.82rem;
+.footer-end{
+  margin-top:24px;
+  padding:8px 0;
+  background: var(--accent);
+  text-align:center;
+}
+.footer-end small{
+  color: var(--bg);
+  font-size:12px;
+  letter-spacing:.08em;
 }
 
 .footer-link-item {
