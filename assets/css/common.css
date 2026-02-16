@@ -262,16 +262,15 @@ img.contact-cta-icon{
 ===================== */
 .footer-links {
   max-width: 720px;
-  margin: 0 auto 28px;
+  margin: 24px auto 28px; /* contactからの距離を少し拡張 */
   padding: 10px 14px;
-  background: transparent; /* 背景を完全に消す */
+  background: transparent;
   border-radius: 14px;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 16px;
   font-size: 0.82rem;
-  /* 境界完全削除：純粋な空気化状態 */
 }
 
 .footer-link-item {
@@ -279,11 +278,11 @@ img.contact-cta-icon{
 }
 
 .footer-links .button-link.sub {
-  padding: 8px 18px;
+  padding: 6px 16px; /* ボタンをほんの少し縮小 */
   font-size: 0.82rem;
   border: none;
   background: var(--accent-color);
-  color: #fff;
+  color: var(--bg-color); /* 文字色を背景色と統一 */
   opacity: 0.95;
 }
 
