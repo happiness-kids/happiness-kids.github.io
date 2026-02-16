@@ -269,43 +269,14 @@ img.contact-cta-icon{
   flex-wrap:wrap;
 }
 
-/* コピーライト直前帯（終端ライン演出：細め） */
-.footer-end{
-  margin-top:24px;
-  padding:6px 0;
-  background: var(--accent-color);
-  text-align:center;
-}
-.footer-end small{
-  color: var(--bg-color);
-  font-size:12px;
-  letter-spacing:.08em;
-}
-
-.footer-link-item {
-  margin: 0;
-}
-
-.footer-links .button-link.sub {
-  padding: 6px 16px; /* ボタンをほんの少し縮小 */
-  font-size: 0.82rem;
-  border: none;
-  background: var(--accent-color);
-  color: var(--bg-color); /* 文字色を背景色と統一 */
-  opacity: 0.95;
-}
-
-.footer-links .button-link.sub:hover {
-  opacity: 1;
-  filter: brightness(1.05);
-}
-
+/* フッター最終帯（コピーライト内包・細幅版） */
 footer {
-  text-align: center;
-  padding: 6px 0; /* 帯を細くして主張を弱める */
-  font-size: 0.7rem;
-  color: #fff;
-  background: var(--accent-color);
+  text-align:center;
+  padding:4px 0; /* ヘッダーより細くして主張を抑制 */
+  font-size:0.68rem;
+  letter-spacing:.05em;
+  color:#fff;
+  background:var(--accent-color);
 }
 
 /* =====================
