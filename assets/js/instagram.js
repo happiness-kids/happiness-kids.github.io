@@ -1,57 +1,38 @@
-/**
- * ============================================
- * Instagram 埋め込み制御スクリプト
- * ============================================
- *
- * 【ここだけ触ればOK】
- * ------------------------------------------------
- * true  : 表示する
- * false : 非表示にする
- */
-const INSTAGRAM_SHOW = true;
-/*
-const INSTAGRAM_SHOW = false;
-*/
-
-
-/**
- * ============================================
- * 以下は原則編集しない
- * ============================================
- */
-
 document.addEventListener("DOMContentLoaded", () => {
-  const section = document.querySelector(".instagram");
+  const section = document.querySelector(".about-instagram");
   if (!section) return;
-
-  // 非表示設定の場合は section ごと消す
-  if (!INSTAGRAM_SHOW) {
-    section.style.display = "none";
-    return;
-  }
 
   const container = document.getElementById("instagram-embed");
   if (!container) return;
 
-  fetch("/parts/instagram.txt")
+  fetch("./parts/instagram.txt")
     .then((res) => {
-      if (!res.ok) {
-        throw new Error("instagram.txt が読み込めません");
-      }
+      if (!res.ok) throw new Error();
       return res.text();
     })
     .then((html) => {
+
+      // script行を自動削除
+      html = html.replace(
+        /<script.*?instagram\.com\/embed\.js.*?<\/script>/is,
+        ""
+      );
+
+      // 空なら非表示
+      if (!html.trim()) {
+        section.remove();
+        return;
+      }
+
       container.innerHTML = html;
       loadInstagramEmbedScript();
     })
-    .catch((err) => {
-      console.error("Instagram 埋め込みエラー:", err);
+    .catch(() => {
+      section.remove();
     });
 });
 
-/**
- * Instagram公式 embed.js を安全に読み込む
- */
+
 function loadInstagramEmbedScript() {
   if (window.instgrm) {
     window.instgrm.Embeds.process();
