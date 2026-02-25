@@ -174,8 +174,21 @@
   <p><a href="/contact">▶ お問い合わせはこちら</a></p>
 </section>
 
-<section class="instagram">
+<!--
+【Instagram設計：決定事項】
+・表示は1投稿のみ（複数表示しない）
+・投稿データは ./parts/instagram.txt に記載し、差し替えで更新する
+・instagram.js により自動読み込み
+・instagram.txt が空の場合はセクション自動非表示
+  ※空白や改行のみの場合も「空」として非表示扱い
+・営業的訴求はしない（実在感・日々の様子の補強が目的）
+・フォロー誘導は強く行わない
+-->
+<section class="about-instagram">
   <h2>日々の様子（Instagram）</h2>
+  <p>日々の活動の様子を、Instagramで発信しています。</p>
+
+  <!-- ./parts/instagram.txt にInstagramの埋め込みコードを1件のみ記載してください -->
   <div id="instagram-embed"></div>
 </section>
 
