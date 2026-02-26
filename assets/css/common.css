@@ -1,8 +1,14 @@
 @charset "UTF-8";
 
 /* =====================================================
-   ハピネスキッズ Common.css
-   再構成版 v2.3（最終完成版）
+   ハピネスキッズ common.css
+   構造整理版 v3.0
+   （機能は変更せず、レイヤー再構成のみ）
+===================================================== */
+
+
+/* =====================================================
+   01 Base / Reset
 ===================================================== */
 
 :root {
@@ -40,9 +46,15 @@ section{
   padding:48px 24px;
 }
 
+
+/* =====================================================
+   02 Layout (全ページ共通構造)
+===================================================== */
+
 /* =====================
-   ヘッダー
+   Header
 ===================== */
+
 .site-header{
   background:var(--accent-color);
   padding:8px 16px;
@@ -69,9 +81,88 @@ section{
   font-weight:bold;
 }
 
+
+/* =====================
+   Footer
+===================== */
+
+.footer-links{
+  display:flex;
+  justify-content:center;
+  gap:18px;
+  flex-wrap:wrap;
+  margin-top:8px;
+}
+
+.footer-links a{
+  display:inline-block;
+  font-size:.78rem;
+  color:var(--accent-color);
+  text-decoration:none;
+  padding:6px 14px;
+  border:1.5px solid var(--accent-color);
+  border-radius:999px;
+  background:#fff;
+  transition:.2s;
+}
+
+.footer-links a:hover{
+  background:var(--accent-color);
+  color:#fff;
+}
+
+.site-footer{
+  text-align:center;
+  padding:4px 0;
+  font-size:.68rem;
+  letter-spacing:.05em;
+  color:#fff;
+  background:var(--accent-color);
+}
+
+.site-footer p{ margin:0; }
+
+
+/* =====================================================
+   03 Components (再利用可能UI)
+===================================================== */
+
+/* =====================
+   Button
+===================== */
+
+.button-link{
+  display:inline-block;
+  margin:16px auto 0;
+  padding:12px 28px;
+  background:var(--accent-color);
+  color:#fff;
+  text-decoration:none;
+  border-radius:999px;
+  font-weight:bold;
+}
+
+.button-link.sub{
+  background:transparent;
+  color:var(--accent-color);
+  border:2px solid var(--accent-color);
+}
+
+
+/* =====================================================
+   04 Utilities
+   （現時点では未使用。将来追加用）
+===================================================== */
+
+
+/* =====================================================
+   05 Page - index
+===================================================== */
+
 /* =====================
    Hero
 ===================== */
+
 .hero{
   position:relative;
   width:100vw;
@@ -104,9 +195,11 @@ section{
 
 .hero-note p{ margin:0; }
 
+
 /* =====================
    Intro
 ===================== */
+
 .intro{
   background:#fff;
   border-radius:var(--radius-large);
@@ -123,9 +216,11 @@ section{
 
 .intro h2{ margin-top:0; }
 
+
 /* =====================
    Pillars
 ===================== */
+
 .pillars{
   padding-top:32px;
   padding-bottom:32px;
@@ -154,9 +249,11 @@ section{
   margin-bottom:12px;
 }
 
+
 /* =====================
-   About導線
+   About導線（index内）
 ===================== */
+
 .about-link{
   background:#fff;
   border:2px solid var(--accent-color);
@@ -179,26 +276,11 @@ section{
   display:none;
 }
 
-.button-link{
-  display:inline-block;
-  margin:16px auto 0;
-  padding:12px 28px;
-  background:var(--accent-color);
-  color:#fff;
-  text-decoration:none;
-  border-radius:999px;
-  font-weight:bold;
-}
-
-.button-link.sub{
-  background:transparent;
-  color:var(--accent-color);
-  border:2px solid var(--accent-color);
-}
 
 /* =====================
-   CTA
+   Top CTA（index専用）
 ===================== */
+
 .contact-cta{
   background:linear-gradient(180deg,#fff 0%,#fff7e7 100%);
   border-radius:var(--radius-large);
@@ -215,52 +297,31 @@ img.contact-cta-icon{
   margin:0 auto 22px;
 }
 
-/* =====================
-   Footerリンク
-===================== */
-.footer-links{
-  display:flex;
-  justify-content:center;
-  gap:18px;
-  flex-wrap:wrap;
-  margin-top:8px;
-}
 
-.footer-links a{
-  display:inline-block;
-  font-size:.78rem;
-  color:var(--accent-color);
-  text-decoration:none;
-  padding:6px 14px;
-  border:1.5px solid var(--accent-color);
-  border-radius:999px;
-  background:#fff;
-  transition:.2s;
-}
+/* =====================================================
+   06 Page - about
+   （未実装）
+===================================================== */
 
-.footer-links a:hover{
-  background:var(--accent-color);
-  color:#fff;
-}
 
-/* =====================
-   コピーライト帯
-===================== */
-.site-footer{
-  text-align:center;
-  padding:4px 0;
-  font-size:.68rem;
-  letter-spacing:.05em;
-  color:#fff;
-  background:var(--accent-color);
-}
+/* =====================================================
+   07 Page - contact
+   （未実装）
+===================================================== */
 
-.site-footer p{ margin:0; }
 
-/* =====================
-   PC調整
-===================== */
+/* =====================================================
+   08 Page - disclosure
+   （未実装）
+===================================================== */
+
+
+/* =====================================================
+   Responsive
+===================================================== */
+
 @media screen and (min-width:769px){
+
   .hero{ height:520px; }
 
   .hero-image{
@@ -281,10 +342,8 @@ img.contact-cta-icon{
   }
 }
 
-/* =====================
-   スマホ最適化
-===================== */
 @media screen and (max-width:768px){
+
   .intro,
   .contact-cta,
   .about-link{
