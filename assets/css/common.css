@@ -163,7 +163,7 @@ section{
    Hero
 ===================== */
 
-.hero{
+.index-hero{
   position:relative;
   width:100vw;
   margin:0;
@@ -174,9 +174,9 @@ section{
   margin-left:-50vw;
 }
 
-.hero-image{ width:100vw; }
+.index-hero-image{ width:100vw; }
 
-.hero-catch{
+.index-hero-catch{
   position:absolute;
   top:54%;
   left:50%;
@@ -186,21 +186,21 @@ section{
   z-index:10;
 }
 
-.hero-note{
+.index-hero-note{
   max-width:720px;
   margin:16px auto 8px;
   padding:12px 24px;
   text-align:center;
 }
 
-.hero-note p{ margin:0; }
+.index-hero-note p{ margin:0; }
 
 
 /* =====================
    Intro
 ===================== */
 
-.intro{
+.index-intro{
   background:#fff;
   border-radius:var(--radius-large);
   max-width:720px;
@@ -208,43 +208,43 @@ section{
   padding:40px 28px;
 }
 
-.intro-inner{
+.index-intro-inner{
   display:flex;
   flex-direction:column;
   gap:16px;
 }
 
-.intro h2{ margin-top:0; }
+.index-intro h2{ margin-top:0; }
 
 
 /* =====================
    Pillars
 ===================== */
 
-.pillars{
+.index-pillars{
   padding-top:32px;
   padding-bottom:32px;
 }
 
-.pillars > h2{
+.index-pillars > h2{
   text-align:center;
   margin:0 0 20px;
 }
 
-.pillar-cards{
+.index-pillar-cards{
   display:grid;
   grid-template-columns:repeat(3,1fr);
   gap:24px;
 }
 
-.pillar{
+.index-pillar{
   background:#fff;
   border-radius:var(--radius-card);
   padding:24px 20px;
   box-shadow:0 4px 12px rgba(0,0,0,.04);
 }
 
-.pillar h3{
+.index-pillar h3{
   font-size:1.1rem;
   margin-bottom:12px;
 }
@@ -254,7 +254,7 @@ section{
    About導線（index内）
 ===================== */
 
-.about-link{
+.index-about-link{
   background:#fff;
   border:2px solid var(--accent-color);
   border-radius:var(--radius-large);
@@ -264,12 +264,12 @@ section{
   max-width:720px;
 }
 
-.about-lead{
+.index-about-lead{
   margin:0 0 8px;
   font-size:1rem;
 }
 
-.about-sub{
+.index-about-sub{
   margin:8px 0 0;
   font-size:.9rem;
   color:var(--sub-text);
@@ -281,7 +281,7 @@ section{
    Top CTA（index専用）
 ===================== */
 
-.contact-cta{
+.index-contact-cta{
   background:linear-gradient(180deg,#fff 0%,#fff7e7 100%);
   border-radius:var(--radius-large);
   box-shadow:0 16px 34px rgba(0,0,0,.12);
@@ -292,7 +292,7 @@ section{
   margin:56px auto 48px;
 }
 
-img.contact-cta-icon{
+img.index-contact-cta-icon{
   width:72px;
   margin:0 auto 22px;
 }
@@ -322,20 +322,20 @@ img.contact-cta-icon{
 
 @media screen and (min-width:769px){
 
-  .hero{ height:520px; }
+  .index-hero{ height:520px; }
 
-  .hero-image{
+  .index-hero-image{
     height:520px;
     object-fit:cover;
   }
 
-  .intro-inner{
+  .index-intro-inner{
     flex-direction:row;
     align-items:center;
     gap:32px;
   }
 
-  .intro-icon{
+  .index-intro-icon{
     width:110px;
     height:auto;
     flex-shrink:0;
@@ -344,20 +344,20 @@ img.contact-cta-icon{
 
 @media screen and (max-width:768px){
 
-  .intro,
-  .contact-cta,
-  .about-link{
+  .index-intro,
+  .index-contact-cta,
+  .index-about-link{
     margin-left:16px;
     margin-right:16px;
     padding:32px 20px;
   }
 
-  .intro-icon{
+  .index-intro-icon{
     width:76px;
     margin:0 auto 12px;
   }
 
-  .pillar-cards{
+  .index-pillar-cards{
     grid-template-columns:1fr;
   }
 }
