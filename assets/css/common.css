@@ -300,8 +300,34 @@ img.index-contact-cta-icon{
 
 /* =====================================================
    06 Page - about
-   （未実装）
 ===================================================== */
+
+/* =====================
+   Pillars
+===================== */
+
+.about-pillars > h2{
+  margin:0 0 24px;
+}
+
+.about-pillar{
+  margin-bottom:40px;
+}
+
+@media screen and (min-width:769px){
+
+  .about-pillar-cards{
+    display:flex;
+    gap:32px;
+  }
+
+  .about-pillar{
+    flex:1;
+    margin-bottom:0;
+  }
+
+}
+
 
 
 /* =====================================================
