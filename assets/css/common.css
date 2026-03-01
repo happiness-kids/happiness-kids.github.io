@@ -303,15 +303,59 @@ img.index-contact-cta-icon{
 ===================================================== */
 
 /* =====================
+   共通セクション土台
+===================== */
+
+.about-intro,
+.about-pillars,
+.about-relationship,
+.about-parents,
+.about-future,
+.about-cta,
+.about-daily-flow,
+.about-overview,
+.about-program,
+.about-staff,
+.about-access,
+.about-instagram,
+.about-footer-links{
+  background:#fff;
+  border-radius:var(--radius-large);
+  margin-bottom:40px;
+}
+
+.about-intro h1{
+  margin-top:0;
+}
+
+.about-intro-header{
+  display:flex;
+  align-items:center;
+  gap:16px;
+  margin-bottom:24px;
+}
+
+.about-intro-icon{
+  width:64px;
+  height:auto;
+}
+
+/* =====================
    Pillars
 ===================== */
 
 .about-pillars > h2{
   margin:0 0 24px;
+  text-align:center;
 }
 
 .about-pillar{
   margin-bottom:40px;
+}
+
+.about-pillar h3{
+  margin-top:0;
+  margin-bottom:12px;
 }
 
 @media screen and (min-width:769px){
@@ -325,10 +369,82 @@ img.index-contact-cta-icon{
     flex:1;
     margin-bottom:0;
   }
-
 }
 
+/* =====================
+   CTA
+===================== */
 
+.about-cta{
+  text-align:center;
+  border:3px solid var(--accent-color);
+  box-shadow:0 12px 28px rgba(0,0,0,.08);
+}
+
+.about-cta-button{
+  display:inline-block;
+  margin-top:16px;
+  padding:12px 32px;
+  background:var(--accent-color);
+  color:#fff;
+  text-decoration:none;
+  border-radius:999px;
+  font-weight:bold;
+}
+
+.about-cta-button:hover{
+  opacity:.9;
+}
+
+/* =====================
+   Daily Flow
+===================== */
+
+.about-daily-flow h3{
+  margin-top:32px;
+}
+
+/* =====================
+   Access
+===================== */
+
+.about-access-map{
+  margin:24px 0;
+  border-radius:var(--radius-card);
+  overflow:hidden;
+}
+
+/* =====================
+   Footer Links
+===================== */
+
+.about-footer-links{
+  background:transparent;
+  text-align:center;
+}
+
+.about-footer-link-item{
+  margin-bottom:16px;
+}
+
+.about-button-link{
+  display:inline-block;
+  padding:10px 24px;
+  border-radius:999px;
+  text-decoration:none;
+  font-weight:bold;
+}
+
+.about-button-sub{
+  background:transparent;
+  color:var(--accent-color);
+  border:2px solid var(--accent-color);
+}
+
+.about-button-sub:hover{
+  background:var(--accent-color);
+  color:#fff;
+}
 
 /* =====================================================
    07 Page - contact
