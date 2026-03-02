@@ -325,8 +325,13 @@ img.index-contact-cta-icon{
   padding:40px 28px; /* indexとPC余白を統一 */
 }
 
+.about-intro{
+  margin-top:32px; /* ヘッダー帯との間に呼吸をつくる */
+}
+
 .about-intro h1{
   margin-top:0;
+  line-height:1.5; /* 2行表示時の窮屈さを軽減 */
 }
 
 .about-intro-header{
@@ -521,5 +526,17 @@ img.index-contact-cta-icon{
     margin-left:16px;
     margin-right:16px;
     padding:32px 20px;
+  }
+
+  /* Introヘッダーを縦並びにして自然なバランスへ */
+  .about-intro-header{
+    flex-direction:column;
+    text-align:center;
+    gap:12px;
+  }
+
+  .about-intro-icon{
+    width:72px;
+    margin:0 auto;
   }
 }
