@@ -1,521 +1,223 @@
-@charset "UTF-8";
-
-/* =====================================================
-   ハピネスキッズ common.css
-   構造整理版 v3.0
-   （機能は変更せず、レイヤー再構成のみ）
-===================================================== */
-
-
-/* =====================================================
-   01 Base / Reset
-===================================================== */
-
-:root {
-  --main-color: #ffe114;
-  --accent-color: #f4a300;
-  --text-color: #333;
-  --sub-text: #666;
-  --bg-color: #fff1d6;
-
-  --radius-card: 16px;
-  --radius-large: 20px;
-}
-
-* { box-sizing: border-box; }
-
-html, body {
-  margin:0;
-  padding:0;
-  font-family:"BIZ UDPGothic","BIZ UDゴシック","Meiryo","Hiragino Kaku Gothic ProN",sans-serif;
-  color:var(--text-color);
-  background-color:var(--bg-color);
-  line-height:1.8;
-  overflow-x:hidden;
-}
-
-img{
-  max-width:100%;
-  height:auto;
-  display:block;
-}
-
-section{
-  max-width:960px;
-  margin:0 auto;
-  padding:48px 24px;
-}
-
-
-/* =====================================================
-   02 Layout (全ページ共通構造)
-===================================================== */
-
-/* =====================
-   Header
-===================== */
-
-.site-header{
-  background:var(--accent-color);
-  padding:8px 16px;
-}
-
-.site-header-inner{
-  max-width:960px;
-  margin:0 auto;
-  display:flex;
-  align-items:center;
-  gap:8px;
-}
-
-.site-header img.site-icon{
-  width:24px !important;
-  height:24px !important;
-  object-fit:contain;
-  flex-shrink:0;
-}
-
-.site-title{
-  font-size:.95rem;
-  color:#fff;
-  font-weight:bold;
-}
-
-
-/* =====================
-   Footer
-===================== */
-
-.footer-links{
-  display:flex;
-  justify-content:center;
-  gap:18px;
-  flex-wrap:wrap;
-  margin-top:8px;
-}
-
-.footer-links a{
-  display:inline-block;
-  font-size:.78rem;
-  color:var(--accent-color);
-  text-decoration:none;
-  padding:6px 14px;
-  border:1.5px solid var(--accent-color);
-  border-radius:999px;
-  background:#fff;
-  transition:.2s;
-}
-
-.footer-links a:hover{
-  background:var(--accent-color);
-  color:#fff;
-}
-
-.site-footer{
-  text-align:center;
-  padding:4px 0;
-  font-size:.68rem;
-  letter-spacing:.05em;
-  color:#fff;
-  background:var(--accent-color);
-}
-
-.site-footer p{ margin:0; }
-
-
-/* =====================================================
-   03 Components (再利用可能UI)
-===================================================== */
-
-/* =====================
-   Button
-===================== */
-
-.button-link{
-  display:inline-block;
-  margin:16px auto 0;
-  padding:12px 28px;
-  background:var(--accent-color);
-  color:#fff;
-  text-decoration:none;
-  border-radius:999px;
-  font-weight:bold;
-}
-
-.button-link.sub{
-  background:transparent;
-  color:var(--accent-color);
-  border:2px solid var(--accent-color);
-}
-
-
-/* =====================================================
-   04 Utilities
-   （現時点では未使用。将来追加用）
-===================================================== */
-
-
-/* =====================================================
-   05 Page - index
-===================================================== */
-
-/* =====================
-   Hero
-===================== */
-
-.index-hero{
-  position:relative;
-  width:100vw;
-  margin:0;
-  padding:0;
-  max-width:none;
-  overflow:hidden;
-  left:50%;
-  margin-left:-50vw;
-}
-
-.index-hero-image{ width:100vw; }
-
-.index-hero-catch{
-  position:absolute;
-  top:54%;
-  left:50%;
-  transform:translateX(-50%);
-  width:78%;
-  max-width:820px;
-  z-index:10;
-}
-
-.index-hero-note{
-  max-width:720px;
-  margin:16px auto 8px;
-  padding:12px 24px;
-  text-align:center;
-}
-
-.index-hero-note p{ margin:0; }
-
-
-/* =====================
-   Intro
-===================== */
-
-.index-intro{
-  background:#fff;
-  border-radius:var(--radius-large);
-  max-width:720px;
-  margin:24px auto 0;
-  padding:40px 28px;
-}
-
-.index-intro-inner{
-  display:flex;
-  flex-direction:column;
-  gap:16px;
-}
-
-.index-intro h2{ margin-top:0; }
-
-
-/* =====================
-   Pillars
-===================== */
-
-.index-pillars{
-  padding-top:32px;
-  padding-bottom:32px;
-}
-
-.index-pillars > h2{
-  text-align:center;
-  margin:0 0 20px;
-}
-
-.index-pillar-cards{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:24px;
-}
-
-.index-pillar{
-  background:#fff;
-  border-radius:var(--radius-card);
-  padding:24px 20px;
-  box-shadow:0 4px 12px rgba(0,0,0,.04);
-}
-
-.index-pillar h3{
-  font-size:1.1rem;
-  margin-bottom:12px;
-}
-
-
-/* =====================
-   About導線（index内）
-===================== */
-
-.index-about-link{
-  background:#fff;
-  border:2px solid var(--accent-color);
-  border-radius:var(--radius-large);
-  padding:32px 24px;
-  text-align:center;
-  margin:24px auto 0;
-  max-width:720px;
-}
-
-.index-about-lead{
-  margin:0 0 8px;
-  font-size:1rem;
-}
-
-.index-about-sub{
-  margin:8px 0 0;
-  font-size:.9rem;
-  color:var(--sub-text);
-  display:none;
-}
-
-
-/* =====================
-   Top CTA（index専用）
-===================== */
-
-.index-contact-cta{
-  background:linear-gradient(180deg,#fff 0%,#fff7e7 100%);
-  border-radius:var(--radius-large);
-  box-shadow:0 16px 34px rgba(0,0,0,.12);
-  border:3px solid var(--accent-color);
-  text-align:center;
-  padding:52px 24px;
-  max-width:720px;
-  margin:56px auto 48px;
-}
-
-img.index-contact-cta-icon{
-  width:72px;
-  margin:0 auto 22px;
-}
-
-
-/* =====================================================
-   06 Page - about
-===================================================== */
-
-/* =====================
-   共通セクション土台
-===================== */
-
-.about-intro,
-.about-pillars,
-.about-relationship,
-.about-parents,
-.about-future,
-.about-cta,
-.about-daily-flow,
-.about-overview,
-.about-program,
-.about-staff,
-.about-access,
-.about-instagram,
-.about-footer-links{
-  background:#fff;
-  border-radius:var(--radius-large);
-  margin-bottom:40px;
-}
-
-/* =====================
-   Intro（主張しないけど届く設計）
-===================== */
-
-.about-intro{
-  max-width:720px;
-  margin:32px auto 48px;
-  padding:40px 28px;
-}
-
-.about-intro h1{
-  margin-top:0;
-  margin-bottom:16px;
-}
-
-.about-intro p{
-  margin:0 0 18px;
-  line-height:1.9;
-}
-
-.about-intro-header{
-  display:flex;
-  align-items:center;
-  gap:14px;
-  margin-bottom:28px;
-}
-
-.about-intro-icon{
-  width:56px;
-  height:auto;
-}
-
-/* =====================
-   Pillars
-===================== */
-
-.about-pillars > h2{
-  margin:0 0 24px;
-  text-align:center;
-}
-
-.about-pillar{
-  margin-bottom:40px;
-}
-
-.about-pillar h3{
-  margin-top:0;
-  margin-bottom:12px;
-}
-
-@media screen and (min-width:769px){
-
-  .about-pillar-cards{
-    display:flex;
-    gap:32px;
-  }
-
-  .about-pillar{
-    flex:1;
-    margin-bottom:0;
-  }
-}
-
-/* =====================
-   CTA
-===================== */
-
-.about-cta{
-  text-align:center;
-  border:3px solid var(--accent-color);
-  box-shadow:0 12px 28px rgba(0,0,0,.08);
-}
-
-.about-cta-button{
-  display:inline-block;
-  margin-top:16px;
-  padding:12px 32px;
-  background:var(--accent-color);
-  color:#fff;
-  text-decoration:none;
-  border-radius:999px;
-  font-weight:bold;
-}
-
-.about-cta-button:hover{
-  opacity:.9;
-}
-
-/* =====================
-   Daily Flow
-===================== */
-
-.about-daily-flow h3{
-  margin-top:32px;
-}
-
-/* =====================
-   Access
-===================== */
-
-.about-access-map{
-  margin:24px 0;
-  border-radius:var(--radius-card);
-  overflow:hidden;
-}
-
-/* =====================
-   Footer Links
-===================== */
-
-.about-footer-links{
-  background:transparent;
-  text-align:center;
-}
-
-.about-footer-link-item{
-  margin-bottom:16px;
-}
-
-.about-button-link{
-  display:inline-block;
-  padding:10px 24px;
-  border-radius:999px;
-  text-decoration:none;
-  font-weight:bold;
-}
-
-.about-button-sub{
-  background:transparent;
-  color:var(--accent-color);
-  border:2px solid var(--accent-color);
-}
-
-.about-button-sub:hover{
-  background:var(--accent-color);
-  color:#fff;
-}
-
-/* =====================================================
-   07 Page - contact
-   （未実装）
-===================================================== */
-
-
-/* =====================================================
-   08 Page - disclosure
-   （未実装）
-===================================================== */
-
-
-/* =====================================================
-   Responsive
-===================================================== */
-
-@media screen and (min-width:769px){
-
-  .index-hero{ height:520px; }
-
-  .index-hero-image{
-    height:520px;
-    object-fit:cover;
-  }
-
-  .index-intro-inner{
-    flex-direction:row;
-    align-items:center;
-    gap:32px;
-  }
-
-  .index-intro-icon{
-    width:110px;
-    height:auto;
-    flex-shrink:0;
-  }
-}
-
-@media screen and (max-width:768px){
-
-  .index-intro,
-  .index-contact-cta,
-  .index-about-link{
-    margin-left:16px;
-    margin-right:16px;
-    padding:32px 20px;
-  }
-
-  .index-intro-icon{
-    width:76px;
-    margin:0 auto 12px;
-  }
-
-  .index-pillar-cards{
-    grid-template-columns:1fr;
-  }
-}
+<!DOCTYPE html>
+<!-- about/index.html Version 1.1 確定版（構造・リンク整合済み） -->
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ハピネスキッズについて</title>
+ <link rel="stylesheet" href="/assets/css/common.css"
+</head>
+<body>
+
+<!-- ヘッダー（ページトップと完全一致） -->
+<header class="site-header">
+  <div class="site-header-inner">
+    <img src="/assets/images/icon.png" class="site-icon" alt="">
+    <span class="site-title">放課後等デイサービス　ハピネスキッズ</span>
+  </div>
+</header>
+
+<!-- イントロ部 -->
+<section class="about-intro">
+  <div class="about-intro-header">
+    <img src="/assets/images/icon.png" class="about-intro-icon" alt="">
+    <h1>ハピネスキッズについて</h1>
+  </div>
+
+   <p><strong>ハピネスキッズでは、失敗しても自分を否定せず、もう一度挑戦できる心を育てます。</strong><br>
+  これはどんな学びや体験よりも大切な力です。</p>
+
+  <p>私たちは、子どもたちの成長を支える土台として、<strong>「褒めて伸ばす」「スモールステップで進める」</strong>という考え方を基盤にしています。<br>
+  さらに、挑戦する気持ちを育てる支援も行っています。<br>
+  その入り口となるのが、<strong>“たのしい”という感情</strong>です。<br>
+  だからこそ、私たちは子どもたちに<strong>「失敗しても大丈夫。チャレンジしていこう」</strong>と伝えています。</p>
+
+  <p>私たちは、子どもが安心して挑戦できる環境を整えています。ここでは子どもが評価されることも、他の子と比べられることもありません。<br>
+  <strong>「休みたいときは休める」「関わりたいときは関われる」</strong>場所であることが、小さな挑戦を生む土台となります。</p>
+
+  <p>私たちは、日々の体験を通して、子どもが少しずつ自分の力で前を向けるように関わります。<br>
+  失敗しても立ち直れる経験や、成功の喜び、挑戦の楽しさ。<br>
+  その積み重ねが、学校や社会の新しい環境でも、自分を否定せずに歩んでいける力につながります。</p>
+</section>
+
+<section class="about-pillars">
+  <h2>支援の柱</h2>
+
+  <div class="about-pillar-cards">
+    <div class="about-pillar">
+      <h3>安心して挑戦できる居場所</h3>
+      <p>私たちは、子どもが安心して過ごせる環境を整えています。<br>
+      「休みたいときは休める」「関わりたいときは関われる」。<br>
+      その安心感が、小さな挑戦を生み出します。<br>
+      <strong>安心できるからこそ、子どもは「やってみよう」と思えるのです。</strong></p>
+    </div>
+     <div class="about-pillar">
+      <h3>挑戦する気持ちを育てる</h3>
+      <p>私たちは、“たのしい”を入り口に、挑戦する気持ちを育てています。<br>
+      「失敗しても大丈夫。チャレンジしていこう。」<br>
+      その言葉を、日々の体験の中で実感できるように支援しています。<br>
+      <strong>その一歩一歩の挑戦が、次の成長へとつながっていきます。</strong></p>
+    </div>
+     <div class="about-pillar">
+      <h3>自分を否定しない力を育む</h3>
+      <p>私たちは、成功も失敗も大切な経験として受け止めます。<br>
+      その積み重ねが、子どもが自分を否定せず前を向ける力につながります。<br>
+      <strong>そしてその力が、もう一度挑戦できる心を育てていきます。</strong></p>
+    </div>
+  </div>
+</section>
+
+<section class="about-relationship">
+  <h2>子どもとの関わり方</h2>
+  <p>
+    子どもたちの成長は、一直線ではありません。<br>
+    私たちは、その日の表情や声のトーン、小さな変化を感じ取りながら関わります。<br>
+    無理に前へ進ませるのではなく、その子の歩幅に合わせることを大切にしています。
+  </p>
+  <p>
+    今日は見学だけで終わる日もあります。<br>
+    今日は思いきり挑戦できる日もあります。<br>
+    その積み重ねの中で、子ども自身が「ここなら大丈夫」と思える関係を築いていきます。
+  </p>
+</section>
+
+<section class="about-parents">
+  <h2>保護者の方へ</h2>
+  <p>お子さまのことを、いちばん近くで見守っておられるのは、保護者のみなさまです。<br>
+  日々の小さな変化や成長、そして揺れ動く気持ちを、誰よりも感じ取っておられることと思います。<br>
+  その歩みの中で、迷いや不安を感じることもあるかもしれません。</p>
+  <p>私たちは、子どもだけを支えるのではなく、<br>
+  ご家庭とともに歩む存在でありたいと考えています。<br>
+  お子さまの今の姿を大切にしながら、これから先の成長を一緒に見つめていきます。</p>
+  <p>お子さまの今の姿を、一度ゆっくりお聞かせいただけませんか。<br>
+  もし今、少しでも気になることがあれば、<br>
+  どうぞお気軽にご相談ください。<br>
+  小さなご質問でも構いません。</p>
+</section>
+
+<section class="about-future">
+  <h2>これからの歩み</h2>
+  <p>私たちが目指しているのは、完璧にできるようになることではありません。</p>
+  <p>失敗しても立ち直れること。<br>助けを求めてもいいと思えること。<br>自分なりに前へ進もうとすること。</p>
+  <p>その土台が育ったとき、子どもはそれぞれの場所で、自分の歩幅で歩んでいけると私たちは信じています。</p>
+  <p>その歩みを、いまから一緒に考えていけたらと思っています。</p>
+</section>
+
+<section class="about-cta">
+  <h2>まずは、お話をお聞かせください</h2>
+  <p>見学・ご相談は随時受け付けています。<br>
+  お子さまの今の姿や、感じておられることを、安心してお話しいただける時間をご用意しています。</p>
+  <a href="../contact/index.html" class="about-cta-button">お問い合わせ・ご相談はこちら</a>
+</section>
+
+<!-- 一日の流れ（CTAの下に配置） -->
+<section class="about-daily-flow">
+  <h2>一日の流れ</h2>
+
+  <h3>平日</h3>
+  <p><strong>来所 → 宿題（希望者） → おやつ → 自由時間 → 個別・集団活動 → 読み聞かせ・帰りの会</strong></p>
+  <p>
+    学校終了後に来所し、それぞれのペースで一日が始まります。<br>
+    保護者の方が希望される場合は、まず宿題に取り組みます。<br>
+    その後はおやつの時間をはさみ、自由時間を過ごします。<br>
+    個別活動や集団活動では、一人ひとりの課題や目標に合わせた支援を行い、社会性や生活力を育みます。<br>
+    その日の気持ちや体調に合わせて、活動に参加することも、少し離れて過ごすこともできます。<br>
+    一日の終わりには、読み聞かせや帰りの会を行います。心を落ち着かせる時間を大切にし、気持ちを整えてから帰宅します。
+  </p>
+
+  <h3>土曜日・長期休暇</h3>
+  <p><strong>来所 → 自由時間 → チャレンジタイム → 朝の会 → 宿題・課題 → 昼食 → 個別・集団活動 → おやつ → 読み聞かせ・帰りの会</strong></p>
+  <p>
+    自宅から来所し、ゆったりと自由時間を過ごしながら一日が始まります。<br>
+    立幅跳びなどの運動に取り組む「チャレンジタイム」や朝の会を通して、活動への気持ちを整えていきます。<br>
+    その後は宿題や課題に取り組む時間を設け、昼食をはさみながら、個別活動や集団活動、自由時間をバランスよく組み合わせて過ごします。<br>
+    その日の様子を大切にしながら、無理のない関わりを心がけています。<br>
+    一日の終わりには、読み聞かせや帰りの会を行います。心身をクールダウンさせ、気持ちを整えてから帰宅します。
+  </p>
+</section>
+
+<section class="about-overview">
+  <h2>施設概要・利用案内</h2>
+  <p>施設名：放課後等デイサービス ハピネスキッズ</p>
+  <p>対象：小学生〜高校生（受給者証が必要）</p>
+  <p>定員：10名</p>
+  <p>営業日：月〜土 / 休日：日・祝・年末年始</p>
+  <p>送迎：あり（ご相談ください）</p>
+  <p>料金：児童福祉法に定められた料金<br>※おやつ代・活動費等は別途必要な場合があります</p>
+  <p>持ちもの：筆記用具・宿題・水筒<br>（1日利用時はお弁当）</p>
+</section>
+
+<section class="about-program">
+  <h2>療育内容</h2>
+  <h3>個別療育</h3>
+  <p>一人ひとりの状態に合わせて計画を立て、個別で支援を行います。</p>
+  <h3>社会性・自立</h3>
+  <p>遊びや活動を通して、コミュニケーションや生活に必要な力を育てます。</p>
+  <h3>音楽</h3>
+  <p>楽器やリトミックなど、音楽の力を活かした支援を行います。</p>
+  <h3>からだづくり</h3>
+  <p>外出活動や運動を取り入れ、楽しく身体を動かす経験を大切にしています。</p>
+</section>
+
+<section class="about-staff">
+  <h2>職員体制</h2>
+  <p>保育士、介護福祉士、教員免許取得者、音楽療法士など、さまざまな専門分野のスタッフが連携して支援します。<br>
+  それぞれの専門性を活かしながら、子どもの今の姿に合わせた支援を大切にしています。</p>
+</section>
+
+<section class="about-access">
+  <h2>アクセス・お問い合わせ</h2>
+  <p>〒780-0931 高知県高知市玉水町5 岩貞ビル1F</p>
+  <p>電話：088-802-1380</p>
+  <p>メール：mail@happiness-kids.net</p>
+
+  <div class="about-access-map">
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3324.883469299897!2d133.5118423781368!3d33.55640388486059!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x354e1901de86b59f%3A0x2adbbe6d3705aaec!2z5pS-6Kqy5b6M562J44OH44Kk44K144O844OT44K5IOODj-ODlOODjeOCueOCreODg-OCug!5e0!3m2!1sja!2sjp!4v1772012861291!5m2!1sja!2sjp" width="100%" height="350" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+  </div>
+
+  <p>見学・ご相談は随時受け付けています。</p>
+  <p><a href="../contact/index.html">▶ お問い合わせはこちら</a></p>
+</section>
+
+<!--
+【Instagram設計：決定事項】
+・表示は1投稿のみ（複数表示しない）
+・投稿データは ./parts/instagram.txt に記載し、差し替えで更新する
+・instagram.js により自動読み込み
+・instagram.txt が空の場合はセクション自動非表示
+  ※空白や改行のみの場合も「空」として非表示扱い
+・営業的訴求はしない（実在感・日々の様子の補強が目的）
+・フォロー誘導は強く行わない
+-->
+<section class="about-instagram">
+  <h2>日々の様子（Instagram）</h2>
+  <p>日々の活動の様子を、Instagramで発信しています。</p>
+
+  <!-- ./parts/instagram.txt にInstagramの埋め込みコードを1件のみ記載してください -->
+  <div id="instagram-embed"></div>
+</section>
+
+<!-- フッターリンク -->
+<section class="about-footer-links">
+  <div class="about-footer-link-item">
+    <a href="../index.html" class="about-button-link about-button-sub">トップへ戻る</a>
+  </div>
+  <div class="about-footer-link-item">
+    <a href="../recruit/" class="about-button-link about-button-sub">採用情報</a>
+  </div>
+  <div class="about-footer-link-item">
+    <a href="../disclosure/" class="about-button-link about-button-sub">情報公開</a>
+  </div>
+  <div class="about-footer-link-item">
+    <a href="../contact/index.html" class="about-button-link about-button-sub">お問い合わせ</a>
+  </div>
+</section>
+
+<!-- フッター -->
+<footer class="site-footer">
+  <p>&copy; ハピネスキッズ</p>
+</footer>
+
+<script src="../assets/js/instagram.js"></script>
+</body>
+</html>
