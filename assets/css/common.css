@@ -322,6 +322,7 @@ img.index-contact-cta-icon{
   background:#fff;
   border-radius:var(--radius-large);
   margin-bottom:40px;
+  padding:40px 28px; /* indexとPC余白を統一 */
 }
 
 .about-intro h1{
@@ -354,6 +355,7 @@ img.index-contact-cta-icon{
 }
 
 .about-pillar h3{
+  font-size:1.1rem; /* indexと見出しサイズを統一 */
   margin-top:0;
   margin-bottom:12px;
 }
