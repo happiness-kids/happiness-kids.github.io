@@ -336,6 +336,8 @@ img.index-contact-cta-icon{
   font-weight:600;
 }
 
+/* スマホ時は本文の行間をさらにゆったり */
+
 .about-intro-header{
   display:flex;
   align-items:center;
@@ -346,6 +348,15 @@ img.index-contact-cta-icon{
 .about-intro-icon{
   width:64px;
   height:auto;
+}
+
+/* Intro本文の読みやすさ改善 */
+.about-intro p{
+  margin:0 0 1.4em;
+}
+
+.about-intro p:last-child{
+  margin-bottom:0;
 }
 
 /* =====================
@@ -545,4 +556,9 @@ img.index-contact-cta-icon{
   .about-intro h1{
     font-size:1.35rem; /* スマホはさらに静かに */
   }
+
+  .about-intro{
+    line-height:2; /* スマホでは本文をゆったり読ませる */
+  }
+}
 }
