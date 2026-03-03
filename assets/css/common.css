@@ -221,6 +221,13 @@ section{
    Pillars
 ===================== */
 
+/* スマホ時：縦積み＋カード間に余白 */
+.about-pillar-cards{
+  display:flex;
+  flex-direction:column;
+  gap:24px;
+}
+
 .index-pillars{
   padding-top:32px;
   padding-bottom:32px;
