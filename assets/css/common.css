@@ -501,13 +501,24 @@ img.index-contact-cta-icon{
   padding:6px 14px;
   border:1.5px solid var(--accent-color);
   border-radius:999px;
-  background:#fff;
+  background:var(--bg-color);
   transition:.2s;
 }
 
 .about-button-link:hover{
   background:var(--accent-color);
   color:#fff;
+}
+
+/* トップに戻る：PCのみ表示 */
+.back-to-top{
+  display:none;
+}
+
+@media screen and (min-width:769px){
+  .back-to-top{
+    display:inline-block;
+  }
 }
 
 /* =====================================================
