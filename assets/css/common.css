@@ -224,6 +224,13 @@ section{
 .index-pillars{
   padding-top:32px;
   padding-bottom:32px;
+  margin:0 auto;
+}
+
+@media screen and (min-width:769px){
+  .index-pillars{
+    max-width:960px; /* aboutと統一 */
+  }
 }
 
 .index-pillars > h2{
