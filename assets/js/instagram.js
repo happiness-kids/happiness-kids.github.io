@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const container = document.getElementById("instagram-embed");
   if (!container) return;
 
-  fetch("./parts/instagram.txt")
+  fetch("../parts/instagram.txt")
     .then((res) => {
       if (!res.ok) throw new Error();
       return res.text();
