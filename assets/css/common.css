@@ -326,8 +326,14 @@ img.index-contact-cta-icon{
 
 /* pillarsは外側カードを外し、indexと同じ構造幅に統一 */
 .about-pillars{
-  margin-bottom:40px;
+  margin:0 auto 40px;
   padding:48px 24px; /* section基準に戻す */
+}
+
+@media screen and (min-width:769px){
+  .about-pillars{
+    max-width:960px; /* ピラー部のみゆったり幅に拡張 */
+  }
 }
 
 .about-intro{
