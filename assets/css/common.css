@@ -483,25 +483,29 @@ img.index-contact-cta-icon{
   text-align:center;
 }
 
-.about-footer-link-item{
-  margin-bottom:16px;
+/* indexと同じ横並びレイアウト */
+.about-footer-links{
+  display:flex;
+  justify-content:center;
+  gap:18px;
+  flex-wrap:wrap;
+  margin-top:8px;
 }
 
+/* ボタンサイズ・デザインをindexと統一 */
 .about-button-link{
   display:inline-block;
-  padding:10px 24px;
-  border-radius:999px;
-  text-decoration:none;
-  font-weight:bold;
-}
-
-.about-button-sub{
-  background:transparent;
+  font-size:.78rem;
   color:var(--accent-color);
-  border:2px solid var(--accent-color);
+  text-decoration:none;
+  padding:6px 14px;
+  border:1.5px solid var(--accent-color);
+  border-radius:999px;
+  background:#fff;
+  transition:.2s;
 }
 
-.about-button-sub:hover{
+.about-button-link:hover{
   background:var(--accent-color);
   color:#fff;
 }
