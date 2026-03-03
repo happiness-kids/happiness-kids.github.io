@@ -307,7 +307,6 @@ img.index-contact-cta-icon{
 ===================== */
 
 .about-intro,
-.about-pillars,
 .about-relationship,
 .about-parents,
 .about-future,
@@ -323,6 +322,12 @@ img.index-contact-cta-icon{
   border-radius:var(--radius-large);
   margin-bottom:40px;
   padding:40px 28px; /* indexとPC余白を統一 */
+}
+
+/* pillarsは外側カードを外し、indexと同じ構造幅に統一 */
+.about-pillars{
+  margin-bottom:40px;
+  padding:48px 24px; /* section基準に戻す */
 }
 
 .about-intro{
