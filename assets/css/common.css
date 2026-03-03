@@ -462,6 +462,18 @@ img.index-contact-cta-icon{
   overflow:hidden;
 }
 
+.about-access-map iframe{
+  width:100%;
+  height:300px; /* PC推奨サイズ */
+  border:0;
+}
+
+@media screen and (max-width:768px){
+  .about-access-map iframe{
+    height:240px; /* スマホ推奨サイズ */
+  }
+}
+
 /* =====================
    Footer Links
 ===================== */
