@@ -86,15 +86,18 @@ section{
    Footer
 ===================== */
 
-.footer-links{
+/* フッターボタン共通ナビ */
+.footer-nav{
   display:flex;
   justify-content:center;
-  gap:18px;
   flex-wrap:wrap;
-  margin-top:8px;
+  gap:18px; /* PC基準 */
+  margin:40px auto 40px; /* フッター帯の上40px */
+  max-width:720px;
 }
 
-.footer-links a{
+/* フッターボタン本体 */
+.footer-button{
   display:inline-block;
   font-size:.78rem;
   color:var(--accent-color);
@@ -106,9 +109,27 @@ section{
   transition:.2s;
 }
 
-.footer-links a:hover{
+.footer-button:hover{
   background:var(--accent-color);
   color:#fff;
+}
+
+/* スマホ時はボタン間隔12px */
+@media screen and (max-width:768px){
+  .footer-nav{
+    gap:12px;
+  }
+}
+
+/* トップに戻る：PCのみ表示 */
+.back-to-top{
+  display:none;
+}
+
+@media screen and (min-width:769px){
+  .back-to-top{
+    display:inline-block;
+  }
 }
 
 .site-footer{
@@ -479,46 +500,8 @@ img.index-contact-cta-icon{
 
 /* =====================
    Footer Links
+   （footer-navへ統合のため削除）
 ===================== */
-
-.about-footer-links{
-  background:transparent;
-  text-align:center;
-}
-
-/* indexと同じ横並びレイアウト */
-.about-footer-links{
-  display:flex;
-  justify-content:center;
-  gap:18px;
-  flex-wrap:wrap;
-  margin-top:8px;
-}
-
-/* スマホ時はボタン間隔を少し詰める */
-@media screen and (max-width:768px){
-  .about-footer-links{
-    gap:12px;
-  }
-}
-
-/* ボタンサイズ・デザインをindexと統一 */
-.about-button-link{
-  display:inline-block;
-  font-size:.78rem;
-  color:var(--accent-color);
-  text-decoration:none;
-  padding:6px 14px;
-  border:1.5px solid var(--accent-color);
-  border-radius:999px;
-  background:var(--bg-color);
-  transition:.2s;
-}
-
-.about-button-link:hover{
-  background:var(--accent-color);
-  color:#fff;
-}
 
 /* トップに戻る：PCのみ表示 */
 .back-to-top{
