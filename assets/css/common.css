@@ -331,7 +331,13 @@ img.index-contact-cta-icon{
 .about-program,
 .about-staff,
 .about-access,
-.about-instagram,
+.about-instagram{
+  background:#fff;
+  border-radius:var(--radius-large);
+  margin-bottom:40px;
+  padding:40px 28px;
+}
+
 .about-footer-links{
   display:flex;
   justify-content:center;
@@ -339,6 +345,7 @@ img.index-contact-cta-icon{
   flex-wrap:wrap;
   margin-top:8px;
   margin-bottom:16px; /* フッター帯との距離を控えめに */
+  background:transparent;
 }
 
 /* スマホ時はボタン間隔を少し詰める */
