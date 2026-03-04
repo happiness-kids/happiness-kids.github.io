@@ -492,6 +492,13 @@ img.index-contact-cta-icon{
   margin-top:8px;
 }
 
+/* スマホ時はボタン間隔を少し詰める */
+@media screen and (max-width:768px){
+  .about-footer-links{
+    gap:12px;
+  }
+}
+
 /* ボタンサイズ・デザインをindexと統一 */
 .about-button-link{
   display:inline-block;
