@@ -375,6 +375,52 @@ img.index-contact-cta-icon{
   margin:0 auto !important;
 }
 
+/* =====================
+   Instagram 折りたたみ表示
+   （長い埋め込みを途中まで表示）
+===================== */
+
+.about-instagram-preview{
+  max-height:300px; /* PC/SP共通：ここで見える高さを制御 */
+  overflow:hidden;
+  position:relative;
+}
+
+/* 下部フェード（続きを示す視覚ヒント） */
+.about-instagram-preview::after{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:0;
+  height:80px;
+  background:linear-gradient(to bottom, rgba(255,255,255,0), #ffffff);
+}
+
+/* 展開状態 */
+.about-instagram-preview.is-open{
+  max-height:none;
+}
+
+.about-instagram-preview.is-open::after{
+  display:none;
+}
+
+.about-instagram-toggle{
+  text-align:center;
+  margin-top:16px;
+}
+
+.about-instagram-toggle button{
+  background:transparent;
+  border:2px solid var(--accent-color);
+  color:var(--accent-color);
+  padding:8px 18px;
+  border-radius:999px;
+  cursor:pointer;
+  font-size:.9rem;
+}
+
 /* 以下、about共通カード */
 .about-instagram,
 .about-footer-links{
