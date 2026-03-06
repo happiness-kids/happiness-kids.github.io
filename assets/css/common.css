@@ -92,8 +92,13 @@ section{
   justify-content:center;
   flex-wrap:wrap;
   gap:18px; /* PC基準 */
-  margin:40px auto 40px; /* フッター帯の上40px */
   max-width:720px;
+
+  /* section共通paddingの影響を打ち消す */
+  padding:0 24px;
+
+  /* フッター帯の上40pxを厳密に確保 */
+  margin:0 auto 40px;
 }
 
 /* フッターボタン本体 */
@@ -105,7 +110,7 @@ section{
   padding:6px 14px;
   border:1.5px solid var(--accent-color);
   border-radius:999px;
-  background:#fff;
+  background:var(--bg-color);
   transition:.2s;
 }
 
