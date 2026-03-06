@@ -29,9 +29,23 @@ document.addEventListener("DOMContentLoaded", () => {
       // Instagram embed.js 読み込み
       loadInstagramEmbedScript();
 
-      /* =========================
-         ここから追加（続きを読む制御）
-      ========================== */
+      /* Instagram描画後に高さを確認して
+         折りたたみが不要ならボタンを非表示にする */
+
+      setTimeout(() => {
+
+        const preview = section.querySelector(".about-instagram-preview");
+        const buttonWrap = section.querySelector(".about-instagram-toggle");
+
+        if (!preview || !buttonWrap) return;
+
+        if (preview.scrollHeight <= preview.clientHeight) {
+          buttonWrap.style.display = "none";
+        }
+
+      }, 800);
+
+      /* 続きを読むトグル */
 
       const preview = section.querySelector(".about-instagram-preview");
       const button = section.querySelector(".about-instagram-toggle button");
