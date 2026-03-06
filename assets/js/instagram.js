@@ -25,7 +25,29 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       container.innerHTML = html;
+
+      // Instagram embed.js 読み込み
       loadInstagramEmbedScript();
+
+      /* =========================
+         ここから追加（続きを読む制御）
+      ========================== */
+
+      const preview = section.querySelector(".about-instagram-preview");
+      const button = section.querySelector(".about-instagram-toggle button");
+
+      if (preview && button) {
+        button.addEventListener("click", () => {
+          preview.classList.toggle("is-open");
+
+          if (preview.classList.contains("is-open")) {
+            button.textContent = "閉じる";
+          } else {
+            button.textContent = "続きを読む";
+          }
+        });
+      }
+
     })
     .catch(() => {
       section.remove();
