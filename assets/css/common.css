@@ -499,6 +499,37 @@ img.index-contact-cta-icon{
 
 @media screen and (max-width:768px){
   .about-access-map iframe{
+    height:240px;
+  }
+}
+
+/* =====================
+   Instagram Embed（安定実装）
+===================== */
+
+.about-instagram-embed{
+  width:100%;
+  display:flex;
+  justify-content:center; /* PCで中央寄せ */
+}
+
+.about-instagram-embed blockquote{
+  margin:0 auto !important; /* Instagram標準余白をリセット */
+  max-width:540px !important; /* Instagram推奨最大幅 */
+  width:100% !important;
+}
+
+/* スマホ安全対策（カードはみ出し防止） */
+@media screen and (max-width:480px){
+  .about-instagram-embed blockquote{
+    min-width:0 !important;
+    width:100% !important;
+  }
+}
+
+
+@media screen and (max-width:768px){
+  .about-access-map iframe{
     height:240px; /* スマホ推奨サイズ */
   }
 }
@@ -614,3 +645,19 @@ img.index-contact-cta-icon{
     line-height:2; /* スマホでは本文をゆったり読ませる */
   }
 }
+
+/* =====================
+   Instagram Embed
+===================== */
+
+/* Instagram公式embedを中央配置 */
+.about-instagram .instagram-media{
+  margin-left:auto !important;
+  margin-right:auto !important;
+}
+
+/* SPでカードからはみ出さない保険 */
+.about-instagram iframe{
+  max-width:100%;
+}
+
