@@ -367,6 +367,23 @@ img.index-contact-cta-icon{
   padding:40px 28px; /* indexとPC余白を統一 */
 }
 
+/* Instagram埋め込み安定化（スマホはみ出し防止） */
+.about-instagram .instagram-media{
+  min-width:0 !important;
+  max-width:100% !important;
+  width:100% !important;
+  margin:0 auto !important;
+}
+
+/* 以下、about共通カード */
+.about-instagram,
+.about-footer-links{
+  background:#fff;
+  border-radius:var(--radius-large);
+  margin-bottom:40px;
+  padding:40px 28px; /* indexとPC余白を統一 */
+}
+
 /* pillarsは外側カードを外し、indexと同じ構造幅に統一 */
 .about-pillars{
   margin:0 auto 40px;
