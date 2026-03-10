@@ -340,11 +340,10 @@ section{
    Pillars
 ===================== */
 
-.about-pillar-cards{
-  display:flex;
-  flex-direction:column;
-  gap:var(--space-gap);
-}
+
+
+
+
 
 .index-pillars{
   padding-top:32px;
@@ -527,7 +526,7 @@ img.index-contact-cta-icon{
   .about-pillar-cards{
   display:grid;
   grid-template-columns:repeat(3,1fr);
-  gap:32px;
+  gap:var(--space-gap);
 }
 
   .about-pillar{
