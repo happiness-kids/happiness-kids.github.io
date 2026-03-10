@@ -705,18 +705,61 @@ img.index-contact-cta-icon{
    折りたたみが表示されなくなる
 ===================== */
 
-.about-instagram .instagram-media{
-  margin-left:auto !important;
-  margin-right:auto !important;
-  max-width:540px !important;
-  width:100% !important;
+/* =====================
+   Instagram 折りたたみ表示
+   （長い埋め込みを途中まで表示）
+===================== */
 
-  /* 折りたたみを出すため高さ制御 */
+.about-instagram-preview{
   max-height:300px;
   overflow:hidden;
+  position:relative;
+}
+
+/* 下部フェード（続きを示す視覚ヒント） */
+.about-instagram-preview::after{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:0;
+  height:80px;
+  background:linear-gradient(to bottom, rgba(255,255,255,0), #ffffff);
+}
+
+/* 展開状態 */
+.about-instagram-preview.is-open{
+  max-height:none;
+}
+
+.about-instagram-preview.is-open::after{
+  display:none;
+}
+
+.about-instagram-toggle{
+  text-align:center;
+  margin-top:16px;
+}
+
+.about-instagram-toggle button{
+  background:transparent;
+  border:2px solid var(--accent-color);
+  color:var(--accent-color);
+  padding:8px 18px;
+  border-radius:999px;
+  cursor:pointer;
+  font-size:.9rem;
+}
+
+/* Instagram埋め込み安定化（幅制御のみ） */
+.about-instagram .instagram-media{
+  min-width:0 !important;
+  max-width:540px !important;
+  width:100% !important;
+  margin-left:auto !important;
+  margin-right:auto !important;
 }
 
 .about-instagram iframe{
   max-width:100%;
-  height:300px;
 }
