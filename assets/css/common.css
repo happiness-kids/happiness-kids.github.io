@@ -454,7 +454,12 @@ img.index-contact-cta-icon{
 .about-footer-links{
   background:#fff;
   border-radius:var(--radius-large);
-  margin-bottom:var(--space-card);
+
+  /* PCでカードが画面いっぱいに広がらないよう制御
+     indexと同じ中央カラム幅に合わせる */
+  max-width:720px;
+  margin:0 auto var(--space-card);
+
   padding:var(--space-card) 28px;
 }
 
@@ -688,11 +693,19 @@ img.index-contact-cta-icon{
 
 /* =====================
    Instagram Embed
+
+   Instagram公式embedは
+   540px前後で折りたたみUIが発生する。
+
+   カード幅が広がると折りたたみが消えるため
+   最大幅を制御して中央寄せする。
 ===================== */
 
 .about-instagram .instagram-media{
   margin-left:auto !important;
   margin-right:auto !important;
+  max-width:540px !important;
+  width:100% !important;
 }
 
 .about-instagram iframe{
