@@ -472,6 +472,12 @@ img.index-contact-cta-icon{
   padding:48px 24px;
 }
 
+/* 見出し中央揃え（支援の柱） */
+.about-pillars > h2{
+  text-align:center;
+  margin:0 0 20px;
+}
+
 @media screen and (min-width:769px){
   .about-pillars{
     max-width:960px;
