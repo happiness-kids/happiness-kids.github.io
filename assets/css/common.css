@@ -2,24 +2,67 @@
 
 /* =====================================================
    ハピネスキッズ common.css
-   構造整理版 v3.1
-   （アバウトページ確定）
+   構造整理版 v4.0
+
+   ■ このCSSの目的
+   ・サイト全体の共通スタイル管理
+   ・ページ別構造を整理
+   ・AI / 人間どちらでも保守しやすい構造
+
+   ■ 保守ルール（AI用コメント）
+   1. セクション番号は必ず維持する
+   2. 新しいUIは「03 Components」へ追加
+   3. ページ固有CSSは
+      05 index
+      06 about
+      07 contact
+      08 disclosure
+      に追加
+   4. spacingは基本的に :root 変数を使用
+   5. radius / color は直接書かない
+
+   ■ 更新履歴
+   v4.0
+   ・AI保守コメント追加
+   ・構造説明を強化
+   ・将来拡張ルールを明文化
 ===================================================== */
 
 
 /* =====================================================
    01 Base / Reset
+   サイト全体の基本設定
 ===================================================== */
 
 :root {
+  /* =====================
+     Color System
+  ===================== */
+
   --main-color: #ffe114;
   --accent-color: #f4a300;
   --text-color: #333;
   --sub-text: #666;
   --bg-color: #fff1d6;
 
+
+  /* =====================
+     Radius System
+  ===================== */
+
   --radius-card: 16px;
   --radius-large: 20px;
+
+
+  /* =====================
+     Spacing System
+     すべての余白はここを基準
+  ===================== */
+
+  --space-section:48px;
+  --space-card:40px;
+  --space-gap:24px;
+  --space-small:16px;
 }
 
 * { box-sizing: border-box; }
@@ -27,10 +70,15 @@
 html, body {
   margin:0;
   padding:0;
+
+  /* フォントは可読性重視 */
   font-family:"BIZ UDPGothic","BIZ UDゴシック","Meiryo","Hiragino Kaku Gothic ProN",sans-serif;
+
   color:var(--text-color);
   background-color:var(--bg-color);
   line-height:1.8;
+
+  /* 横スクロール防止 */
   overflow-x:hidden;
 }
 
@@ -40,16 +88,37 @@ img{
   display:block;
 }
 
+/* セクション共通余白 */
 section{
-  max-width:720px; /* サイト全体の基準幅をindexに統一 */
-  margin:0 auto;
-  padding:48px 24px;
+  padding:var(--space-section) 24px;
 }
 
 
 /* =====================================================
-   02 Layout (全ページ共通構造)
+   02 Layout
+   サイト全体の構造
+
+   Header
+   Container
+   Footer
 ===================================================== */
+
+
+/* =====================
+   Container
+   中央寄せレイアウト
+===================== */
+
+.container{
+  max-width:720px;
+  margin:0 auto;
+}
+
+.container-wide{
+  max-width:960px;
+  margin:0 auto;
+}
+
 
 /* =====================
    Header
@@ -61,7 +130,7 @@ section{
 }
 
 .site-header-inner{
-  max-width:720px; /* コンテンツ幅と統一 */
+  max-width:720px;
   margin:0 auto;
   display:flex;
   align-items:center;
@@ -91,17 +160,15 @@ section{
   display:flex;
   justify-content:center;
   flex-wrap:wrap;
-  gap:18px; /* PC基準 */
-  max-width:720px;
+  gap:18px;
 
-  /* section共通paddingの影響を打ち消す */
   padding:0 24px;
 
-  /* フッター帯の上40pxを厳密に確保 */
-  margin:0 auto 40px;
+  margin:0 auto var(--space-card);
+  max-width:720px;
 }
 
-/* フッターボタン本体 */
+/* フッターボタン */
 .footer-button{
   display:inline-block;
   font-size:.78rem;
@@ -119,14 +186,14 @@ section{
   color:#fff;
 }
 
-/* スマホ時はボタン間隔12px */
+/* スマホ時ボタン間隔 */
 @media screen and (max-width:768px){
   .footer-nav{
     gap:12px;
   }
 }
 
-/* トップに戻る：PCのみ表示 */
+/* トップに戻る（PCのみ） */
 .back-to-top{
   display:none;
 }
@@ -150,8 +217,14 @@ section{
 
 
 /* =====================================================
-   03 Components (再利用可能UI)
+   03 Components
+   再利用できるUI
+
+   Button
+   Card
+   Utility
 ===================================================== */
+
 
 /* =====================
    Button
@@ -159,7 +232,7 @@ section{
 
 .button-link{
   display:inline-block;
-  margin:16px auto 0;
+  margin:var(--space-small) auto 0;
   padding:12px 28px;
   background:var(--accent-color);
   color:#fff;
@@ -168,6 +241,7 @@ section{
   font-weight:bold;
 }
 
+/* サブボタン */
 .button-link.sub{
   background:transparent;
   color:var(--accent-color);
@@ -175,15 +249,34 @@ section{
 }
 
 
+/* =====================
+   Card Section
+   ページ内の白カード
+===================== */
+
+.card-section{
+  background:#fff;
+  border-radius:var(--radius-large);
+  margin-bottom:var(--space-card);
+  padding:var(--space-card) 28px;
+}
+
+
 /* =====================================================
    04 Utilities
-   （現時点では未使用。将来追加用）
+   汎用クラス（将来拡張用）
+
+   例
+   .text-center
+   .mt-large
 ===================================================== */
 
 
 /* =====================================================
    05 Page - index
+   トップページ専用
 ===================================================== */
+
 
 /* =====================
    Hero
@@ -247,15 +340,11 @@ section{
    Pillars
 ===================== */
 
-/* スマホ時：縦積み＋カード間に余白 */
 .about-pillar-cards{
   display:flex;
   flex-direction:column;
-  gap:24px;
+  gap:var(--space-gap);
 }
-
-
-
 
 .index-pillars{
   padding-top:32px;
@@ -265,7 +354,7 @@ section{
 
 @media screen and (min-width:769px){
   .index-pillars{
-    max-width:960px; /* aboutと統一 */
+    max-width:960px;
   }
 }
 
@@ -277,7 +366,7 @@ section{
 .index-pillar-cards{
   display:grid;
   grid-template-columns:repeat(3,1fr);
-  gap:24px;
+  gap:var(--space-gap);
 }
 
 .index-pillar{
@@ -294,7 +383,7 @@ section{
 
 
 /* =====================
-   About導線（index内）
+   About導線
 ===================== */
 
 .index-about-link{
@@ -321,7 +410,7 @@ section{
 
 
 /* =====================
-   Top CTA（index専用）
+   Top CTA
 ===================== */
 
 .index-contact-cta{
@@ -343,10 +432,12 @@ img.index-contact-cta-icon{
 
 /* =====================================================
    06 Page - about
+   施設紹介ページ
 ===================================================== */
 
+
 /* =====================
-   共通セクション土台
+   共通カード
 ===================== */
 
 .about-intro,
@@ -363,97 +454,36 @@ img.index-contact-cta-icon{
 .about-footer-links{
   background:#fff;
   border-radius:var(--radius-large);
-  margin-bottom:40px;
-  padding:40px 28px; /* indexとPC余白を統一 */
+  margin-bottom:var(--space-card);
+  padding:var(--space-card) 28px;
 }
 
-/* Instagram埋め込み安定化（スマホはみ出し防止） */
-.about-instagram .instagram-media{
-  min-width:0 !important;
-  max-width:100% !important;
-  width:100% !important;
-  margin:0 auto !important;
-}
 
 /* =====================
-   Instagram 折りたたみ表示
-   （長い埋め込みを途中まで表示）
+   Pillars
 ===================== */
 
-.about-instagram-preview{
-  max-height:300px; /* PC/SP共通：ここで見える高さを制御 */
-  overflow:hidden;
-  position:relative;
-}
-
-/* 下部フェード（続きを示す視覚ヒント） */
-.about-instagram-preview::after{
-  content:"";
-  position:absolute;
-  left:0;
-  right:0;
-  bottom:0;
-  height:80px;
-  background:linear-gradient(to bottom, rgba(255,255,255,0), #ffffff);
-}
-
-/* 展開状態 */
-.about-instagram-preview.is-open{
-  max-height:none;
-}
-
-.about-instagram-preview.is-open::after{
-  display:none;
-}
-
-.about-instagram-toggle{
-  text-align:center;
-  margin-top:16px;
-}
-
-.about-instagram-toggle button{
-  background:transparent;
-  border:2px solid var(--accent-color);
-  color:var(--accent-color);
-  padding:8px 18px;
-  border-radius:999px;
-  cursor:pointer;
-  font-size:.9rem;
-}
-
-/* 以下、about共通カード */
-.about-instagram,
-.about-footer-links{
-  background:#fff;
-  border-radius:var(--radius-large);
-  margin-bottom:40px;
-  padding:40px 28px; /* indexとPC余白を統一 */
-}
-
-/* pillarsは外側カードを外し、indexと同じ構造幅に統一 */
 .about-pillars{
-  margin:0 auto 40px;
-  padding:48px 24px; /* section基準に戻す */
+  margin:0 auto var(--space-card);
+  padding:48px 24px;
 }
 
 @media screen and (min-width:769px){
   .about-pillars{
-    max-width:960px; /* ピラー部のみゆったり幅に拡張 */
+    max-width:960px;
   }
 }
 
 .about-intro{
-  margin-top:32px; /* ヘッダー帯との間に呼吸をつくる */
+  margin-top:32px;
 }
 
 .about-intro h1{
   margin-top:0;
   line-height:1.5;
-  font-size:1.5rem; /* 控えめで洗練されたサイズ（PC） */
+  font-size:1.5rem;
   font-weight:600;
 }
-
-/* スマホ時は本文の行間をさらにゆったり */
 
 .about-intro-header{
   display:flex;
@@ -467,22 +497,12 @@ img.index-contact-cta-icon{
   height:auto;
 }
 
-/* Intro本文の読みやすさ改善 */
 .about-intro p{
   margin:0 0 1.4em;
 }
 
 .about-intro p:last-child{
   margin-bottom:0;
-}
-
-/* =====================
-   Pillars
-===================== */
-
-.about-pillars > h2{
-  margin:0 0 24px;
-  text-align:center;
 }
 
 .about-pillar{
@@ -492,7 +512,7 @@ img.index-contact-cta-icon{
 }
 
 .about-pillar h3{
-  font-size:1.1rem; /* indexと見出しサイズを統一 */
+  font-size:1.1rem;
   margin-top:0;
   margin-bottom:12px;
 }
@@ -510,6 +530,7 @@ img.index-contact-cta-icon{
     margin-bottom:0;
   }
 }
+
 
 /* =====================
    CTA
@@ -536,6 +557,7 @@ img.index-contact-cta-icon{
   opacity:.9;
 }
 
+
 /* =====================
    Daily Flow
 ===================== */
@@ -543,6 +565,7 @@ img.index-contact-cta-icon{
 .about-daily-flow h3{
   margin-top:32px;
 }
+
 
 /* =====================
    Access
@@ -556,7 +579,7 @@ img.index-contact-cta-icon{
 
 .about-access-map iframe{
   width:100%;
-  height:300px; /* PC推奨サイズ */
+  height:300px;
   border:0;
 }
 
@@ -566,67 +589,22 @@ img.index-contact-cta-icon{
   }
 }
 
-/* =====================
-   Instagram Embed（安定実装）
-===================== */
-
-.about-instagram-embed{
-  width:100%;
-  display:flex;
-  justify-content:center; /* PCで中央寄せ */
-}
-
-.about-instagram-embed blockquote{
-  margin:0 auto !important; /* Instagram標準余白をリセット */
-  max-width:540px !important; /* Instagram推奨最大幅 */
-  width:100% !important;
-}
-
-/* スマホ安全対策（カードはみ出し防止） */
-@media screen and (max-width:480px){
-  .about-instagram-embed blockquote{
-    min-width:0 !important;
-    width:100% !important;
-  }
-}
-
-
-@media screen and (max-width:768px){
-  .about-access-map iframe{
-    height:240px; /* スマホ推奨サイズ */
-  }
-}
-
-/* =====================
-   Footer Links
-   （footer-navへ統合のため削除）
-===================== */
-
-/* トップに戻る：PCのみ表示 */
-.back-to-top{
-  display:none;
-}
-
-@media screen and (min-width:769px){
-  .back-to-top{
-    display:inline-block;
-  }
-}
 
 /* =====================================================
    07 Page - contact
-   （未実装）
+   （将来実装）
 ===================================================== */
 
 
 /* =====================================================
    08 Page - disclosure
-   （未実装）
+   （将来実装）
 ===================================================== */
 
 
 /* =====================================================
    Responsive
+   PC / Mobile
 ===================================================== */
 
 @media screen and (min-width:769px){
@@ -670,7 +648,6 @@ img.index-contact-cta-icon{
     grid-template-columns:1fr;
   }
 
-  /* aboutページもindexと横幅を統一 */
   .about-intro,
   .about-pillars,
   .about-relationship,
@@ -688,7 +665,6 @@ img.index-contact-cta-icon{
     padding:32px 20px;
   }
 
-  /* Introヘッダーを縦並びにして自然なバランスへ */
   .about-intro-header{
     flex-direction:column;
     text-align:center;
@@ -701,26 +677,24 @@ img.index-contact-cta-icon{
   }
 
   .about-intro h1{
-    font-size:1.35rem; /* スマホはさらに静かに */
+    font-size:1.35rem;
   }
 
   .about-intro{
-    line-height:2; /* スマホでは本文をゆったり読ませる */
+    line-height:2;
   }
 }
+
 
 /* =====================
    Instagram Embed
 ===================== */
 
-/* Instagram公式embedを中央配置 */
 .about-instagram .instagram-media{
   margin-left:auto !important;
   margin-right:auto !important;
 }
 
-/* SPでカードからはみ出さない保険 */
 .about-instagram iframe{
   max-width:100%;
 }
-
