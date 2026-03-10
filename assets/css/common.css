@@ -695,10 +695,14 @@ img.index-contact-cta-icon{
    Instagram Embed
 
    Instagram公式embedは
-   540px前後で折りたたみUIが発生する。
+   高さが約300px前後の時に
+   "続きを読む（折りたたみ）" UI が表示される。
 
-   カード幅が広がると折りたたみが消えるため
-   最大幅を制御して中央寄せする。
+   そのためカード内の表示高さを
+   300px程度に制御しておく。
+
+   ※この高さを大きくすると
+   折りたたみが表示されなくなる
 ===================== */
 
 .about-instagram .instagram-media{
@@ -706,8 +710,13 @@ img.index-contact-cta-icon{
   margin-right:auto !important;
   max-width:540px !important;
   width:100% !important;
+
+  /* 折りたたみを出すため高さ制御 */
+  max-height:300px;
+  overflow:hidden;
 }
 
 .about-instagram iframe{
   max-width:100%;
+  height:300px;
 }
