@@ -1,141 +1,151 @@
 <!DOCTYPE html>
+<!-- contact/index.html 相談窓口ページ v1.0（確定版） -->
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>お問い合わせ・ご相談｜ハピネスキッズ</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <link rel="stylesheet" href="/assets/css/common.css">
+  <title>お問い合わせ | ハピネスキッズ</title>
+  <link rel="stylesheet" href="../assets/css/common.css">
 </head>
-
 <body>
 
-  <!-- =====================
-       ヘッダー
-  ====================== -->
-
-  <div class="site-header">
-    <div class="site-header-inner">
-      <img
-        src="/assets/images/icon.png"
-        alt="ハピネスキッズ アイコン"
-        class="site-icon"
-      >
-      <span class="site-title">
-        放課後等デイサービス　ハピネスキッズ
-      </span>
-    </div>
+<!-- ヘッダー（aboutページと統一） -->
+<header class="site-header">
+  <div class="site-header-inner">
+    <img src="/assets/images/icon.png" class="site-icon" alt="">
+    <span class="site-title">放課後等デイサービス　ハピネスキッズ</span>
   </div>
+</header>
 
-  <!-- =====================
-       ページタイトル
-  ====================== -->
-
-  <section class="page-title">
-    <h1>お問い合わせ・ご相談</h1>
-  </section>
-
-  <!-- =====================
-       導入文
-  ====================== -->
-
-  <section class="contact-intro">
+<!-- =============================
+     Hero
+============================= -->
+<section class="page-hero">
+  <div class="container">
+    <h1>お問い合わせ</h1>
     <p>
-      ハピネスキッズでは、
-      ご利用を検討中の方からのご相談やご質問を
-      随時受け付けています。
+      気になることがあれば、<br>
+      どうぞ気軽にご相談ください。
+    </p>
+  </div>
+</section>
+
+<!-- =============================
+     Intro
+============================= -->
+<section class="contact-intro">
+  <div class="container">
+
+    <p>
+      はじめての場所に問い合わせるのは、
+      少し勇気がいるものだと思います。
     </p>
 
     <p>
-      「放課後等デイサービスについてよく知らない」
-      「うちの子に合うかどうか不安」
-      「まずは話だけ聞いてみたい」
+      利用を決めていなくても大丈夫です。<br>
+      「少し話を聞いてみたい」
+      そんな段階でも、どうぞ気軽にご連絡ください。
     </p>
 
     <p>
-      そんな段階でも、どうぞ安心してご連絡ください。
+      お子さんの様子や、日々の中で気になっていることをうかがいながら、
+      私たちにできることがあるか、
+      一緒に考えていけたらと思っています。
     </p>
-  </section>
 
-  <!-- =====================
-       相談内容例
-  ====================== -->
+  </div>
+</section>
 
-  <section class="contact-examples">
-    <h2>このような内容でご相談いただけます</h2>
-    <ul>
-      <li>放課後等デイサービスの利用について</li>
-      <li>お子さまの様子・発達に関するご相談</li>
-      <li>見学・体験利用について</li>
-      <li>空き状況について</li>
-      <li>そのほか気になること</li>
+<!-- =============================
+     よくあるご相談
+============================= -->
+<section class="contact-faq">
+  <div class="container">
+
+    <h2>よくあるご相談</h2>
+
+    <ul class="contact-faq-list">
+      <li>見学はできますか</li>
+      <li>どんな子どもが利用していますか</li>
+      <li>利用までの流れを知りたい</li>
+      <li>うちの子に合うか相談したい</li>
     </ul>
 
-    <p class="note">
-      ※ 利用を決めていなくても問題ありません。
+    <p>
+      このような内容でも大丈夫です。
     </p>
-  </section>
 
-  <!-- =====================
-       連絡先
-  ====================== -->
+  </div>
+</section>
 
-  <section class="contact-methods">
+<!-- =============================
+     Contact Methods
+============================= -->
+<section class="contact-methods">
+  <div class="container">
+
     <h2>ご連絡方法</h2>
 
-    <div class="contact-method">
-      <h3>お電話でのお問い合わせ</h3>
-      <p class="contact-tel">
-        <a href="tel:0888021380">088-802-1380</a>
-      </p>
+    <div class="contact-cards">
+
+      <div class="contact-card">
+        <h3>電話で相談</h3>
+        <p class="contact-phone">
+          TEL : <a href="tel:0888021380" class="contact-phone-link" aria-label="電話をかける 088-802-1380">088-802-1380</a>
+        </p>
+        <p>
+          受付時間 : 平日 10:00〜18:00
+        </p>
+        <p class="contact-note">
+          ※活動中などで電話に出られない場合があります。<br>
+          その際は折り返しご連絡いたします。
+        </p>
+      </div>
+
+      <div class="contact-card">
+        <h3>メールで相談</h3>
+        <p>
+          お急ぎの場合はお電話でのご連絡が確実です。<br>
+          電話が難しい場合は、メールでもお問い合わせいただけます。
+        </p>
+        <p>
+          <a href="mailto:mail@happiness-kids.net" class="contact-mail-button" aria-label="メールで問い合わせる">メールを送る</a>
+        </p>
+        <p class="contact-note">
+          ※返信には1〜2営業日ほどお時間をいただく場合があります。
+        </p>
+      </div>
+
     </div>
 
-    <div class="contact-method">
-      <h3>メールでのお問い合わせ</h3>
-      <p class="contact-mail">
-        <a href="mailto:mail@happiness-kids.net">
-          mail@happiness-kids.net
-        </a>
-      </p>
-    </div>
-
-    <p class="note">
-      ※ 現在、お問い合わせフォームは設置しておりません。
-      お電話またはメールにてご連絡ください。
+    <p class="contact-visit">
+      見学だけでも大丈夫です。<br>
+      ご希望の場合は、お電話またはメールでお気軽にご連絡ください。
     </p>
-  </section>
 
-  <!-- =====================
-       補足メッセージ
-  ====================== -->
-
-  <section class="contact-message">
-    <p>
+    <p class="contact-closing">
       大切なお子さまのことだからこそ、
-      悩んだり、不安に感じたりするのは自然なことです。
-    </p>
-
-    <p>
+      悩んだり、不安に感じたりするのは自然なことだと思います。<br><br>
       ハピネスキッズは、
       保護者の方のお気持ちにも寄り添いながら、
       一緒に考えていける場所でありたいと考えています。
     </p>
 
-    <p>
-      どうぞ、お気軽にご相談ください。
-    </p>
-  </section>
+  </div>
+</section>
 
-  <!-- =====================
-       フッター
-  ====================== -->
+<!-- フッターリンク（aboutページ構造に合わせる） -->
+<section class="footer-nav">
+  <a href="../index.html" class="footer-button back-to-top">トップに戻る</a>
+  <a href="../about/" class="footer-button">施設情報</a>
+  <a href="../recruit/" class="footer-button">採用情報</a>
+  <a href="../disclosure/" class="footer-button">情報公開</a>
+</section>
 
-  <footer>
-    <p>&copy; ハピネスキッズ</p>
-    <p>
-      <a href="/disclosure/">情報公開</a>
-    </p>
-  </footer>
+<!-- フッター -->
+<footer class="site-footer">
+  <p>&copy; ハピネスキッズ</p>
+</footer>
 
 </body>
 </html>
