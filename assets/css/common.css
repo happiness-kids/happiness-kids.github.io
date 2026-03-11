@@ -605,59 +605,52 @@ img.index-contact-cta-icon{
    お問い合わせページ
 ===================================================== */
 
-.contact-hero {
-  background: #fff7e7;
-  text-align: center;
-  padding: 64px 24px;
-  border-radius: var(--radius-large);
-  margin-bottom: var(--space-card);
-}
-
-.contact-hero h1 {
-  margin: 0 0 16px;
-  font-size: 1.8rem;
-  font-weight: 600;
-}
-
-.contact-hero p {
-  margin: 0;
-  font-size: 1rem;
-  color: var(--sub-text);
-}
-
-.contact-intro {
+/* Hero + Introを統合したカード */
+.contact-hero-intro {
   background: #fff;
   border-radius: var(--radius-large);
   padding: 40px 28px;
   margin-bottom: var(--space-card);
+  box-shadow: 0 4px 12px rgba(0,0,0,.04);
 }
-
-.contact-intro p {
+.contact-hero-intro h1 {
+  margin: 0 0 16px;
+  font-size: 1.8rem;
+  font-weight: 600;
+  text-align: center;
+}
+.contact-hero-intro p {
   margin-bottom: 1.4em;
   line-height: 1.6;
+  text-align: center;
+  color: var(--sub-text);
 }
-
-.contact-intro p:last-child {
+.contact-hero-intro p:last-child {
   margin-bottom: 0;
 }
 
+/* FAQもカード化 */
+.contact-faq {
+  background: #fff;
+  border-radius: var(--radius-card);
+  padding: 24px 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,.04);
+  margin-bottom: var(--space-card);
+}
 .contact-faq h2 {
   text-align: center;
   margin-bottom: 24px;
 }
-
 .contact-faq-list {
   list-style: none;
   padding: 0;
   margin: 0 0 16px;
 }
-
 .contact-faq-list li {
   margin-bottom: 12px;
   padding-left: 16px;
   position: relative;
 }
-
 .contact-faq-list li::before {
   content: "•";
   position: absolute;
@@ -669,44 +662,37 @@ img.index-contact-cta-icon{
   text-align: center;
   margin-bottom: 32px;
 }
-
 .contact-cards {
   display: grid;
   gap: var(--space-gap);
 }
-
 .contact-card {
   background: #fff;
   border-radius: var(--radius-card);
   padding: 24px 20px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 4px 12px rgba(0,0,0,.04);
 }
-
 .contact-card h3 {
   margin-top: 0;
   margin-bottom: 12px;
   font-size: 1.1rem;
 }
-
 .contact-phone {
   font-weight: bold;
   margin-bottom: 8px;
 }
-
 .contact-phone-link {
   color: var(--accent-color);
   text-decoration: none;
 }
-
 .contact-note {
   font-size: 0.8rem;
   color: var(--sub-text);
   margin-top: 8px;
 }
-
 .contact-mail-button {
   display: inline-block;
-  padding: 10px 24px;
+  padding: 8px 16px; /* フッターボタンと同サイズ */
   background: var(--accent-color);
   color: #fff;
   border-radius: 999px;
@@ -714,21 +700,25 @@ img.index-contact-cta-icon{
   font-weight: bold;
 }
 
-.contact-visit,
-.contact-closing {
-  margin-top: 32px;
+/* 見学案内もカード化 */
+.contact-visit, .contact-closing {
+  background: #fff;
+  border-radius: var(--radius-card);
+  padding: 24px 20px;
   line-height: 1.6;
+  margin-top: var(--space-card);
+  box-shadow: 0 4px 12px rgba(0,0,0,.04);
 }
 
 @media screen and (min-width: 769px) {
   .contact-cards {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2,1fr);
   }
 }
 
 @media screen and (max-width: 768px) {
-  .contact-hero,
-  .contact-intro,
+  .contact-hero-intro,
+  .contact-faq,
   .contact-cards,
   .contact-visit,
   .contact-closing {
@@ -900,4 +890,5 @@ img.index-contact-cta-icon{
 .about-instagram iframe{
   max-width:100%;
 }
+
 
