@@ -679,10 +679,13 @@ img.index-contact-cta-icon{
   margin-bottom: var(--space-card);
   border: none; /* 枠は内側カードのみ */
 }
-.contact-methods h2 {
+
+/* H2を中央揃え */
+.contact-methods-wrapper h2 {
   text-align: center;
   margin-bottom: 32px;
 }
+
 .contact-cards {
   display: grid;
   gap: var(--space-gap);
