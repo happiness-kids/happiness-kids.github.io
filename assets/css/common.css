@@ -628,6 +628,9 @@ img.index-contact-cta-icon{
   text-align: center;
   color: var(--text-color);
 }
+.contact-hero-intro p:first-child {
+  font-weight: bold;
+}
 .contact-hero-intro p:last-child {
   margin-bottom: 0;
 }
@@ -680,6 +683,7 @@ img.index-contact-cta-icon{
   border-radius: var(--radius-card);
   padding: 24px 20px;
   box-shadow: 0 4px 12px rgba(0,0,0,.04);
+  border: 2px solid var(--accent-color);
 }
 .contact-card h3 {
   margin-top: 0;
@@ -701,12 +705,13 @@ img.index-contact-cta-icon{
 }
 .contact-mail-button {
   display: inline-block;
-  padding: 8px 16px;
+  padding: 10px 18px;
   background: var(--accent-color);
   color: #fff;
   border-radius: 999px;
   text-decoration: none;
   font-weight: bold;
+  font-size: 0.875rem;
 }
 
 /* 見学案内もカード化 */
