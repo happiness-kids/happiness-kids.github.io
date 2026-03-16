@@ -721,7 +721,7 @@ img.index-contact-cta-icon{
   border: 1.5px solid var(--accent-color);
   border-radius: 999px;
   background: #fff; /* 通常時白に変更 */
-  font-weight: bold;
+  font-weight: normal; /* ボールド解除 */
   text-align: center;
   transition: .2s;
 }
