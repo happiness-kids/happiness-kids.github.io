@@ -605,7 +605,6 @@ img.index-contact-cta-icon{
    お問い合わせページ
 ===================================================== */
 
-
 /* Hero + Introを統合したカード */
 .contact-hero-intro {
   background: #fff;
@@ -658,23 +657,27 @@ img.index-contact-cta-icon{
   margin: 0 0 16px;
 }
 .contact-faq-list li {
+  position: relative; /* ::beforeを絶対配置するため */
   margin-bottom: 12px;
-  padding-left: 40px; /* PC向けインデント */
-  line-height: 1.4;  /* 行間を少し詰める */
-  text-indent: -20px; /* 行頭記号と文字の距離を縮める */
-  position: relative;
+  padding-left: 36px; /* 記号含めて右に寄せる */
+  line-height: 1.4;
 }
+
 .contact-faq-list li::before {
   content: "•";
-  display: inline-block;
-  width: 20px; /* インデント幅と揃える */
-  margin-right: 4px; /* 記号と文字の隙間 */
+  position: absolute;
+  left: 0;          /* 行頭記号の位置 */
+  top: 0;
   color: var(--accent-color);
+  font-size: 1em;
 }
+
 @media screen and (max-width: 768px) {
   .contact-faq-list li {
-    padding-left: 24px; /* スマホでは文字とマークの距離を縮める */
-    text-indent: 0;
+    padding-left: 24px; 
+  }
+  .contact-faq-list li::before {
+    left: 0; /* スマホでも同様に左端 */
   }
 }
 .contact-faq > p {
