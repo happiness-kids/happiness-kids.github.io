@@ -658,8 +658,9 @@ img.index-contact-cta-icon{
 }
 .contact-faq-list li {
   margin-bottom: 12px;
-  padding-left: 28px; /* PCでの余白増加で右側の空白対策 */
+  padding-left: 40px; /* インデントをPC向けに増やす */
   position: relative;
+  line-height: 1.4;  /* 行間を少し詰める */
 }
 .contact-faq-list li::before {
   content: "•";
