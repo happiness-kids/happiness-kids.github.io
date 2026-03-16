@@ -610,12 +610,14 @@ img.index-contact-cta-icon{
   background: #fff;
   border-radius: var(--radius-card);
   padding: var(--space-card);
+  margin-top: var(--space-card);   /* ← 追加：ヘッダーからの余白 */
   margin-bottom: var(--space-card);
   box-shadow: 0 4px 12px rgba(0,0,0,.04);
   max-width: 720px;
   margin-left: auto;
   margin-right: auto;
 }
+
 .contact-hero-intro h1 {
   margin: 0 0 16px;
   font-size: 1.8rem;
