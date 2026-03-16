@@ -659,19 +659,25 @@ img.index-contact-cta-icon{
 .contact-faq-list li {
   margin-bottom: 12px;
   padding-left: 40px; /* PC向けインデント */
-  position: relative;
   line-height: 1.4;  /* 行間を少し詰める */
+  text-indent: -20px; /* 行頭記号と文字の距離を縮める */
+  position: relative;
 }
 .contact-faq-list li::before {
   content: "•";
-  position: absolute;
-  left: 0;
+  display: inline-block;
+  width: 20px; /* インデント幅と揃える */
+  margin-right: 4px; /* 記号と文字の隙間 */
   color: var(--accent-color);
 }
 @media screen and (max-width: 768px) {
   .contact-faq-list li {
     padding-left: 24px; /* スマホでは文字とマークの距離を縮める */
+    text-indent: 0;
   }
+}
+.contact-faq > p {
+  margin-top: 16px; /* リスト直後の文章との間隔 */
 }
 
 /* ご連絡方法全体を白カード化 */
