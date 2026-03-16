@@ -626,7 +626,7 @@ img.index-contact-cta-icon{
 .contact-hero-intro p {
   margin-bottom: 1.4em;
   line-height: 1.6;
-  text-align: center;
+  text-align: left;
   color: var(--text-color); /* 本文として目立たせる */
 }
 .contact-hero-intro p:first-child {
@@ -740,7 +740,7 @@ img.index-contact-cta-icon{
   padding: var(--space-card);
   line-height: 1.6;
   margin-top: var(--space-card);
-  margin-bottom: 0; /* 下余白は最後のカードのみ */
+  margin-bottom: 0;
   box-shadow: 0 4px 12px rgba(0,0,0,.04);
   max-width: 720px;
   margin-left: auto;
