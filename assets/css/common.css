@@ -626,7 +626,7 @@ img.index-contact-cta-icon{
 .contact-hero-intro p {
   margin-bottom: 1.4em;
   line-height: 1.6;
-  text-align: left; /* 左揃え */
+  text-align: left;
   color: var(--text-color);
 }
 .contact-hero-intro p:first-child {
@@ -657,16 +657,15 @@ img.index-contact-cta-icon{
   margin: 0 0 16px;
 }
 .contact-faq-list li {
-  position: relative; /* ::beforeを絶対配置するため */
+  position: relative;
   margin-bottom: 12px;
-  padding-left: 36px; /* 記号含めて右に寄せる */
+  padding-left: 48px; /* PCでより右に寄せる */
   line-height: 1.4;
 }
-
 .contact-faq-list li::before {
   content: "•";
   position: absolute;
-  left: 0;          /* 行頭記号の位置 */
+  left: 12px; /* 行頭記号と文字の距離を詰める */
   top: 0;
   color: var(--accent-color);
   font-size: 1em;
@@ -674,14 +673,14 @@ img.index-contact-cta-icon{
 
 @media screen and (max-width: 768px) {
   .contact-faq-list li {
-    padding-left: 24px; 
+    padding-left: 24px;
   }
   .contact-faq-list li::before {
-    left: 0; /* スマホでも同様に左端 */
+    left: 0;
   }
 }
 .contact-faq > p {
-  margin-top: 16px; /* リスト直後の文章との間隔 */
+  margin-top: 16px;
 }
 
 /* ご連絡方法全体を白カード化 */
