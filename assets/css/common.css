@@ -615,7 +615,7 @@ img.index-contact-cta-icon{
   max-width: 720px;
   margin-left: auto;
   margin-right: auto;
-  margin-top: var(--space-card); /* 上余白追加 */
+  margin-top: var(--space-card);
 }
 .contact-hero-intro h1 {
   margin: 0 0 16px;
@@ -626,8 +626,8 @@ img.index-contact-cta-icon{
 .contact-hero-intro p {
   margin-bottom: 1.4em;
   line-height: 1.6;
-  text-align: left;
-  color: var(--text-color); /* 本文として目立たせる */
+  text-align: left; /* 左揃えに修正 */
+  color: var(--text-color);
 }
 .contact-hero-intro p:first-child {
   font-weight: bold;
@@ -658,7 +658,7 @@ img.index-contact-cta-icon{
 }
 .contact-faq-list li {
   margin-bottom: 12px;
-  padding-left: 16px;
+  padding-left: 28px; /* PCでの余白増加で右側の空白対策 */
   position: relative;
 }
 .contact-faq-list li::before {
@@ -678,10 +678,10 @@ img.index-contact-cta-icon{
   margin-left: auto;
   margin-right: auto;
   margin-bottom: var(--space-card);
-  border: none; /* 枠は内側カードのみ */
+  border: none;
 }
 .contact-methods-wrapper h2 {
-  text-align: center; /* センタリング追加 */
+  text-align: center;
   margin-bottom: 32px;
 }
 
@@ -694,7 +694,7 @@ img.index-contact-cta-icon{
   border-radius: var(--radius-card);
   padding: 24px 20px;
   box-shadow: 0 4px 12px rgba(0,0,0,.04);
-  border: 2px solid var(--accent-color); /* 内側カードだけオレンジ枠 */
+  border: 2px solid var(--accent-color);
 }
 .contact-card h3 {
   margin-top: 0;
@@ -747,7 +747,7 @@ img.index-contact-cta-icon{
   margin-right: auto;
 }
 .contact-closing {
-  margin-bottom: var(--space-card); /* フッターとの間隔確保 */
+  margin-bottom: var(--space-card);
 }
 
 @media screen and (min-width: 769px) {
