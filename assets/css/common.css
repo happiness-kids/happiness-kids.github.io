@@ -712,19 +712,21 @@ img.index-contact-cta-icon{
   color: var(--sub-text);
   margin-top: 8px;
 }
+/* メールボタン（ひっそり版） */
 .contact-mail-button {
   display: inline-block;
-  font-size: .78rem;
+  font-size: .72rem;           /* 文字サイズを一段下げ */
   color: var(--accent-color);
   text-decoration: none;
-  padding: 6px 14px;
-  border: 1.5px solid var(--accent-color);
+  padding: 4px 12px;           /* パディングも少し小さく */
+  border: 1px solid var(--accent-color); /* 線を細く */
   border-radius: 999px;
-  background: #fff; /* 通常時白に変更 */
-  font-weight: normal; /* ボールド解除 */
+  background: #fff;             /* 通常時白背景 */
+  font-weight: normal;          /* 太字解除 */
   text-align: center;
   transition: .2s;
 }
+
 .contact-mail-button:hover {
   background: var(--accent-color);
   color: #fff;
