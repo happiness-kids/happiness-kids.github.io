@@ -608,10 +608,13 @@ img.index-contact-cta-icon{
 /* Hero + Introを統合したカード */
 .contact-hero-intro {
   background: #fff;
-  border-radius: var(--radius-large);
-  padding: 40px 28px;
+  border-radius: var(--radius-card);
+  padding: var(--space-card);
   margin-bottom: var(--space-card);
   box-shadow: 0 4px 12px rgba(0,0,0,.04);
+  max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
 }
 .contact-hero-intro h1 {
   margin: 0 0 16px;
@@ -633,9 +636,12 @@ img.index-contact-cta-icon{
 .contact-faq {
   background: #fff;
   border-radius: var(--radius-card);
-  padding: 24px 20px;
+  padding: var(--space-card);
   box-shadow: 0 4px 12px rgba(0,0,0,.04);
   margin-bottom: var(--space-card);
+  max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
 }
 .contact-faq h2 {
   text-align: center;
@@ -665,6 +671,9 @@ img.index-contact-cta-icon{
 .contact-cards {
   display: grid;
   gap: var(--space-gap);
+  max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
 }
 .contact-card {
   background: #fff;
@@ -692,7 +701,7 @@ img.index-contact-cta-icon{
 }
 .contact-mail-button {
   display: inline-block;
-  padding: 8px 16px; /* フッターボタンと同サイズ */
+  padding: 8px 16px;
   background: var(--accent-color);
   color: #fff;
   border-radius: 999px;
@@ -704,10 +713,13 @@ img.index-contact-cta-icon{
 .contact-visit, .contact-closing {
   background: #fff;
   border-radius: var(--radius-card);
-  padding: 24px 20px;
+  padding: var(--space-card);
   line-height: 1.6;
   margin-top: var(--space-card);
   box-shadow: 0 4px 12px rgba(0,0,0,.04);
+  max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 @media screen and (min-width: 769px) {
@@ -727,6 +739,7 @@ img.index-contact-cta-icon{
     padding: 32px 20px;
   }
 }
+
 
 /* =====================================================
    08 Page - disclosure
