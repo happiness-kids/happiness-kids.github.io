@@ -746,7 +746,7 @@ img.index-contact-cta-icon{
   margin-left: auto;
   margin-right: auto;
 }
-.contact-closing:last-of-type {
+.contact-closing {
   margin-bottom: var(--space-card); /* フッターとの間隔確保 */
 }
 
