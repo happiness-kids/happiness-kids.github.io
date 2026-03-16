@@ -646,54 +646,41 @@ img.index-contact-cta-icon{
   max-width: 720px;
   margin-left: auto;
   margin-right: auto;
+  text-align: center; /* リスト全体を中央寄せ気味 */
 }
 .contact-faq h2 {
   text-align: center;
   margin-bottom: 24px;
 }
 .contact-faq-list {
-  list-style: none;
+  list-style: disc;
   padding: 0;
-  margin: 0 0 16px;
+  margin: 0 auto 16px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px 24px;
 }
 .contact-faq-list li {
+  text-align: left;
+  padding-left: 24px; /* 行頭記号から文字までの距離 */
+  line-height: 1.5;
+  margin-bottom: 8px;
   position: relative;
-  margin-bottom: 12px;
-  padding-left: 48px;
-  line-height: 1.4;
 }
 .contact-faq-list li::before {
   content: "•";
   position: absolute;
-  left: 12px;
+  left: 0;
   top: 0;
   color: var(--accent-color);
   font-size: 1em;
 }
 
-/* PCのみで2列化して右側空白を減らす */
-@media screen and (min-width: 769px) {
-  .contact-faq-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 16px;
-  }
-  .contact-faq-list li {
-    width: calc(50% - 8px);
-    padding-left: 48px;
-  }
-}
-
-@media screen and (max-width: 768px) {
-  .contact-faq-list li {
-    padding-left: 24px;
-  }
-  .contact-faq-list li::before {
-    left: 0;
-  }
-}
+/* 下の文章との余白調整 */
 .contact-faq > p {
-  margin-top: 16px;
+  margin-top: 0.8em;
+  margin-bottom: 0;
+  line-height: 1.6;
 }
 
 /* ご連絡方法全体を白カード化 */
