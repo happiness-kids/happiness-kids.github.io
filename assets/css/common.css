@@ -615,7 +615,6 @@ img.index-contact-cta-icon{
   max-width: 720px;
   margin-left: auto;
   margin-right: auto;
-  border: 2px solid var(--accent-color); /* 大きなカード枠にオレンジ線 */
 }
 .contact-hero-intro h1 {
   margin: 0 0 16px;
@@ -627,7 +626,7 @@ img.index-contact-cta-icon{
   margin-bottom: 1.4em;
   line-height: 1.6;
   text-align: center;
-  color: var(--text-color); /* サブテキストから本文カラーに変更 */
+  color: var(--text-color); /* 本文として目立たせる */
 }
 .contact-hero-intro p:first-child {
   font-weight: bold;
@@ -669,7 +668,7 @@ img.index-contact-cta-icon{
   color: var(--accent-color);
 }
 
-/* ご連絡方法カード枠追加 */
+/* ご連絡方法全体を白カード化 */
 .contact-methods-wrapper {
   background: #fff;
   border-radius: var(--radius-card);
@@ -678,8 +677,8 @@ img.index-contact-cta-icon{
   max-width: 720px;
   margin-left: auto;
   margin-right: auto;
-  border: 2px solid var(--accent-color);
   margin-bottom: var(--space-card);
+  border: none; /* 枠は内側カードのみ */
 }
 .contact-methods h2 {
   text-align: center;
@@ -694,7 +693,7 @@ img.index-contact-cta-icon{
   border-radius: var(--radius-card);
   padding: 24px 20px;
   box-shadow: 0 4px 12px rgba(0,0,0,.04);
-  border: 2px solid var(--accent-color);
+  border: 2px solid var(--accent-color); /* 内側カードだけオレンジ枠 */
 }
 .contact-card h3 {
   margin-top: 0;
@@ -717,7 +716,7 @@ img.index-contact-cta-icon{
 .contact-mail-button {
   display: inline-block;
   padding: 10px 18px;
-  background: #333; /* フッターボタン色に合わせる */
+  background: #333; /* フッターボタンと統一 */
   color: #fff;
   border-radius: 999px;
   text-decoration: none;
@@ -725,7 +724,7 @@ img.index-contact-cta-icon{
   font-size: 0.875rem;
 }
 
-/* 見学案内もカード化 */
+/* 見学案内もカード化（オレンジ枠なし） */
 .contact-visit, .contact-closing {
   background: #fff;
   border-radius: var(--radius-card);
