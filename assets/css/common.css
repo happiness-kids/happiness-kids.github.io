@@ -645,7 +645,6 @@ img.index-contact-cta-icon{
   max-width: 720px;
   margin-left: auto;
   margin-right: auto;
-
 }
 .contact-faq h2 {
   text-align: center;
@@ -715,16 +714,21 @@ img.index-contact-cta-icon{
 }
 .contact-mail-button {
   display: inline-block;
-  padding: 10px 16px;           /* フッターボタンと同サイズ */
-  background: var(--accent-color); /* フッターボタンと統一 */
-  color: #fff;
-  border-radius: 999px;
+  font-size: .78rem;
+  color: var(--accent-color);
   text-decoration: none;
+  padding: 6px 14px;
+  border: 1.5px solid var(--accent-color);
+  border-radius: 999px;
+  background: var(--bg-color);
   font-weight: bold;
-  font-size: 0.875rem;
   text-align: center;
+  transition: .2s;
 }
-
+.contact-mail-button:hover {
+  background: var(--accent-color);
+  color: #fff;
+}
 
 /* 見学案内もカード化（オレンジ枠なし） */
 .contact-visit, .contact-closing {
