@@ -635,7 +635,7 @@ img.index-contact-cta-icon{
   margin-bottom: 0;
 }
 
-/* FAQもカード化 */
+/* FAQもカード化（オレンジ枠削除） */
 .contact-faq {
   background: #fff;
   border-radius: var(--radius-card);
@@ -645,7 +645,8 @@ img.index-contact-cta-icon{
   max-width: 720px;
   margin-left: auto;
   margin-right: auto;
- }
+
+}
 .contact-faq h2 {
   text-align: center;
   margin-bottom: 24px;
@@ -714,14 +715,16 @@ img.index-contact-cta-icon{
 }
 .contact-mail-button {
   display: inline-block;
-  padding: 10px 18px;
-  background: #333; /* フッターボタンと統一 */
+  padding: 10px 16px;           /* フッターボタンと同サイズ */
+  background: var(--accent-color); /* フッターボタンと統一 */
   color: #fff;
   border-radius: 999px;
   text-decoration: none;
   font-weight: bold;
   font-size: 0.875rem;
+  text-align: center;
 }
+
 
 /* 見学案内もカード化（オレンジ枠なし） */
 .contact-visit, .contact-closing {
