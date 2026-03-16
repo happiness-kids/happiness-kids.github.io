@@ -615,6 +615,7 @@ img.index-contact-cta-icon{
   max-width: 720px;
   margin-left: auto;
   margin-right: auto;
+  border: 2px solid var(--accent-color); /* 大きなカード枠にオレンジ線 */
 }
 .contact-hero-intro h1 {
   margin: 0 0 16px;
@@ -626,7 +627,7 @@ img.index-contact-cta-icon{
   margin-bottom: 1.4em;
   line-height: 1.6;
   text-align: center;
-  color: var(--text-color);
+  color: var(--text-color); /* サブテキストから本文カラーに変更 */
 }
 .contact-hero-intro p:first-child {
   font-weight: bold;
@@ -645,6 +646,7 @@ img.index-contact-cta-icon{
   max-width: 720px;
   margin-left: auto;
   margin-right: auto;
+  border: 2px solid var(--accent-color);
 }
 .contact-faq h2 {
   text-align: center;
@@ -667,6 +669,18 @@ img.index-contact-cta-icon{
   color: var(--accent-color);
 }
 
+/* ご連絡方法カード枠追加 */
+.contact-methods-wrapper {
+  background: #fff;
+  border-radius: var(--radius-card);
+  padding: var(--space-card);
+  box-shadow: 0 4px 12px rgba(0,0,0,.04);
+  max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
+  border: 2px solid var(--accent-color);
+  margin-bottom: var(--space-card);
+}
 .contact-methods h2 {
   text-align: center;
   margin-bottom: 32px;
@@ -674,9 +688,6 @@ img.index-contact-cta-icon{
 .contact-cards {
   display: grid;
   gap: var(--space-gap);
-  max-width: 720px;
-  margin-left: auto;
-  margin-right: auto;
 }
 .contact-card {
   background: #fff;
@@ -706,7 +717,7 @@ img.index-contact-cta-icon{
 .contact-mail-button {
   display: inline-block;
   padding: 10px 18px;
-  background: var(--accent-color);
+  background: #333; /* フッターボタン色に合わせる */
   color: #fff;
   border-radius: 999px;
   text-decoration: none;
@@ -736,6 +747,7 @@ img.index-contact-cta-icon{
 @media screen and (max-width: 768px) {
   .contact-hero-intro,
   .contact-faq,
+  .contact-methods-wrapper,
   .contact-cards,
   .contact-visit,
   .contact-closing {
@@ -744,7 +756,6 @@ img.index-contact-cta-icon{
     padding: 32px 20px;
   }
 }
-
 
 /* =====================================================
    08 Page - disclosure
