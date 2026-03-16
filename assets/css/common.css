@@ -744,10 +744,14 @@ img.index-contact-cta-icon{
   padding: var(--space-card);
   line-height: 1.6;
   margin-top: var(--space-card);
+  margin-bottom: 0; /* 下余白は最後のカードのみ */
   box-shadow: 0 4px 12px rgba(0,0,0,.04);
   max-width: 720px;
   margin-left: auto;
   margin-right: auto;
+}
+.contact-closing:last-of-type {
+  margin-bottom: var(--space-card); /* フッターとの間隔確保 */
 }
 
 @media screen and (min-width: 769px) {
