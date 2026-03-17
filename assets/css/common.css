@@ -604,6 +604,10 @@ img.index-contact-cta-icon{
    07 Page - contact
    お問い合わせページ
 ===================================================== */
+/* =====================================================
+   07 Page - contact
+   お問い合わせページ
+===================================================== */
 
 /* Hero + Introを統合したカード */
 .contact-hero-intro {
@@ -798,28 +802,32 @@ img.index-contact-cta-icon{
 
 
 @media screen and (max-width: 768px) {
+  /* スマホでは左右余白を固定pxではなく画面幅基準にする */
   .contact-hero-intro,
   .contact-faq,
   .contact-methods-wrapper,
-  .contact-cards,
   .contact-visit,
   .contact-closing {
-    margin-left: 16px;
-    margin-right: 16px;
-    padding: 32px 20px;
+    margin-left: 4vw;
+    margin-right: 4vw;
+    padding: 28px 5vw;
   }
 
-  /* スマホではカードを広く使う */
+  /* カードグリッドは横いっぱい使う */
   .contact-cards {
     grid-template-columns: 1fr;
+    margin-left: 0;
+    margin-right: 0;
   }
 
+  /* カード内部の余白を少し広めに */
   .contact-card {
-    padding: 24px 24px; /* 横幅を広く感じさせる */
+    padding: 24px 6vw;
   }
 
+  /* 電話番号はスマホで少し大きく */
   .contact-phone-link {
-    font-size: 1.55rem; /* スマホではさらに見やすく */
+    font-size: 1.55rem;
   }
 }
 
