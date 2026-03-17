@@ -705,6 +705,7 @@ img.index-contact-cta-icon{
 .contact-cards {
   display: grid;
   gap: var(--space-gap);
+  grid-auto-rows: 1fr; /* カード高さをそろえる */
 }
 .contact-card {
   background: #fff;
@@ -712,6 +713,15 @@ img.index-contact-cta-icon{
   padding: 24px 20px;
   box-shadow: 0 4px 12px rgba(0,0,0,.04);
   border: 2px solid var(--accent-color);
+  display: flex;            /* カード内レイアウト安定 */
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;             /* 高さを揃える */
+}
+
+/* 電話カードをほんの少し強調（線を太く） */
+.contact-card:first-child {
+  border-width: 3px;
 }
 .contact-card h3 {
   margin-top: 0;
@@ -725,7 +735,8 @@ img.index-contact-cta-icon{
 .contact-phone-link {
   color: var(--accent-color);
   text-decoration: none;
-  font-size: 1.5rem; /* 電話番号をCTAとしてはっきり視認できるサイズまで強調 */
+  font-size: 1.5rem; /* 電話番号CTA */
+  white-space: nowrap; /* スマホで番号が折り返されないように */
 }
 .contact-note {
   font-size: 0.8rem;
@@ -779,9 +790,9 @@ img.index-contact-cta-icon{
     justify-content: center;
   }
 
-  /* 電話カードをわずかに強調 */
+  /* 電話カードはサイズ変更ではなく線で強調 */
   .contact-card:first-child {
-    transform: scale(1.02);
+    border-width: 3px;
   }
 }
 
@@ -797,7 +808,21 @@ img.index-contact-cta-icon{
     margin-right: 16px;
     padding: 32px 20px;
   }
+
+  /* スマホではカードを広く使う */
+  .contact-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .contact-card {
+    padding: 24px 24px; /* 横幅を広く感じさせる */
+  }
+
+  .contact-phone-link {
+    font-size: 1.55rem; /* スマホではさらに見やすく */
+  }
 }
+
 
 /* =====================================================
    08 Page - disclosure
