@@ -640,7 +640,7 @@ img.index-contact-cta-icon{
 .contact-faq {
   background: #fff;
   border-radius: var(--radius-card);
-  padding: var(--space-card);
+  padding: calc(var(--space-card) * 0.85); /* 上下余白を少し締める */
   box-shadow: 0 4px 12px rgba(0,0,0,.04);
   margin-bottom: var(--space-card);
   max-width: 720px;
@@ -678,9 +678,11 @@ img.index-contact-cta-icon{
 
 /* 下の文章との余白調整 */
 .contact-faq > p {
-  margin-top: 0.8em;
+  margin-top: 12px;
   margin-bottom: 0;
   line-height: 1.6;
+  font-size: .9rem;
+  color: var(--sub-text);
 }
 
 /* ご連絡方法全体を白カード化 */
@@ -723,6 +725,7 @@ img.index-contact-cta-icon{
 .contact-phone-link {
   color: var(--accent-color);
   text-decoration: none;
+  font-size: 1.25rem; /* 電話番号をCTAとして少し強調 */
 }
 .contact-note {
   font-size: 0.8rem;
@@ -749,6 +752,7 @@ img.index-contact-cta-icon{
 
 /* 見学案内もカード化（オレンジ枠なし） */
 .contact-visit, .contact-closing {
+  /* 連絡方法との心理距離を少し近づける */
   background: #fff;
   border-radius: var(--radius-card);
   padding: var(--space-card);
@@ -768,6 +772,18 @@ img.index-contact-cta-icon{
   .contact-cards {
     grid-template-columns: repeat(2,1fr);
   }
+
+  /* FAQをPCでは中央寄せ2列に固定 */
+  .contact-faq-list {
+    grid-template-columns: repeat(2, 260px);
+    justify-content: center;
+  }
+
+  /* 電話カードをわずかに強調 */
+  .contact-card:first-child {
+    transform: scale(1.02);
+  }
+}
 }
 
 @media screen and (max-width: 768px) {
