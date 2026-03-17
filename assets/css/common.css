@@ -725,7 +725,7 @@ img.index-contact-cta-icon{
 .contact-phone-link {
   color: var(--accent-color);
   text-decoration: none;
-  font-size: 1.25rem; /* 電話番号をCTAとして少し強調 */
+  font-size: 1.5rem; /* 電話番号をCTAとしてはっきり視認できるサイズまで強調 */
 }
 .contact-note {
   font-size: 0.8rem;
@@ -784,7 +784,7 @@ img.index-contact-cta-icon{
     transform: scale(1.02);
   }
 }
-}
+
 
 @media screen and (max-width: 768px) {
   .contact-hero-intro,
@@ -961,5 +961,4 @@ img.index-contact-cta-icon{
 .about-instagram iframe{
   max-width:100%;
 }
-
 
