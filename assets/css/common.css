@@ -604,10 +604,6 @@ img.index-contact-cta-icon{
    07 Page - contact
    お問い合わせページ
 ===================================================== */
-/* =====================================================
-   07 Page - contact
-   お問い合わせページ
-===================================================== */
 
 /* Hero + Introを統合したカード */
 .contact-hero-intro {
@@ -830,6 +826,102 @@ img.index-contact-cta-icon{
     font-size: 1.55rem;
   }
 }
+
+
+/* ===== Contact Methods (cards) ===== */
+.contact-methods-wrapper {
+  padding: 56px 0;
+}
+
+.contact-methods-wrapper .container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+.contact-methods-wrapper h2 {
+  margin-bottom: 24px;
+}
+
+.contact-cards {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+.contact-card {
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 16px;
+  padding: 20px;
+}
+
+.contact-card h3 {
+  margin-bottom: 12px;
+}
+
+.contact-phone {
+  margin-bottom: 8px;
+  font-size: 1.1rem;
+}
+
+.contact-phone-link {
+  text-decoration: none;
+  color: var(--accent-color);
+  font-weight: 600;
+}
+
+.contact-card p {
+  margin: 8px 0;
+  line-height: 1.6;
+}
+
+/* ★ 見学テキスト（今回の修正） */
+.contact-assist-text {
+  margin-top: 12px;
+  font-size: 0.9rem;
+  color: var(--text-color);
+}
+
+/* 注意書き */
+.contact-note {
+  font-size: 0.8rem;
+  color: var(--sub-text);
+}
+
+/* メールボタン */
+.contact-mail-button {
+  display: inline-block;
+  font-size: .72rem;
+  color: var(--accent-color);
+  text-decoration: none;
+  padding: 4px 12px;
+  border: 1px solid var(--accent-color);
+  border-radius: 999px;
+  background: #fff;
+  font-weight: normal;
+  text-align: center;
+  transition: .2s;
+}
+
+.contact-mail-button:hover {
+  background: var(--accent-color);
+  color: #fff;
+}
+
+/* PC */
+@media (min-width: 768px) {
+  .contact-cards {
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+
+  .contact-card {
+    padding: 24px;
+  }
+}
+
+
 
 
 /* =====================================================
