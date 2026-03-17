@@ -653,7 +653,7 @@ img.index-contact-cta-icon{
   margin-bottom: 24px;
 }
 .contact-faq-list {
-  list-style: disc;
+  list-style: none; /* ブラウザ標準の黒い中黒を消す */
   padding: 0;
   margin: 0 auto 16px;
   display: grid;
