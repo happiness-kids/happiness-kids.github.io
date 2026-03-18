@@ -66,8 +66,16 @@ Instagram投稿を更新する際は `parts/instagram.txt` の内容を差し替
 - `088-802-1380` — 事業所（ハピネスキッズ）の電話番号
 - `088-824-8810` — 法人代表（合同会社足人）の電話番号
 
-## 未実装ページ
+## disclosure ページの仕組み
 
-以下のページはHTMLが存在しないため、リンクは張られているが実体がない。
+`disclosure/index.html` は `disclosure/files.json` を JavaScript で読み込んでPDFリンクを自動生成する。HTMLは触らずに運用できる。
 
-- `/disclosure/` — 情報公開
+**PDFを追加するときの手順：**
+1. `disclosure/files/` に PDF ファイルを追加
+2. `disclosure/files.json` にエントリを追記
+
+```json
+[
+  { "title": "資料タイトル", "file": "files/filename.pdf" }
+]
+```
