@@ -114,10 +114,6 @@ section{
   margin:0 auto;
 }
 
-.container-wide{
-  max-width:960px;
-  margin:0 auto;
-}
 
 
 /* =====================
@@ -400,12 +396,6 @@ section{
   font-size:1rem;
 }
 
-.index-about-sub{
-  margin:8px 0 0;
-  font-size:.9rem;
-  color:var(--sub-text);
-  display:none;
-}
 
 
 /* =====================
@@ -449,8 +439,7 @@ img.index-contact-cta-icon{
 .about-program,
 .about-staff,
 .about-access,
-.about-instagram,
-.about-footer-links{
+.about-instagram{
   background:#fff;
   border-radius:var(--radius-large);
 
@@ -600,10 +589,6 @@ img.index-contact-cta-icon{
 }
 
 
-/* =====================================================
-   07 Page - contact
-   お問い合わせページ
-===================================================== */
 /* =====================================================
    07 Page - contact
    お問い合わせページ
