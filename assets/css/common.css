@@ -820,8 +820,61 @@ img.index-contact-cta-icon{
 
 /* =====================================================
    08 Page - disclosure
-   （将来実装）
+   情報公開ページ
 ===================================================== */
+
+.disclosure-intro,
+.disclosure-files{
+  background:#fff;
+  border-radius:var(--radius-large);
+  max-width:720px;
+  margin:0 auto var(--space-card);
+  padding:var(--space-card) 28px;
+}
+
+.disclosure-intro{
+  margin-top:32px;
+}
+
+.disclosure-intro h1{
+  margin-top:0;
+  font-size:1.5rem;
+  font-weight:600;
+}
+
+.disclosure-files h2{
+  margin-top:0;
+}
+
+.disclosure-list{
+  list-style:none;
+  padding:0;
+  margin:0;
+}
+
+.disclosure-list li{
+  border-bottom:1px solid #f0e8d0;
+  padding:14px 0;
+}
+
+.disclosure-list li:last-child{
+  border-bottom:none;
+}
+
+.disclosure-list a{
+  color:var(--accent-color);
+  text-decoration:none;
+  font-weight:bold;
+}
+
+.disclosure-list a:hover{
+  text-decoration:underline;
+}
+
+.disclosure-empty{
+  color:var(--sub-text);
+  font-size:.9rem;
+}
 
 
 /* =====================================================
@@ -904,6 +957,13 @@ img.index-contact-cta-icon{
 
   .about-intro{
     line-height:2;
+  }
+
+  .disclosure-intro,
+  .disclosure-files{
+    margin-left:16px;
+    margin-right:16px;
+    padding:32px 20px;
   }
 }
 
