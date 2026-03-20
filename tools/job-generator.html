@@ -331,7 +331,12 @@ details summary {
    設定管理
 ===================================================== */
 function saveSettings() {
-  localStorage.setItem("gh_token",  document.getElementById("gh-token").value.trim());
+  const token = document.getElementById("gh-token").value.trim();
+  if (!token) {
+    showMsg("msg-settings", "トークンが入力されていません。貼り付けを確認してください。", "err");
+    return;
+  }
+  localStorage.setItem("gh_token",  token);
   localStorage.setItem("gh_owner",  document.getElementById("gh-owner").value.trim());
   localStorage.setItem("gh_repo",   document.getElementById("gh-repo").value.trim());
   localStorage.setItem("gh_branch", document.getElementById("gh-branch").value.trim());
