@@ -878,6 +878,183 @@ img.index-contact-cta-icon{
 
 
 /* =====================================================
+   09 Page - recruit
+   採用情報ページ
+===================================================== */
+
+.recruit-intro,
+.recruit-jobs {
+  background: #fff;
+  border-radius: var(--radius-large);
+  max-width: 720px;
+  margin: 0 auto var(--space-card);
+  padding: var(--space-card) 28px;
+}
+
+.recruit-intro {
+  margin-top: 32px;
+}
+
+.recruit-intro h1 {
+  margin-top: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.recruit-jobs h2 {
+  margin-top: 0;
+}
+
+.recruit-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* 求人1件ごとのブロック */
+.recruit-item {
+  border-bottom: 1px solid #f0e8d0;
+  padding: 20px 0;
+}
+
+.recruit-item:last-child {
+  border-bottom: none;
+}
+
+/* 職種名リンク */
+.recruit-title {
+  display: block;
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: var(--accent-color);
+  text-decoration: none;
+  margin-bottom: 6px;
+}
+
+.recruit-title:hover {
+  text-decoration: underline;
+}
+
+/* コメント文 */
+.recruit-comment {
+  margin: 0 0 12px;
+  font-size: 0.9rem;
+  color: var(--sub-text);
+  line-height: 1.6;
+}
+
+/* 詳細ページボタン */
+.recruit-btn {
+  font-size: 0.85rem;
+  padding: 8px 20px;
+}
+
+/* 求人なし表示 */
+.recruit-empty {
+  color: var(--sub-text);
+  font-size: 0.9rem;
+  padding: 8px 0;
+}
+
+/* 採用詳細ページ共通 */
+.recruit-detail-intro {
+  background: #fff;
+  border-radius: var(--radius-large);
+  max-width: 720px;
+  margin: 32px auto var(--space-card);
+  padding: var(--space-card) 28px;
+}
+
+.recruit-detail-intro h1 {
+  margin-top: 0;
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+
+.recruit-detail-section {
+  background: #fff;
+  border-radius: var(--radius-large);
+  max-width: 720px;
+  margin: 0 auto var(--space-card);
+  padding: var(--space-card) 28px;
+}
+
+.recruit-detail-section h2 {
+  margin-top: 0;
+  font-size: 1.1rem;
+  border-left: 5px solid var(--accent-color);
+  padding-left: 10px;
+}
+
+.recruit-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.recruit-table th,
+.recruit-table td {
+  border: 1px solid #e8ddc8;
+  padding: 12px 14px;
+  vertical-align: top;
+  font-size: 0.9rem;
+}
+
+.recruit-table th {
+  width: 30%;
+  background: #fff8e6;
+  font-weight: bold;
+}
+
+.recruit-note {
+  margin-top: 6px;
+  font-size: 0.82rem;
+  color: var(--sub-text);
+}
+
+.recruit-apply {
+  background: #fff;
+  border-radius: var(--radius-large);
+  max-width: 720px;
+  margin: 0 auto var(--space-card);
+  padding: var(--space-card) 28px;
+  text-align: center;
+  border: 2px solid var(--accent-color);
+}
+
+.recruit-apply h2 {
+  margin-top: 0;
+}
+
+.recruit-apply-phone {
+  margin-top: 12px;
+  font-size: 0.9rem;
+  color: var(--sub-text);
+}
+
+.recruit-apply-phone a {
+  color: var(--accent-color);
+  font-weight: bold;
+  text-decoration: none;
+}
+
+@media screen and (max-width: 768px) {
+  .recruit-intro,
+  .recruit-jobs,
+  .recruit-detail-intro,
+  .recruit-detail-section,
+  .recruit-apply {
+    margin-left: 16px;
+    margin-right: 16px;
+    padding: 32px 20px;
+  }
+
+  .recruit-table th {
+    width: 35%;
+  }
+}
+
+
+/* =====================================================
    Responsive
    PC / Mobile
 ===================================================== */
