@@ -20,6 +20,16 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
   <link rel="canonical" href="https://happiness-kids.net/recruit/">
   ```
 
+- 全ページの OGP タグ（`og:url` と `og:image`）を書き換える。対象ファイルと書き換え内容：
+
+  | ファイル | og:url | og:image |
+  |---|---|---|
+  | `index.html` | `https://happiness-kids.net/` | `https://happiness-kids.net/assets/images/icon.png` |
+  | `about/index.html` | `https://happiness-kids.net/about/` | 同上 |
+  | `contact/index.html` | `https://happiness-kids.net/contact/` | 同上 |
+  | `disclosure/index.html` | `https://happiness-kids.net/disclosure/` | 同上 |
+  | `recruit/index.html` | `https://happiness-kids.net/recruit/` | 同上 |
+
 ## CSS設計ルール（common.css v4）
 
 `assets/css/common.css` がサイト全体のスタイルを管理。以下のセクション構成を維持すること：
