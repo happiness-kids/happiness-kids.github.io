@@ -492,11 +492,12 @@ function renderJobList() {
     return;
   }
   const today = new Date(); today.setHours(0,0,0,0);
-  let html = '<table class="job-table"><thead><tr><th>開始日</th><th>終了日</th><th>職種名</th><th>ファイル名</th><th>操作</th></tr></thead><tbody>';
+  let html = '<table class="job-table"><thead><tr><th style="width:60px;">表示順</th><th>開始日</th><th>終了日</th><th>職種名</th><th>ファイル名</th><th>操作</th></tr></thead><tbody>';
   csvRows.forEach((r, i) => {
     const end = new Date(r.end); end.setHours(23,59,59,999);
     const expired = today > end;
     html += `<tr class="${expired ? "expired" : ""}">
+      <td><input type="number" class="sort-order-input" data-index="${i}" value="${i + 1}" min="1" max="${csvRows.length}" style="width:50px;padding:4px 6px;text-align:center;"></td>
       <td>${r.start}</td>
       <td>${r.end}</td>
       <td>${r.title}</td>
@@ -511,7 +512,20 @@ function renderJobList() {
   if (csvRows.some((r) => { const e = new Date(r.end); e.setHours(23,59,59,999); return today > e; })) {
     html += '<p style="font-size:.8rem;color:var(--sub);margin-top:8px;">グレー表示は掲載終了済みです。</p>';
   }
+  html += '<button class="btn btn-sub" style="margin-top:12px;" onclick="applySortOrder()">表示順を並べ替えに適用</button>';
   area.innerHTML = html;
+}
+
+function applySortOrder() {
+  const inputs = document.querySelectorAll(".sort-order-input");
+  const ordered = Array.from(inputs).map((el) => ({
+    index: parseInt(el.dataset.index, 10),
+    order: parseFloat(el.value) || 0,
+  }));
+  ordered.sort((a, b) => a.order - b.order);
+  csvRows = ordered.map((o) => csvRows[o.index]);
+  renderJobList();
+  showMsg("msg-list", "表示順を変更しました。「CSV を GitHub にアップロード」で保存してください。", "ok");
 }
 
 function deleteRow(i) {
