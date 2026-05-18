@@ -457,12 +457,13 @@ async function loadCSV() {
 async function uploadCSV() {
   showMsg("msg-list", "アップロード中…", "ok");
   try {
+    const latest = await ghGetFile(CSV_PATH);
+    csvSha = latest.sha;
     const content = buildCSVText();
     await ghPutFile(CSV_PATH, content, "jobs.csv を更新", csvSha);
+    const updated = await ghGetFile(CSV_PATH);
+    csvSha = updated.sha;
     showMsg("msg-list", "jobs.csv をアップロードしました！", "ok");
-    // SHA を再取得
-    const file = await ghGetFile(CSV_PATH);
-    csvSha = file.sha;
   } catch (e) {
     showMsg("msg-list", "アップロードエラー: " + e.message, "err");
   }
