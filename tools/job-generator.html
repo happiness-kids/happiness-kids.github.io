@@ -276,11 +276,20 @@ details summary {
       <h2>給与・勤務条件</h2>
       <div class="row2">
         <div>
-          <label>時給・下限（円）</label>
+          <label>給与形態</label>
+          <select id="f-salary-type">
+            <option value="HOUR">時給</option>
+            <option value="MONTH">月給</option>
+          </select>
+        </div>
+      </div>
+      <div class="row2">
+        <div>
+          <label id="label-salary-min">時給・下限（円）</label>
           <input type="number" id="f-salary-min" placeholder="1050">
         </div>
         <div>
-          <label>時給・上限（円）</label>
+          <label id="label-salary-max">時給・上限（円）</label>
           <input type="number" id="f-salary-max" placeholder="1200">
         </div>
       </div>
@@ -535,6 +544,7 @@ function getFormValues() {
     end:             document.getElementById("f-end").value,
     employment:      document.getElementById("f-employment").value,
     employmentLabel: document.getElementById("f-employment-label").value.trim() || "パート",
+    salaryType:      document.getElementById("f-salary-type").value,
     salaryMin:       document.getElementById("f-salary-min").value,
     salaryMax:       document.getElementById("f-salary-max").value,
     salaryNote:      document.getElementById("f-salary-note").value.trim(),
@@ -559,6 +569,27 @@ function checkFormReady() {
   document.getElementById(id).addEventListener("input", checkFormReady);
 });
 
+// 給与形態ラベル更新
+function updateSalaryLabels() {
+  const isMonth = document.getElementById("f-salary-type").value === "MONTH";
+  const unit = isMonth ? "月給" : "時給";
+  document.getElementById("label-salary-min").textContent = `${unit}・下限（円）`;
+  document.getElementById("label-salary-max").textContent = `${unit}・上限（円）`;
+}
+
+document.getElementById("f-salary-type").addEventListener("change", updateSalaryLabels);
+
+// 雇用形態変更時に給与形態を自動切替
+document.getElementById("f-employment").addEventListener("change", function () {
+  const salaryTypeEl = document.getElementById("f-salary-type");
+  if (this.value === "FULL_TIME") {
+    salaryTypeEl.value = "MONTH";
+  } else {
+    salaryTypeEl.value = "HOUR";
+  }
+  updateSalaryLabels();
+});
+
 // 職種名からファイル名を自動生成（英数字以外はハイフンに）
 document.getElementById("f-title").addEventListener("blur", () => {
   const fnField = document.getElementById("f-filename");
@@ -571,9 +602,10 @@ function nl2br(str) {
 }
 
 function generateHTML(v) {
+  const salaryUnit = v.salaryType === "MONTH" ? "月給" : "時給";
   const salaryRange = (v.salaryMin && v.salaryMax)
-    ? `時給 ${Number(v.salaryMin).toLocaleString()}円 〜 ${Number(v.salaryMax).toLocaleString()}円`
-    : (v.salaryMin ? `時給 ${Number(v.salaryMin).toLocaleString()}円〜` : "応相談");
+    ? `${salaryUnit} ${Number(v.salaryMin).toLocaleString()}円 〜 ${Number(v.salaryMax).toLocaleString()}円`
+    : (v.salaryMin ? `${salaryUnit} ${Number(v.salaryMin).toLocaleString()}円〜` : "応相談");
 
   const jsonLdSalary = (v.salaryMin && v.salaryMax) ? `
   "baseSalary": {
@@ -583,7 +615,7 @@ function generateHTML(v) {
       "@type": "QuantitativeValue",
       "minValue": ${v.salaryMin},
       "maxValue": ${v.salaryMax},
-      "unitText": "HOUR"
+      "unitText": "${v.salaryType === "MONTH" ? "MONTH" : "HOUR"}"
     }
   },` : "";
 
