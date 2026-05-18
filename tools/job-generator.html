@@ -309,6 +309,13 @@ details summary {
       <label>ページ冒頭の紹介文</label>
       <textarea id="f-intro" rows="4" placeholder="例：ハピネスキッズは、子どもたち一人ひとりのペースを大切にしながら…"></textarea>
 
+      <label>meta description（検索結果の説明文）</label>
+      <textarea id="f-meta-desc" rows="3" placeholder="紹介文またはコメントから自動入力されます。120文字以内。"></textarea>
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-top:4px;">
+        <span id="meta-desc-error" style="font-size:.8rem;color:var(--danger);flex:1;"></span>
+        <span id="meta-desc-counter" style="font-size:.8rem;color:var(--sub);white-space:nowrap;margin-left:8px;">0 / 120文字</span>
+      </div>
+
       <label>仕事内容</label>
       <textarea id="f-job-content" placeholder="例：・子どもたちの見守り、声かけ、活動サポート&#10;・日常生活や遊びを通じた自立支援&#10;・簡単な記録業務&#10;・送迎業務（社用車を使用）"></textarea>
 
@@ -552,6 +559,9 @@ function editRow(i) {
   document.getElementById("f-comment").value  = r.comment;
   document.getElementById("f-start").value    = r.start;
   document.getElementById("f-end").value      = r.end;
+  metaDescManuallyEdited = false;
+  document.getElementById("f-meta-desc").value = r.comment;
+  updateMetaDescCounter();
   checkFormReady();
   showMsg("msg-form", "CSVから読み込みました。内容を確認・編集してください。", "ok");
 }
@@ -578,6 +588,7 @@ function getFormValues() {
     jobContent:      document.getElementById("f-job-content").value.trim(),
     requirements:    document.getElementById("f-requirements").value.trim(),
     preferred:       document.getElementById("f-preferred").value.trim(),
+    metaDesc:        document.getElementById("f-meta-desc").value.trim(),
   };
 }
 
@@ -622,6 +633,40 @@ document.getElementById("f-title").addEventListener("blur", () => {
   // ひらがな・カタカナ・漢字はローマ字変換できないので空のまま
 });
 
+// meta description 自動入力・文字数カウント
+let metaDescManuallyEdited = false;
+
+function updateMetaDescCounter() {
+  const val = document.getElementById("f-meta-desc").value;
+  const len = val.length;
+  const counter = document.getElementById("meta-desc-counter");
+  const error   = document.getElementById("meta-desc-error");
+  counter.textContent = `${len} / 120文字`;
+  if (len > 120) {
+    counter.style.color = "var(--danger)";
+    error.textContent   = `${len - 120}文字オーバーです。120文字以内にしてください。`;
+  } else {
+    counter.style.color = len > 100 ? "var(--accent)" : "var(--sub)";
+    error.textContent   = "";
+  }
+}
+
+document.getElementById("f-meta-desc").addEventListener("input", function () {
+  metaDescManuallyEdited = true;
+  updateMetaDescCounter();
+});
+
+function autoFillMetaDesc() {
+  if (metaDescManuallyEdited) return;
+  const intro   = document.getElementById("f-intro").value.trim();
+  const comment = document.getElementById("f-comment").value.trim();
+  document.getElementById("f-meta-desc").value = intro || comment;
+  updateMetaDescCounter();
+}
+
+document.getElementById("f-intro").addEventListener("input", autoFillMetaDesc);
+document.getElementById("f-comment").addEventListener("input", autoFillMetaDesc);
+
 function nl2br(str) {
   return str.replace(/\n/g, "<br>\n");
 }
@@ -632,7 +677,7 @@ function generateHTML(v) {
     ? `${salaryUnit} ${Number(v.salaryMin).toLocaleString()}円 〜 ${Number(v.salaryMax).toLocaleString()}円`
     : (v.salaryMin ? `${salaryUnit} ${Number(v.salaryMin).toLocaleString()}円〜` : "応相談");
 
-  const jsonLdSalary = (v.salaryMin && v.salaryMax) ? `
+  const jsonLdSalary = (v.salaryMin && v.salaryMax) ? `,
   "baseSalary": {
     "@type": "MonetaryAmount",
     "currency": "JPY",
@@ -642,7 +687,7 @@ function generateHTML(v) {
       "maxValue": ${v.salaryMax},
       "unitText": "${v.salaryType === "MONTH" ? "MONTH" : "HOUR"}"
     }
-  },` : "";
+  }` : "";
 
   const intro = v.intro || "ハピネスキッズでは、子どもたちの成長を一緒に支えるスタッフを募集しています。";
   const description = v.intro || v.comment || "放課後等デイサービス ハピネスキッズでの児童支援業務です。";
@@ -653,7 +698,8 @@ function generateHTML(v) {
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>${v.title}｜ハピネスキッズ採用情報</title>
+<title>${v.title}｜高知市 放課後等デイサービス ハピネスキッズ 求人</title>
+${v.metaDesc ? `<meta name="description" content="${v.metaDesc.replace(/"/g, '&quot;')}">` : ""}
 <link rel="stylesheet" href="../assets/css/common.css">
 
 <!-- Google しごと検索用 構造化データ -->
@@ -772,6 +818,10 @@ function downloadHTML() {
     showMsg("msg-form", "職種名とファイル名は必須です。", "err");
     return;
   }
+  if (v.metaDesc.length > 120) {
+    showMsg("msg-form", `meta descriptionが${v.metaDesc.length - 120}文字オーバーしています。修正してください。`, "err");
+    return;
+  }
   const html = generateHTML(v);
   const blob = new Blob([html], { type: "text/html;charset=utf-8" });
   const a = document.createElement("a");
@@ -796,6 +846,11 @@ async function uploadHTML() {
     sha = existing.sha;
   } catch (e) {
     // ファイルが存在しない場合はそのまま新規作成
+  }
+
+  if (v.metaDesc.length > 120) {
+    showMsg("msg-form", `meta descriptionが${v.metaDesc.length - 120}文字オーバーしています。修正してください。`, "err");
+    return;
   }
 
   if (sha) {
