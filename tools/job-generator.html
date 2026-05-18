@@ -327,6 +327,7 @@ details summary {
       </p>
       <div class="btn-group">
         <button class="btn btn-primary" id="btn-dl" onclick="downloadHTML()" disabled>HTMLをダウンロード</button>
+        <button class="btn btn-primary" id="btn-upload-html" onclick="uploadHTML()" disabled>HTMLをGitHubにアップロード</button>
         <button class="btn btn-sub" id="btn-add-csv" onclick="addToCSV()" disabled>jobs.csv に追加</button>
       </div>
     </div>
@@ -560,8 +561,9 @@ function getFormValues() {
 function checkFormReady() {
   const v = getFormValues();
   const ok = v.title && v.filename && v.comment && v.start && v.end;
-  document.getElementById("btn-dl").disabled     = !ok;
-  document.getElementById("btn-add-csv").disabled = !ok;
+  document.getElementById("btn-dl").disabled          = !ok;
+  document.getElementById("btn-upload-html").disabled = !ok;
+  document.getElementById("btn-add-csv").disabled     = !ok;
 }
 
 // 入力監視
@@ -754,6 +756,40 @@ function downloadHTML() {
   a.download = v.filename + ".html";
   a.click();
   showMsg("msg-form", `「${v.filename}.html」をダウンロードしました。recruit/ フォルダに配置してください。`, "ok");
+}
+
+async function uploadHTML() {
+  const v = getFormValues();
+  if (!v.title || !v.filename) {
+    showMsg("msg-form", "職種名とファイル名は必須です。", "err");
+    return;
+  }
+  const path = `recruit/${v.filename}.html`;
+  showMsg("msg-form", "確認中…", "ok");
+
+  let sha = null;
+  try {
+    const existing = await ghGetFile(path);
+    sha = existing.sha;
+  } catch (e) {
+    // ファイルが存在しない場合はそのまま新規作成
+  }
+
+  if (sha) {
+    if (!confirm(`「${v.filename}.html」はすでにGitHubに存在します。上書きしますか？`)) {
+      showMsg("msg-form", "アップロードをキャンセルしました。", "err");
+      return;
+    }
+  }
+
+  showMsg("msg-form", "アップロード中…", "ok");
+  try {
+    const html = generateHTML(v);
+    await ghPutFile(path, html, `recruit/${v.filename}.html を更新`, sha);
+    showMsg("msg-form", `「${v.filename}.html」をGitHubにアップロードしました！recruit/ フォルダに配置されています。`, "ok");
+  } catch (e) {
+    showMsg("msg-form", "アップロードエラー: " + e.message, "err");
+  }
 }
 
 function addToCSV() {
