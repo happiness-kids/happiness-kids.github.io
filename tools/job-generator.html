@@ -522,6 +522,14 @@ function applySortOrder() {
     index: parseInt(el.dataset.index, 10),
     order: parseFloat(el.value) || 0,
   }));
+
+  const values = ordered.map((o) => o.order);
+  const duplicates = values.filter((v, i) => values.indexOf(v) !== i);
+  if (duplicates.length > 0) {
+    showMsg("msg-list", `表示順に重複があります（重複値：${[...new Set(duplicates)].join("、")}）。番号を修正してください。`, "err");
+    return;
+  }
+
   ordered.sort((a, b) => a.order - b.order);
   csvRows = ordered.map((o) => csvRows[o.index]);
   renderJobList();
