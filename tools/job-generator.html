@@ -1,9 +1,5 @@
 <!DOCTYPE html>
-<!-- tools/job-generator.html
-     求人ページ管理ツール
-     - jobs.csv の管理（GitHub API経由で取得・更新）
-     - 求人詳細HTMLページの生成・ダウンロード
--->
+<!-- tools/job-generator.html 求人ページ管理ツール（統合版） -->
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
@@ -11,7 +7,6 @@
 <title>求人ページ管理ツール | ハピネスキッズ</title>
 <style>
 :root {
-  --main: #ffe114;
   --accent: #f4a300;
   --bg: #fffaf0;
   --text: #333;
@@ -20,169 +15,72 @@
   --card-bg: #fff;
   --danger: #e53935;
   --success: #2e7d32;
+  --blue: #2563eb;
+  --green: #2e7d32;
 }
 * { box-sizing: border-box; }
-body {
-  margin: 0;
-  font-family: "BIZ UDPGothic", "Meiryo", sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  line-height: 1.7;
-}
-header {
-  background: var(--accent);
-  color: #fff;
-  padding: 12px 24px;
-  font-size: 1rem;
-  font-weight: bold;
-}
-.wrap {
-  max-width: 860px;
-  margin: 0 auto;
-  padding: 24px 16px 60px;
-}
+body { margin:0; font-family:"BIZ UDPGothic","Meiryo",sans-serif; background:var(--bg); color:var(--text); line-height:1.7; }
+header { background:var(--accent); color:#fff; padding:12px 24px; font-size:1rem; font-weight:bold; }
+.wrap { max-width:860px; margin:0 auto; padding:24px 16px 60px; }
 
-/* ---- タブ ---- */
-.tabs {
-  display: flex;
-  gap: 8px;
-  margin-bottom: 24px;
-}
-.tab-btn {
-  padding: 8px 20px;
-  border: 2px solid var(--accent);
-  border-radius: 999px;
-  background: #fff;
-  color: var(--accent);
-  font-weight: bold;
-  cursor: pointer;
-  font-size: 0.9rem;
-  transition: .2s;
-}
-.tab-btn.active, .tab-btn:hover {
-  background: var(--accent);
-  color: #fff;
-}
+.tabs { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:24px; }
+.tab-btn { padding:8px 18px; border:2px solid var(--accent); border-radius:999px; background:#fff; color:var(--accent); font-weight:bold; cursor:pointer; font-size:.88rem; transition:.2s; }
+.tab-btn.active,.tab-btn:hover { background:var(--accent); color:#fff; }
+.tab-panel { display:none; }
+.tab-panel.active { display:block; }
 
-.tab-panel { display: none; }
-.tab-panel.active { display: block; }
+.card { background:var(--card-bg); border-radius:12px; padding:24px; margin-bottom:20px; box-shadow:0 2px 8px rgba(0,0,0,.06); }
+.card h2 { margin:0 0 16px; font-size:1rem; border-left:4px solid var(--accent); padding-left:10px; }
 
-/* ---- カード ---- */
-.card {
-  background: var(--card-bg);
-  border-radius: 12px;
-  padding: 24px;
-  margin-bottom: 20px;
-  box-shadow: 0 2px 8px rgba(0,0,0,.06);
+label { display:block; font-size:.85rem; font-weight:bold; margin-bottom:4px; margin-top:14px; }
+label:first-of-type { margin-top:0; }
+input[type="text"],input[type="date"],input[type="number"],input[type="password"],textarea,select {
+  width:100%; padding:8px 10px; border:1px solid var(--border); border-radius:6px; font-size:.9rem; font-family:inherit; background:#fafafa;
 }
-.card h2 {
-  margin: 0 0 16px;
-  font-size: 1rem;
-  border-left: 4px solid var(--accent);
-  padding-left: 10px;
-}
+textarea { resize:vertical; min-height:80px; }
+.row2 { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+@media(max-width:600px){ .row2{ grid-template-columns:1fr; } }
 
-/* ---- フォーム ---- */
-label {
-  display: block;
-  font-size: 0.85rem;
-  font-weight: bold;
-  margin-bottom: 4px;
-  margin-top: 14px;
-}
-label:first-of-type { margin-top: 0; }
-input[type="text"],
-input[type="date"],
-input[type="number"],
-input[type="password"],
-textarea,
-select {
-  width: 100%;
-  padding: 8px 10px;
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  font-size: 0.9rem;
-  font-family: inherit;
-  background: #fafafa;
-}
-textarea { resize: vertical; min-height: 80px; }
-.row2 {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-}
-@media (max-width: 600px) { .row2 { grid-template-columns: 1fr; } }
+.btn { display:inline-block; padding:10px 20px; border:none; border-radius:999px; font-weight:bold; cursor:pointer; font-size:.88rem; transition:.2s; }
+.btn:disabled { opacity:.45; cursor:not-allowed; }
+.btn-primary { background:var(--accent); color:#fff; }
+.btn-primary:not(:disabled):hover { opacity:.85; }
+.btn-sub { background:#fff; color:var(--accent); border:2px solid var(--accent); }
+.btn-sub:not(:disabled):hover { background:var(--accent); color:#fff; }
+.btn-green { background:var(--green); color:#fff; }
+.btn-green:not(:disabled):hover { opacity:.85; }
+.btn-blue { background:var(--blue); color:#fff; }
+.btn-blue:not(:disabled):hover { opacity:.85; }
+.btn-danger { background:#fff; color:var(--danger); border:2px solid var(--danger); font-size:.8rem; padding:4px 12px; }
+.btn-danger:hover { background:var(--danger); color:#fff; }
+.btn-s { padding:6px 14px; font-size:.82rem; }
+.btn-group { display:flex; gap:10px; flex-wrap:wrap; margin-top:16px; }
 
-/* ---- ボタン ---- */
-.btn {
-  display: inline-block;
-  padding: 10px 22px;
-  border: none;
-  border-radius: 999px;
-  font-weight: bold;
-  cursor: pointer;
-  font-size: 0.9rem;
-  transition: .2s;
-}
-.btn-primary { background: var(--accent); color: #fff; }
-.btn-primary:hover { opacity: .85; }
-.btn-primary:disabled { background: #ccc; cursor: not-allowed; }
-.btn-sub { background: #fff; color: var(--accent); border: 2px solid var(--accent); }
-.btn-sub:hover { background: var(--accent); color: #fff; }
-.btn-danger { background: #fff; color: var(--danger); border: 2px solid var(--danger); font-size: 0.8rem; padding: 4px 12px; }
-.btn-danger:hover { background: var(--danger); color: #fff; }
-.btn-group { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 16px; }
+.job-table { width:100%; border-collapse:collapse; font-size:.88rem; }
+.job-table th { background:#fff8e6; border:1px solid #e8ddc8; padding:8px 10px; text-align:left; }
+.job-table td { border:1px solid #e8ddc8; padding:8px 10px; vertical-align:middle; }
+.job-table tr.expired td { color:#aaa; }
 
-/* ---- 求人リスト ---- */
-.job-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 0.88rem;
-}
-.job-table th {
-  background: #fff8e6;
-  border: 1px solid #e8ddc8;
-  padding: 8px 10px;
-  text-align: left;
-}
-.job-table td {
-  border: 1px solid #e8ddc8;
-  padding: 8px 10px;
-  vertical-align: middle;
-}
-.job-table tr.expired td { color: #aaa; }
+.badge { display:inline-block; font-size:.75rem; padding:2px 8px; border-radius:20px; }
+.badge-active  { background:#d1fae5; color:#065f46; }
+.badge-expired { background:#fee2e2; color:#991b1b; }
+.badge-future  { background:#dbeafe; color:#1e40af; }
 
-/* ---- メッセージ ---- */
-.msg {
-  padding: 10px 14px;
-  border-radius: 6px;
-  font-size: 0.88rem;
-  margin-bottom: 12px;
-  display: none;
-}
-.msg.show { display: block; }
-.msg.ok { background: #e8f5e9; color: var(--success); border: 1px solid #a5d6a7; }
-.msg.err { background: #ffebee; color: var(--danger); border: 1px solid #ef9a9a; }
+.msg { padding:10px 14px; border-radius:6px; font-size:.88rem; margin-top:12px; display:none; }
+.msg.show { display:block; }
+.msg.ok  { background:#e8f5e9; color:var(--success); border:1px solid #a5d6a7; }
+.msg.err { background:#ffebee; color:var(--danger); border:1px solid #ef9a9a; }
 
-/* ---- 設定 ---- */
-details summary {
-  cursor: pointer;
-  font-weight: bold;
-  font-size: 0.9rem;
-  color: var(--sub);
-  padding: 6px 0;
-}
-.setting-note {
-  font-size: 0.8rem;
-  color: var(--sub);
-  margin-top: 4px;
-}
+details summary { cursor:pointer; font-weight:bold; font-size:.9rem; color:var(--sub); padding:6px 0; }
+.setting-note { font-size:.8rem; color:var(--sub); margin-top:4px; }
+
+.code-out { background:#1e1e1e; color:#d4d4d4; padding:14px; border-radius:8px; font-size:.77rem; font-family:monospace; white-space:pre-wrap; overflow:auto; max-height:220px; margin-bottom:8px; }
+.hw-out { background:#fff8e6; border:1px solid var(--border); border-radius:8px; padding:14px; white-space:pre-wrap; font-size:.85rem; line-height:1.9; }
+.notice { background:#dbeafe; border:1px solid #93c5fd; border-radius:8px; padding:10px 14px; font-size:.83rem; line-height:1.6; margin-bottom:12px; }
 </style>
 </head>
 <body>
-
 <header>求人ページ管理ツール｜ハピネスキッズ</header>
-
 <div class="wrap">
 
   <!-- GitHub設定 -->
@@ -192,16 +90,16 @@ details summary {
       <div style="margin-top:12px;">
         <label>Personal Access Token</label>
         <input type="password" id="gh-token" placeholder="ghp_xxxxxxxxxxxx">
-        <p class="setting-note">GitHubの Settings → Developer settings → Personal access tokens → Fine-grained tokens で発行。対象リポジトリの Contents に Read/Write 権限が必要です。</p>
-        <label>リポジトリオーナー</label>
-        <input type="text" id="gh-owner" value="happiness-kids">
-        <label>リポジトリ名</label>
-        <input type="text" id="gh-repo" value="happiness-kids.github.io">
+        <p class="setting-note">GitHub の Settings → Developer settings → Personal access tokens → Fine-grained tokens で発行。対象リポジトリの Contents に Read/Write 権限が必要です。</p>
+        <div class="row2" style="margin-top:12px;">
+          <div><label>リポジトリオーナー</label><input type="text" id="gh-owner" value="happiness-kids"></div>
+          <div><label>リポジトリ名</label><input type="text" id="gh-repo" value="happiness-kids.github.io"></div>
+        </div>
         <label>ブランチ</label>
-        <input type="text" id="gh-branch" value="main">
+        <input type="text" id="gh-branch" value="main" style="width:160px;">
         <div class="btn-group">
-          <button class="btn btn-primary" onclick="saveSettings()">設定を保存</button>
-          <button class="btn btn-sub" onclick="testConnection()">接続テスト</button>
+          <button class="btn btn-primary btn-s" onclick="saveSettings()">設定を保存</button>
+          <button class="btn btn-sub btn-s" onclick="testConnection()">接続テスト</button>
         </div>
         <div id="msg-settings" class="msg"></div>
       </div>
@@ -210,73 +108,55 @@ details summary {
 
   <!-- タブ -->
   <div class="tabs">
-    <button class="tab-btn active" onclick="switchTab('tab-list', this)">求人一覧管理</button>
-    <button class="tab-btn" onclick="switchTab('tab-form', this)">求人ページ作成・編集</button>
+    <button class="tab-btn active" onclick="switchTab('tab-list',this)">求人一覧</button>
+    <button class="tab-btn" onclick="switchTab('tab-form',this)">求人編集</button>
+    <button class="tab-btn" onclick="switchTab('tab-output',this)">ファイル出力</button>
+    <button class="tab-btn" onclick="switchTab('tab-hw',this)">ハローワーク</button>
   </div>
 
-  <!-- ========== タブ1: 求人一覧管理 ========== -->
+  <!-- ========== タブ1: 求人一覧 ========== -->
   <div id="tab-list" class="tab-panel active">
-
     <div class="card">
-      <h2>現在の求人一覧（jobs.csv）</h2>
+      <h2>現在の求人一覧</h2>
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:16px;">
+        <div class="btn-group" style="margin-top:0;">
+          <button class="btn btn-primary btn-s" onclick="switchTab('tab-form',document.querySelectorAll('.tab-btn')[1]);clrForm()">＋ 新規作成</button>
+          <button class="btn btn-sub btn-s" onclick="loadCSVFromGH()">GitHubからCSVを確認</button>
+          <button class="btn btn-green btn-s" onclick="uploadCSV('msg-list')">CSVをGitHubにアップロード</button>
+        </div>
+        <button class="btn btn-sub" onclick="resetDefaults()" style="font-size:.75rem;padding:4px 12px;color:var(--sub);border-color:var(--border);">初期データに戻す</button>
+      </div>
       <div id="msg-list" class="msg"></div>
-      <div id="job-list-area">
-        <p style="color:var(--sub);font-size:.9rem;">「CSVを読み込む」ボタンで最新データを取得します。</p>
-      </div>
-      <div class="btn-group">
-        <button class="btn btn-primary" onclick="loadCSV()">CSVを読み込む</button>
-        <button class="btn btn-sub" id="btn-upload-csv" onclick="uploadCSV()" disabled>CSV を GitHub にアップロード</button>
-      </div>
+      <div id="job-list-area"><p style="color:var(--sub);font-size:.9rem;">読み込み中…</p></div>
     </div>
-
   </div>
 
-  <!-- ========== タブ2: 求人ページ作成・編集 ========== -->
+  <!-- ========== タブ2: 求人編集 ========== -->
   <div id="tab-form" class="tab-panel">
-
     <div class="card">
       <h2>基本情報</h2>
       <label>募集職種名 <span style="color:red">*</span></label>
-      <input type="text" id="f-title" placeholder="例：保育士・児童指導員（パート）">
-
-      <label>ファイル名 <span style="color:red">*</span>（拡張子 .html は不要）</label>
-      <input type="text" id="f-filename" placeholder="例：job-hoikushi-jidoushidouin">
-
-      <label>一覧カード用コメント <span style="color:red">*</span></label>
-      <input type="text" id="f-comment" placeholder="例：放課後等デイサービスでの児童支援業務です。">
-
+      <input type="text" id="f-title" placeholder="例：保育士（パート）">
+      <label>ファイル名（.html 不要）<span style="color:red">*</span></label>
+      <input type="text" id="f-filename" placeholder="例：job-hoikushi-p">
+      <label>一覧カード用コメント</label>
+      <input type="text" id="f-comment" placeholder="例：ブランクのある方も歓迎。">
       <div class="row2">
-        <div>
-          <label>掲載開始日 <span style="color:red">*</span></label>
-          <input type="date" id="f-start">
-        </div>
-        <div>
-          <label>掲載終了日 <span style="color:red">*</span></label>
-          <input type="date" id="f-end">
-        </div>
+        <div><label>掲載開始日 <span style="color:red">*</span></label><input type="date" id="f-start"></div>
+        <div><label>掲載終了日 <span style="color:red">*</span></label><input type="date" id="f-end"></div>
       </div>
-
-      <div class="row2">
-        <div>
-          <label>雇用形態</label>
-          <select id="f-employment">
-            <option value="PART_TIME">パート・アルバイト</option>
-            <option value="FULL_TIME">正社員</option>
-            <option value="CONTRACTOR">契約社員</option>
-          </select>
-        </div>
-        <div>
-          <label>雇用形態（表示名）</label>
-          <input type="text" id="f-employment-label" placeholder="例：パート">
-        </div>
-      </div>
+      <label>雇用形態</label>
+      <select id="f-employment">
+        <option value="PART_TIME">パート・アルバイト</option>
+        <option value="FULL_TIME">正社員</option>
+        <option value="CONTRACTOR">契約社員</option>
+      </select>
     </div>
 
     <div class="card">
       <h2>給与・勤務条件</h2>
       <div class="row2">
-        <div>
-          <label>給与形態</label>
+        <div><label>給与形態</label>
           <select id="f-salary-type">
             <option value="HOUR">時給</option>
             <option value="MONTH">月給</option>
@@ -284,22 +164,13 @@ details summary {
         </div>
       </div>
       <div class="row2">
-        <div>
-          <label id="label-salary-min">時給・下限（円）</label>
-          <input type="number" id="f-salary-min" placeholder="1050">
-        </div>
-        <div>
-          <label id="label-salary-max">時給・上限（円）</label>
-          <input type="number" id="f-salary-max" placeholder="1200">
-        </div>
+        <div><label id="label-salary-min">時給・下限（円）</label><input type="number" id="f-salary-min" placeholder="1050"></div>
+        <div><label id="label-salary-max">時給・上限（円）</label><input type="number" id="f-salary-max" placeholder="1200"></div>
       </div>
-
       <label>給与補足（賞与・手当など）</label>
       <input type="text" id="f-salary-note" placeholder="例：処遇改善手当として、賞与年2回（計1.5か月分程度）支給実績あり">
-
       <label>勤務時間</label>
       <textarea id="f-hours" placeholder="例：平日：13:00〜18:30の間で4時間以上&#10;土曜：8:30〜17:30の間で4〜8時間"></textarea>
-
       <label>休日・休暇</label>
       <textarea id="f-holidays" placeholder="例：日曜・祝日、年末年始（12月29日〜1月3日）&#10;週休2日"></textarea>
     </div>
@@ -308,51 +179,187 @@ details summary {
       <h2>仕事内容・応募条件</h2>
       <label>ページ冒頭の紹介文</label>
       <textarea id="f-intro" rows="4" placeholder="例：ハピネスキッズは、子どもたち一人ひとりのペースを大切にしながら…"></textarea>
-
-      <label>meta description（検索結果の説明文）</label>
-      <textarea id="f-meta-desc" rows="3" placeholder="紹介文またはコメントから自動入力されます。120文字以内。"></textarea>
-      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-top:4px;">
+      <label>仕事内容</label>
+      <textarea id="f-job-content" placeholder="例：・子どもたちの見守り、声かけ、活動サポート&#10;・日常生活や遊びを通じた自立支援"></textarea>
+      <label>応募資格</label>
+      <input type="text" id="f-requirements" placeholder="例：保育士資格 または 児童指導員任用資格">
+      <label>歓迎条件</label>
+      <textarea id="f-preferred" placeholder="例：・保育士経験5年以上の方&#10;・発達障がい児支援の経験がある方"></textarea>
+      <label>meta description / Indeed 説明文（120文字以内推奨）</label>
+      <textarea id="f-meta-desc" rows="3" placeholder="検索結果の説明文。HTMLのmetaタグとIndeedの説明文に使用されます。"></textarea>
+      <div style="display:flex;justify-content:space-between;margin-top:4px;">
         <span id="meta-desc-error" style="font-size:.8rem;color:var(--danger);flex:1;"></span>
         <span id="meta-desc-counter" style="font-size:.8rem;color:var(--sub);white-space:nowrap;margin-left:8px;">0 / 120文字</span>
       </div>
-
-      <label>仕事内容</label>
-      <textarea id="f-job-content" placeholder="例：・子どもたちの見守り、声かけ、活動サポート&#10;・日常生活や遊びを通じた自立支援&#10;・簡単な記録業務&#10;・送迎業務（社用車を使用）"></textarea>
-
-      <label>応募資格</label>
-      <input type="text" id="f-requirements" placeholder="例：保育士資格 または 児童指導員任用資格">
-
-      <label>歓迎条件</label>
-      <textarea id="f-preferred" placeholder="例：・保育士経験5年以上の方&#10;・発達障がい児支援の経験がある方"></textarea>
     </div>
 
     <div class="card">
       <h2>アクション</h2>
       <div id="msg-form" class="msg"></div>
-      <p style="font-size:.85rem;color:var(--sub);">
-        ファイル名・開始日・終了日・職種名・コメントを入力すると操作できます。
-      </p>
+      <p style="font-size:.85rem;color:var(--sub);">職種名・ファイル名・開始日・終了日を入力すると操作できます。</p>
       <div class="btn-group">
         <button class="btn btn-primary" id="btn-dl" onclick="downloadHTML()" disabled>HTMLをダウンロード</button>
-        <button class="btn btn-primary" id="btn-upload-html" onclick="uploadHTML()" disabled>HTMLをGitHubにアップロード</button>
-        <button class="btn btn-sub" id="btn-add-csv" onclick="addToCSV()" disabled>jobs.csv に追加</button>
+        <button class="btn btn-green" id="btn-upload-html" onclick="uploadHTML('msg-form')" disabled>HTMLをGitHubにアップロード</button>
+        <button class="btn btn-sub" id="btn-add-jobs" onclick="addToJobs()" disabled>保存して一覧に追加</button>
+      </div>
+    </div>
+  </div><!-- /tab-form -->
+
+  <!-- ========== タブ3: ファイル出力 ========== -->
+  <div id="tab-output" class="tab-panel">
+    <div id="msg-output" class="msg"></div>
+
+    <div class="card">
+      <h2>HTMLページ（最後に生成した求人）</h2>
+      <div class="notice">「求人編集」タブで「HTMLをダウンロード」または「HTMLをGitHubにアップロード」を押した後に表示されます。</div>
+      <div id="out-html" class="code-out">（求人編集タブでHTMLを生成してください）</div>
+      <div class="btn-group">
+        <button class="btn btn-primary btn-s" id="btn-dl-html" onclick="dlHtml()" disabled>HTMLをダウンロード</button>
+        <button class="btn btn-green btn-s" id="btn-up-html" onclick="uploadHTML('msg-output')" disabled>GitHubにアップロード</button>
       </div>
     </div>
 
-  </div><!-- /tab-form -->
+    <div class="card">
+      <h2>indeed-feed.xml（掲載中の求人のみ）</h2>
+      <div class="notice">
+        このXMLを <code>recruit/indeed-feed.xml</code> としてGitHubにデプロイしてください。<br>
+        IndeedにXMLフィードとしてURLを登録すると、約24時間以内に求人が反映されます。
+      </div>
+      <div id="out-xml" class="code-out"></div>
+      <div class="btn-group">
+        <button class="btn btn-blue btn-s" onclick="dlXml()">XMLをダウンロード</button>
+        <button class="btn btn-green btn-s" onclick="uploadXml()">GitHubにアップロード</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>jobs.csv（求人一覧ページ用）</h2>
+      <div class="notice">ウェブサイトの採用情報ページ（recruit/index.html）が参照するCSVファイルです。</div>
+      <div id="out-csv" class="code-out"></div>
+      <div class="btn-group">
+        <button class="btn btn-sub btn-s" onclick="dlCsv()">CSVをダウンロード</button>
+        <button class="btn btn-green btn-s" onclick="uploadCSV('msg-output')">GitHubにアップロード</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Google しごと検索への登録</h2>
+      <div class="notice">
+        <strong>新しい求人ページを追加・デプロイしたあとに行ってください。</strong><br>
+        Google Search Console を開き、「URL検査」に新しい求人ページのURLを入力して「インデックス登録をリクエスト」すると、Googleへの反映が早くなります（1〜数時間）。<br>
+        リクエストしなくても、1〜2週間以内に自動でクロールされます。
+      </div>
+      <div class="btn-group">
+        <a href="https://search.google.com/search-console" target="_blank" rel="noopener" class="btn btn-sub btn-s">Google Search Console を開く ↗</a>
+      </div>
+    </div>
+  </div><!-- /tab-output -->
+
+  <!-- ========== タブ4: ハローワーク ========== -->
+  <div id="tab-hw" class="tab-panel">
+    <div class="card">
+      <h2>ハローワーク入力用テキスト</h2>
+      <div style="margin-bottom:12px;">
+        <label>対象求人</label>
+        <select id="hw-sel" onchange="renderHw()" style="width:auto;min-width:200px;"></select>
+      </div>
+      <div id="hw-text" class="hw-out">（求人を選択してください）</div>
+      <div class="btn-group">
+        <button class="btn btn-sub btn-s" onclick="copyHw()">テキストをコピー</button>
+      </div>
+      <div id="msg-hw" class="msg"></div>
+    </div>
+  </div>
 
 </div><!-- /wrap -->
 
 <script>
 /* =====================================================
-   設定管理
+   DEFAULT_JOBS（初期データ）
+===================================================== */
+const DEFAULT_JOBS = [
+  {
+    filename:"job-hoikushi-p", title:"保育士（パート）", employment:"PART_TIME",
+    start:"2026-05-01", end:"2026-08-31", salaryType:"HOUR", salaryMin:1110, salaryMax:1250,
+    salaryNote:"処遇改善手当として、賞与年2回（計1.5か月分程度）支給実績あり",
+    intro:"高知市の放課後等デイサービス ハピネスキッズは、発達障がいのある子どもたち一人ひとりのペースを大切にしながら、「できた」「やってみたい」を一緒に増やしていく支援を行っています。\n\n経験やブランクよりも、子どもに寄り添う気持ちを大切にしています。\nまずは職場の雰囲気を知りたい、という方も歓迎です。",
+    jobContent:"・子どもたちの見守り、声かけ、活動サポート\n・日常生活や遊びを通じた自立支援\n・簡単な記録業務\n・送迎業務（社用車を使用）\n※業務内容は、会社の定める範囲で変更となる場合があります",
+    requirements:"保育士", preferred:"・保育士経験5年以上の方\n・発達障がい児支援の経験がある方",
+    hours:"平日：13:00〜18:30の間で4時間以上\n※午前からの勤務を希望される場合は、お気軽にご相談ください\n\n土曜：8:30〜17:30の間で4〜8時間\n\n長期休暇：9:30〜18:30の間で4〜8時間\n※休憩は労働条件により、法定通り付与します",
+    holidays:"日曜・祝日、年末年始（12月29日〜1月3日）\n週休2日", comment:"",
+    metaDesc:"高知市の放課後等デイサービス ハピネスキッズで保育士（パート）を募集しています。発達障がいのある子どもたちへの療育・自立支援に携わりたい方へ。ブランクのある方も歓迎します。"
+  },
+  {
+    filename:"job-hoikushi-s", title:"保育士（正社員）", employment:"FULL_TIME",
+    start:"2026-05-01", end:"2026-08-31", salaryType:"MONTH", salaryMin:191700, salaryMax:229700,
+    salaryNote:"処遇改善手当として、賞与年2回（計1.5か月分程度）支給実績あり",
+    intro:"高知市の放課後等デイサービス ハピネスキッズは、発達障がいのある子どもたち一人ひとりのペースを大切にしながら、「できた」「やってみたい」を一緒に増やしていく支援を行っています。\n\n経験やブランクよりも、子どもに寄り添う気持ちを大切にしています。\nまずは職場の雰囲気を知りたい、という方も歓迎です。",
+    jobContent:"・子どもたちの見守り、声かけ、活動サポート\n・日常生活や遊びを通じた自立支援\n・簡単な記録業務\n・送迎業務（社用車を使用）\n※業務内容は、会社の定める範囲で変更となる場合があります",
+    requirements:"保育士（必須）", preferred:"・保育士経験5年以上の方\n・発達障がい児支援の経験がある方",
+    hours:"平日：9:30〜18:30\n\n土曜：8:30〜17:30\n\n※子育て世代の場合は、例えば保育園のお迎え時間に間に合うよう、勤務時間は考慮いたしますので、ご相談ください。",
+    holidays:"日曜・祝日、年末年始（12月29日〜1月3日）\n週休2日", comment:"",
+    metaDesc:"高知市の放課後等デイサービス ハピネスキッズで保育士（正社員）を募集。月給191,700円〜、賞与年2回あり。子育て世代の勤務時間考慮あり。発達障がい児支援経験者歓迎。"
+  },
+  {
+    filename:"job-jidoushidouin-p", title:"児童指導員（パート）", employment:"PART_TIME",
+    start:"2026-05-01", end:"2026-08-31", salaryType:"HOUR", salaryMin:1100, salaryMax:1200,
+    salaryNote:"処遇改善手当として、賞与年2回（計1.5か月分程度）支給実績あり",
+    intro:"高知市の放課後等デイサービス ハピネスキッズは、発達障がいのある子どもたち一人ひとりのペースを大切にしながら、「できた」「やってみたい」を一緒に増やしていく支援を行っています。\n\n経験やブランクよりも、子どもに寄り添う気持ちを大切にしています。\nまずは職場の雰囲気を知りたい、という方も歓迎です。",
+    jobContent:"・子どもたちの見守り、声かけ、活動サポート\n・日常生活や遊びを通じた自立支援\n・簡単な記録業務\n・送迎業務（社用車を使用）\n※業務内容は、会社の定める範囲で変更となる場合があります",
+    requirements:"児童指導員任用資格", preferred:"・経験が5年以上の方\n・発達障がい児支援の経験がある方",
+    hours:"平日：13:00〜18:30の間で4時間以上\n※午前からの勤務を希望される場合は、お気軽にご相談ください\n\n土曜：8:30〜17:30の間で4〜8時間\n\n長期休暇：9:30〜18:30の間で4〜8時間\n※休憩は労働条件により、法定通り付与します",
+    holidays:"日曜・祝日、年末年始（12月29日〜1月3日）\n週休2日", comment:"",
+    metaDesc:"高知市の放課後等デイサービス ハピネスキッズで児童指導員（パート）を募集しています。発達障がいのある子どもたちへの療育・活動支援や自立支援業務です。ブランクのある方も歓迎します。"
+  },
+  {
+    filename:"job-jidoushidouin-s", title:"児童指導員（正社員）", employment:"FULL_TIME",
+    start:"2026-05-01", end:"2026-08-31", salaryType:"MONTH", salaryMin:181700, salaryMax:219700,
+    salaryNote:"処遇改善手当として、賞与年2回（計1.5か月分程度）支給実績あり",
+    intro:"高知市の放課後等デイサービス ハピネスキッズは、発達障がいのある子どもたち一人ひとりのペースを大切にしながら、「できた」「やってみたい」を一緒に増やしていく支援を行っています。\n\n経験やブランクよりも、子どもに寄り添う気持ちを大切にしています。\nまずは職場の雰囲気を知りたい、という方も歓迎です。",
+    jobContent:"・子どもたちの見守り、声かけ、活動サポート\n・日常生活や遊びを通じた自立支援\n・簡単な記録業務\n・送迎業務（社用車を使用）\n※業務内容は、会社の定める範囲で変更となる場合があります",
+    requirements:"児童指導員任用資格（必須）", preferred:"・保育士経験5年以上の方\n・発達障がい児支援の経験がある方",
+    hours:"平日：9:30〜18:30\n\n土曜：8:30〜17:30\n\n※子育て世代の場合は、例えば保育園のお迎え時間に間に合うよう、勤務時間は考慮いたしますので、ご相談ください。",
+    holidays:"日曜・祝日、年末年始（12月29日〜1月3日）\n週休2日", comment:"",
+    metaDesc:"高知市の放課後等デイサービス ハピネスキッズで児童指導員（正社員）を募集。月給181,700円〜、賞与年2回あり。子育て世代の勤務時間考慮あり。発達障がい児支援経験者歓迎。"
+  },
+  {
+    filename:"job-sougei-a", title:"送迎職員（アルバイト）", employment:"PART_TIME",
+    start:"2026-05-01", end:"2026-08-31", salaryType:"HOUR", salaryMin:1200, salaryMax:1250,
+    salaryNote:"賞与なし",
+    intro:"高知市の放課後等デイサービス ハピネスキッズは、発達障がいのある子どもたちが通う療育施設です。\n\n今回は、利用児童の送迎を担う職員を募集しています。普通自動車免許があればOK。子どもたちの「いってきます」「ただいま」を支える大切なお仕事です。",
+    jobContent:"利用児童の学校から施設までの送迎業務\n子どもたちの見守りなど、支援の補助業務",
+    requirements:"普通自動車運転免許　必須", preferred:"2種免許をお持ちの方歓迎",
+    hours:"平日：15:00〜17:00程度",
+    holidays:"日曜・祝日、年末年始（12月29日〜1月3日）\n週休2日以上", comment:"",
+    metaDesc:"高知市の放課後等デイサービス ハピネスキッズで送迎職員（アルバイト）を募集しています。利用児童の学校・自宅から施設間の送迎が主な業務です。普通自動車免許があればOK。"
+  }
+];
+
+/* =====================================================
+   状態
+===================================================== */
+let jobs = [];
+let editIdx = -1;
+let lastGenHtml = "";
+let lastGenFilename = "";
+
+function loadJobs() {
+  const s = localStorage.getItem("hk-jobs");
+  try { jobs = s ? JSON.parse(s) : [...DEFAULT_JOBS]; } catch(e) { jobs = [...DEFAULT_JOBS]; }
+}
+function saveJobs() { localStorage.setItem("hk-jobs", JSON.stringify(jobs)); }
+function resetDefaults() {
+  if (!confirm("初期データに戻しますか？（現在のデータは消えます）")) return;
+  jobs = [...DEFAULT_JOBS]; saveJobs(); renderJobList();
+  showMsg("msg-list", "初期データに戻しました。", "ok");
+}
+
+/* =====================================================
+   GitHub 設定
 ===================================================== */
 function saveSettings() {
   const token = document.getElementById("gh-token").value.trim();
-  if (!token) {
-    showMsg("msg-settings", "トークンが入力されていません。貼り付けを確認してください。", "err");
-    return;
-  }
+  if (!token) { showMsg("msg-settings", "トークンが入力されていません。", "err"); return; }
   localStorage.setItem("gh_token",  token);
   localStorage.setItem("gh_owner",  document.getElementById("gh-owner").value.trim());
   localStorage.setItem("gh_repo",   document.getElementById("gh-repo").value.trim());
@@ -361,14 +368,9 @@ function saveSettings() {
 }
 
 function loadSettings() {
-  const set = (id, key) => {
-    const v = localStorage.getItem(key);
-    if (v) document.getElementById(id).value = v;
-  };
-  set("gh-token",  "gh_token");
-  set("gh-owner",  "gh_owner");
-  set("gh-repo",   "gh_repo");
-  set("gh-branch", "gh_branch");
+  const set = (id, key) => { const v = localStorage.getItem(key); if (v) document.getElementById(id).value = v; };
+  set("gh-token","gh_token"); set("gh-owner","gh_owner");
+  set("gh-repo","gh_repo");   set("gh-branch","gh_branch");
 }
 
 function getSettings() {
@@ -380,36 +382,41 @@ function getSettings() {
   };
 }
 
+async function testConnection() {
+  showMsg("msg-settings", "接続確認中…", "ok");
+  try {
+    const { token, owner, repo } = getSettings();
+    const res = await fetch(`https://api.github.com/repos/${owner}/${repo}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    showMsg("msg-settings",
+      res.ok ? "接続成功しました！" : `接続失敗: ${res.status} — トークンやリポジトリ名を確認してください。`,
+      res.ok ? "ok" : "err");
+  } catch(e) {
+    showMsg("msg-settings", "エラー: " + e.message, "err");
+  }
+}
+
 /* =====================================================
    GitHub API ヘルパー
 ===================================================== */
 async function ghGetFile(path) {
   const { token, owner, repo, branch } = getSettings();
-  const url = `https://api.github.com/repos/${owner}/${repo}/contents/${path}?ref=${branch}`;
-  const res = await fetch(url, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-      Accept: "application/vnd.github+json",
-    },
+  const res = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${path}?ref=${branch}`, {
+    headers: { Authorization: `Bearer ${token}`, Accept: "application/vnd.github+json" },
   });
   if (!res.ok) throw new Error(`取得失敗: ${res.status}`);
-  return res.json(); // { content, sha, ... }
+  return res.json();
 }
 
 async function ghPutFile(path, content, message, sha) {
   const { token, owner, repo, branch } = getSettings();
-  const url = `https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
-  const body = {
-    message,
-    content: btoa(unescape(encodeURIComponent(content))),
-    branch,
-  };
+  const body = { message, content: btoa(unescape(encodeURIComponent(content))), branch };
   if (sha) body.sha = sha;
-  const res = await fetch(url, {
+  const res = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${path}`, {
     method: "PUT",
     headers: {
-      Authorization: `Bearer ${token}`,
-      Accept: "application/vnd.github+json",
+      Authorization: `Bearer ${token}`, Accept: "application/vnd.github+json",
       "Content-Type": "application/json",
     },
     body: JSON.stringify(body),
@@ -421,276 +428,242 @@ async function ghPutFile(path, content, message, sha) {
   return res.json();
 }
 
-async function testConnection() {
-  showMsg("msg-settings", "接続確認中…", "ok");
-  try {
-    const { token, owner, repo } = getSettings();
-    const res = await fetch(`https://api.github.com/repos/${owner}/${repo}`, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
-    if (res.ok) {
-      showMsg("msg-settings", "接続成功しました！", "ok");
-    } else {
-      showMsg("msg-settings", `接続失敗: ${res.status} — トークンやリポジトリ名を確認してください。`, "err");
-    }
-  } catch (e) {
-    showMsg("msg-settings", "エラー: " + e.message, "err");
-  }
-}
-
 /* =====================================================
-   CSV 管理
+   CSV GitHubから読み込み・アップロード
 ===================================================== */
-let csvRows    = [];  // ヘッダー除く行データ
-let csvSha     = "";  // GitHub上のSHA
-const CSV_PATH = "assets/csv/jobs.csv";
-const CSV_HEADER = "掲載開始日,掲載終了日,募集職種名,リンク先ファイル名,コメント";
-
-async function loadCSV() {
-  showMsg("msg-list", "読み込み中…", "ok");
+async function loadCSVFromGH() {
+  showMsg("msg-list", "GitHub上のCSVを確認中…", "ok");
   try {
-    const file = await ghGetFile(CSV_PATH);
-    csvSha = file.sha;
+    const file = await ghGetFile("assets/csv/jobs.csv");
     const text = decodeURIComponent(escape(atob(file.content.replace(/\n/g, ""))));
-    csvRows = parseCSV(text);
-    renderJobList();
-    showMsg("msg-list", "CSVを読み込みました。", "ok");
-    document.getElementById("btn-upload-csv").disabled = false;
-  } catch (e) {
+    const lines = text.trim().split(/\r?\n/).slice(1).filter(l => l.trim());
+    showMsg("msg-list", `GitHub上のCSV: ${lines.length}件。（表示は下の「ファイル出力」タブのCSVプレビューと比較してください）`, "ok");
+  } catch(e) {
     showMsg("msg-list", "読み込みエラー: " + e.message, "err");
   }
 }
 
-async function uploadCSV() {
-  showMsg("msg-list", "アップロード中…", "ok");
+async function uploadCSV(msgId) {
+  showMsg(msgId, "CSVをGitHubにアップロード中…", "ok");
   try {
-    const latest = await ghGetFile(CSV_PATH);
-    csvSha = latest.sha;
-    const content = buildCSVText();
-    await ghPutFile(CSV_PATH, content, "jobs.csv を更新", csvSha);
-    const updated = await ghGetFile(CSV_PATH);
-    csvSha = updated.sha;
-    showMsg("msg-list", "jobs.csv をアップロードしました！", "ok");
-  } catch (e) {
-    showMsg("msg-list", "アップロードエラー: " + e.message, "err");
+    let sha = null;
+    try { const f = await ghGetFile("assets/csv/jobs.csv"); sha = f.sha; } catch {}
+    await ghPutFile("assets/csv/jobs.csv", buildCsvText(), "jobs.csv を更新", sha);
+    showMsg(msgId, "jobs.csv をGitHubにアップロードしました！", "ok");
+  } catch(e) {
+    showMsg(msgId, "アップロードエラー: " + e.message, "err");
   }
 }
 
-function buildCSVText() {
-  const lines = [CSV_HEADER];
-  csvRows.forEach((r) => {
-    lines.push([
-      r.start, r.end, csvQuote(r.title), r.filename, csvQuote(r.comment)
-    ].join(","));
-  });
-  return lines.join("\n") + "\n";
+async function uploadXml() {
+  showMsg("msg-output", "XMLをGitHubにアップロード中…", "ok");
+  try {
+    let sha = null;
+    try { const f = await ghGetFile("recruit/indeed-feed.xml"); sha = f.sha; } catch {}
+    await ghPutFile("recruit/indeed-feed.xml", buildXml(), "indeed-feed.xml を更新", sha);
+    showMsg("msg-output", "indeed-feed.xml をGitHubにアップロードしました！", "ok");
+  } catch(e) {
+    showMsg("msg-output", "アップロードエラー: " + e.message, "err");
+  }
 }
 
-function csvQuote(str) {
-  if (str.includes(",") || str.includes('"') || str.includes("\n")) {
-    return '"' + str.replace(/"/g, '""') + '"';
-  }
-  return str;
+/* =====================================================
+   求人一覧
+===================================================== */
+function jobStatus(j) {
+  const t = new Date().toISOString().slice(0, 10);
+  if (j.end < t)   return ["badge-expired", "終了"];
+  if (j.start > t) return ["badge-future",  "掲載前"];
+  return ["badge-active", "掲載中"];
+}
+function empLabel(e) {
+  return e === "FULL_TIME" ? "正社員" : e === "CONTRACTOR" ? "契約社員" : "パート・アルバイト";
 }
 
 function renderJobList() {
   const area = document.getElementById("job-list-area");
-  if (csvRows.length === 0) {
+  if (!jobs.length) {
     area.innerHTML = '<p style="color:var(--sub);font-size:.9rem;">求人データがありません。</p>';
     return;
   }
-  const today = new Date(); today.setHours(0,0,0,0);
-  let html = '<table class="job-table"><thead><tr><th style="width:60px;">表示順</th><th>開始日</th><th>終了日</th><th>職種名</th><th>ファイル名</th><th>操作</th></tr></thead><tbody>';
-  csvRows.forEach((r, i) => {
-    const end = new Date(r.end); end.setHours(23,59,59,999);
-    const expired = today > end;
-    html += `<tr class="${expired ? "expired" : ""}">
-      <td><input type="number" class="sort-order-input" data-index="${i}" value="${i + 1}" min="1" max="${csvRows.length}" style="width:50px;padding:4px 6px;text-align:center;"></td>
-      <td>${r.start}</td>
-      <td>${r.end}</td>
-      <td>${r.title}</td>
-      <td>${r.filename}</td>
+  let html = '<table class="job-table"><thead><tr><th style="width:60px;">順番</th><th>職種名</th><th>雇用形態</th><th>掲載期間</th><th>状態</th><th>操作</th></tr></thead><tbody>';
+  jobs.forEach((j, i) => {
+    const [cls, lbl] = jobStatus(j);
+    html += `<tr class="${cls === "badge-expired" ? "expired" : ""}">
+      <td><input type="number" class="sort-order-input" data-index="${i}" value="${i + 1}" min="1" max="${jobs.length}" style="width:50px;padding:4px 6px;text-align:center;"></td>
+      <td><strong>${j.title}</strong></td>
+      <td>${empLabel(j.employment)}</td>
+      <td>${j.start} 〜 ${j.end}</td>
+      <td><span class="badge ${cls}">${lbl}</span></td>
       <td>
-        <button class="btn btn-sub" style="font-size:.78rem;padding:4px 10px;" onclick="editRow(${i})">編集</button>
-        <button class="btn btn-danger" onclick="deleteRow(${i})">削除</button>
+        <button class="btn btn-sub btn-s" onclick="editJob(${i})">編集</button>
+        <button class="btn btn-danger" onclick="deleteJob(${i})">削除</button>
       </td>
     </tr>`;
   });
   html += '</tbody></table>';
-  if (csvRows.some((r) => { const e = new Date(r.end); e.setHours(23,59,59,999); return today > e; })) {
-    html += '<p style="font-size:.8rem;color:var(--sub);margin-top:8px;">グレー表示は掲載終了済みです。</p>';
-  }
-  html += '<button class="btn btn-sub" style="margin-top:12px;" onclick="applySortOrder()">表示順を並べ替えに適用</button>';
+  html += '<button class="btn btn-sub btn-s" style="margin-top:12px;" onclick="applySortOrder()">▲▼ 順番を並べ替えに適用</button>';
   area.innerHTML = html;
 }
 
 function applySortOrder() {
   const inputs = document.querySelectorAll(".sort-order-input");
-  const ordered = Array.from(inputs).map((el) => ({
+  const ordered = Array.from(inputs).map(el => ({
     index: parseInt(el.dataset.index, 10),
     order: parseFloat(el.value) || 0,
   }));
-
-  const values = ordered.map((o) => o.order);
-  const duplicates = values.filter((v, i) => values.indexOf(v) !== i);
-  if (duplicates.length > 0) {
-    showMsg("msg-list", `表示順に重複があります（重複値：${[...new Set(duplicates)].join("、")}）。番号を修正してください。`, "err");
+  const values = ordered.map(o => o.order);
+  const dups = values.filter((v, i) => values.indexOf(v) !== i);
+  if (dups.length > 0) {
+    showMsg("msg-list", `順番に重複があります（${[...new Set(dups)].join("、")}）。番号を修正してください。`, "err");
     return;
   }
-
   ordered.sort((a, b) => a.order - b.order);
-  csvRows = ordered.map((o) => csvRows[o.index]);
+  jobs = ordered.map(o => jobs[o.index]);
+  saveJobs();
   renderJobList();
-  showMsg("msg-list", "表示順を変更しました。「CSV を GitHub にアップロード」で保存してください。", "ok");
+  showMsg("msg-list", "順番を変更しました。「CSVをGitHubにアップロード」で反映できます。", "ok");
 }
 
-function deleteRow(i) {
-  if (!confirm(`「${csvRows[i].title}」を削除しますか？`)) return;
-  csvRows.splice(i, 1);
-  renderJobList();
-  showMsg("msg-list", "削除しました。「CSV を GitHub にアップロード」で保存してください。", "ok");
-}
-
-function editRow(i) {
-  const r = csvRows[i];
-  switchTab("tab-form", document.querySelectorAll(".tab-btn")[1]);
-  document.getElementById("f-title").value    = r.title;
-  document.getElementById("f-filename").value = r.filename.replace(/\.html$/, "");
-  document.getElementById("f-comment").value  = r.comment;
-  document.getElementById("f-start").value    = r.start;
-  document.getElementById("f-end").value      = r.end;
-  metaDescManuallyEdited = false;
-  document.getElementById("f-meta-desc").value = r.comment;
+function editJob(i) {
+  editIdx = i;
+  const j = jobs[i];
+  const set = (id, val) => { document.getElementById(id).value = val || ""; };
+  set("f-title",       j.title);
+  set("f-filename",    j.filename);
+  set("f-comment",     j.comment);
+  set("f-start",       j.start);
+  set("f-end",         j.end);
+  document.getElementById("f-employment").value  = j.employment  || "PART_TIME";
+  document.getElementById("f-salary-type").value = j.salaryType  || "HOUR";
+  set("f-salary-min",  j.salaryMin);
+  set("f-salary-max",  j.salaryMax);
+  set("f-salary-note", j.salaryNote);
+  set("f-hours",       j.hours);
+  set("f-holidays",    j.holidays);
+  set("f-intro",       j.intro);
+  set("f-job-content", j.jobContent);
+  set("f-requirements",j.requirements);
+  set("f-preferred",   j.preferred);
+  set("f-meta-desc",   j.metaDesc);
+  updateSalaryLabels();
   updateMetaDescCounter();
   checkFormReady();
-  showMsg("msg-form", "CSVから読み込みました。内容を確認・編集してください。", "ok");
+  switchTab("tab-form", document.querySelectorAll(".tab-btn")[1]);
+  showMsg("msg-form", "求人データを読み込みました。編集後に保存してください。", "ok");
+}
+
+function deleteJob(i) {
+  if (!confirm(`「${jobs[i].title}」を削除しますか？`)) return;
+  jobs.splice(i, 1); saveJobs(); renderJobList();
+  showMsg("msg-list", "削除しました。", "ok");
 }
 
 /* =====================================================
-   フォーム → HTML 生成
+   フォーム
 ===================================================== */
 function getFormValues() {
   return {
-    title:           document.getElementById("f-title").value.trim(),
-    filename:        document.getElementById("f-filename").value.trim(),
-    comment:         document.getElementById("f-comment").value.trim(),
-    start:           document.getElementById("f-start").value,
-    end:             document.getElementById("f-end").value,
-    employment:      document.getElementById("f-employment").value,
-    employmentLabel: document.getElementById("f-employment-label").value.trim() || "パート",
-    salaryType:      document.getElementById("f-salary-type").value,
-    salaryMin:       document.getElementById("f-salary-min").value,
-    salaryMax:       document.getElementById("f-salary-max").value,
-    salaryNote:      document.getElementById("f-salary-note").value.trim(),
-    hours:           document.getElementById("f-hours").value.trim(),
-    holidays:        document.getElementById("f-holidays").value.trim(),
-    intro:           document.getElementById("f-intro").value.trim(),
-    jobContent:      document.getElementById("f-job-content").value.trim(),
-    requirements:    document.getElementById("f-requirements").value.trim(),
-    preferred:       document.getElementById("f-preferred").value.trim(),
-    metaDesc:        document.getElementById("f-meta-desc").value.trim(),
+    title:        document.getElementById("f-title").value.trim(),
+    filename:     document.getElementById("f-filename").value.trim().replace(/\.html$/, ""),
+    comment:      document.getElementById("f-comment").value.trim(),
+    start:        document.getElementById("f-start").value,
+    end:          document.getElementById("f-end").value,
+    employment:   document.getElementById("f-employment").value,
+    salaryType:   document.getElementById("f-salary-type").value,
+    salaryMin:    parseInt(document.getElementById("f-salary-min").value) || 0,
+    salaryMax:    parseInt(document.getElementById("f-salary-max").value) || 0,
+    salaryNote:   document.getElementById("f-salary-note").value.trim(),
+    hours:        document.getElementById("f-hours").value.trim(),
+    holidays:     document.getElementById("f-holidays").value.trim(),
+    intro:        document.getElementById("f-intro").value.trim(),
+    jobContent:   document.getElementById("f-job-content").value.trim(),
+    requirements: document.getElementById("f-requirements").value.trim(),
+    preferred:    document.getElementById("f-preferred").value.trim(),
+    metaDesc:     document.getElementById("f-meta-desc").value.trim(),
   };
+}
+
+function clrForm() {
+  editIdx = -1;
+  ["f-title","f-filename","f-comment","f-start","f-end",
+   "f-salary-min","f-salary-max","f-salary-note","f-hours","f-holidays",
+   "f-intro","f-job-content","f-requirements","f-preferred","f-meta-desc"]
+    .forEach(id => { document.getElementById(id).value = ""; });
+  document.getElementById("f-employment").value  = "PART_TIME";
+  document.getElementById("f-salary-type").value = "HOUR";
+  updateSalaryLabels(); updateMetaDescCounter(); checkFormReady();
 }
 
 function checkFormReady() {
   const v = getFormValues();
-  const ok = v.title && v.filename && v.comment && v.start && v.end;
+  const ok = !!(v.title && v.filename && v.start && v.end);
   document.getElementById("btn-dl").disabled          = !ok;
   document.getElementById("btn-upload-html").disabled = !ok;
-  document.getElementById("btn-add-csv").disabled     = !ok;
+  document.getElementById("btn-add-jobs").disabled    = !ok;
+  document.getElementById("btn-dl-html").disabled     = !lastGenHtml;
+  document.getElementById("btn-up-html").disabled     = !lastGenHtml;
 }
 
-// 入力監視
-["f-title","f-filename","f-comment","f-start","f-end"].forEach((id) => {
+["f-title","f-filename","f-start","f-end"].forEach(id => {
   document.getElementById(id).addEventListener("input", checkFormReady);
 });
 
-// 給与形態ラベル更新
 function updateSalaryLabels() {
   const isMonth = document.getElementById("f-salary-type").value === "MONTH";
-  const unit = isMonth ? "月給" : "時給";
-  document.getElementById("label-salary-min").textContent = `${unit}・下限（円）`;
-  document.getElementById("label-salary-max").textContent = `${unit}・上限（円）`;
+  const u = isMonth ? "月給" : "時給";
+  document.getElementById("label-salary-min").textContent = `${u}・下限（円）`;
+  document.getElementById("label-salary-max").textContent = `${u}・上限（円）`;
 }
-
 document.getElementById("f-salary-type").addEventListener("change", updateSalaryLabels);
-
-// 雇用形態変更時に給与形態を自動切替
-document.getElementById("f-employment").addEventListener("change", function () {
-  const salaryTypeEl = document.getElementById("f-salary-type");
-  if (this.value === "FULL_TIME") {
-    salaryTypeEl.value = "MONTH";
-  } else {
-    salaryTypeEl.value = "HOUR";
-  }
+document.getElementById("f-employment").addEventListener("change", function() {
+  document.getElementById("f-salary-type").value = this.value === "FULL_TIME" ? "MONTH" : "HOUR";
   updateSalaryLabels();
 });
 
-// 職種名からファイル名を自動生成（英数字以外はハイフンに）
-document.getElementById("f-title").addEventListener("blur", () => {
-  const fnField = document.getElementById("f-filename");
-  if (fnField.value !== "") return;
-  // ひらがな・カタカナ・漢字はローマ字変換できないので空のまま
-});
-
-// meta description 自動入力・文字数カウント
-let metaDescManuallyEdited = false;
-
 function updateMetaDescCounter() {
-  const val = document.getElementById("f-meta-desc").value;
-  const len = val.length;
+  const len = document.getElementById("f-meta-desc").value.length;
   const counter = document.getElementById("meta-desc-counter");
-  const error   = document.getElementById("meta-desc-error");
   counter.textContent = `${len} / 120文字`;
-  if (len > 120) {
-    counter.style.color = "var(--danger)";
-    error.textContent   = `${len - 120}文字オーバーです。120文字以内にしてください。`;
-  } else {
-    counter.style.color = len > 100 ? "var(--accent)" : "var(--sub)";
-    error.textContent   = "";
-  }
+  counter.style.color = len > 120 ? "var(--danger)" : len > 100 ? "var(--accent)" : "var(--sub)";
+  document.getElementById("meta-desc-error").textContent = len > 120 ? `${len - 120}文字オーバーです。` : "";
 }
-
-document.getElementById("f-meta-desc").addEventListener("input", function () {
-  metaDescManuallyEdited = true;
-  updateMetaDescCounter();
+document.getElementById("f-meta-desc").addEventListener("input", updateMetaDescCounter);
+document.getElementById("f-intro").addEventListener("input", function() {
+  const md = document.getElementById("f-meta-desc");
+  if (!md.value) { md.value = this.value.trim().slice(0, 120); updateMetaDescCounter(); }
 });
 
-function autoFillMetaDesc() {
-  if (metaDescManuallyEdited) return;
-  const intro   = document.getElementById("f-intro").value.trim();
-  const comment = document.getElementById("f-comment").value.trim();
-  document.getElementById("f-meta-desc").value = intro || comment;
-  updateMetaDescCounter();
-}
-
-document.getElementById("f-intro").addEventListener("input", autoFillMetaDesc);
-document.getElementById("f-comment").addEventListener("input", autoFillMetaDesc);
-
-function nl2br(str) {
-  return str.replace(/\n/g, "<br>\n");
-}
+/* =====================================================
+   HTML 生成
+===================================================== */
+function nl2br(s) { return (s || "").replace(/\n/g, "<br>\n"); }
 
 function generateHTML(v) {
-  const salaryUnit = v.salaryType === "MONTH" ? "月給" : "時給";
-  const salaryRange = (v.salaryMin && v.salaryMax)
-    ? `${salaryUnit} ${Number(v.salaryMin).toLocaleString()}円 〜 ${Number(v.salaryMax).toLocaleString()}円`
-    : (v.salaryMin ? `${salaryUnit} ${Number(v.salaryMin).toLocaleString()}円〜` : "応相談");
-
-  const jsonLdSalary = (v.salaryMin && v.salaryMax) ? `,
-  "baseSalary": {
-    "@type": "MonetaryAmount",
-    "currency": "JPY",
-    "value": {
-      "@type": "QuantitativeValue",
-      "minValue": ${v.salaryMin},
-      "maxValue": ${v.salaryMax},
-      "unitText": "${v.salaryType === "MONTH" ? "MONTH" : "HOUR"}"
-    }
-  }` : "";
-
+  const ul = v.salaryType === "MONTH" ? "月給" : "時給";
+  const fmt = n => (n || 0).toLocaleString("ja-JP");
+  const sd = `${ul} ${fmt(v.salaryMin)}円 〜 ${fmt(v.salaryMax)}円`;
   const intro = v.intro || "ハピネスキッズでは、子どもたちの成長を一緒に支えるスタッフを募集しています。";
-  const description = v.intro || v.comment || "放課後等デイサービス ハピネスキッズでの児童支援業務です。";
+  const metaDesc = v.metaDesc || `高知市の放課後等デイサービス ハピネスキッズで${v.title}を募集しています。`;
+  const jsonLd = JSON.stringify({
+    "@context": "https://schema.org", "@type": "JobPosting",
+    "title": v.title, "description": metaDesc,
+    "employmentType": v.employment, "datePosted": v.start, "validThrough": v.end,
+    "hiringOrganization": { "@type": "Organization", "name": "合同会社足人" },
+    "jobLocation": { "@type": "Place", "address": {
+      "@type": "PostalAddress", "postalCode": "780-0931", "addressCountry": "JP",
+      "addressRegion": "高知県", "addressLocality": "高知市", "streetAddress": "玉水町5 岩貞ビル"
+    }},
+    "baseSalary": { "@type": "MonetaryAmount", "currency": "JPY", "value": {
+      "@type": "QuantitativeValue", "minValue": v.salaryMin, "maxValue": v.salaryMax, "unitText": v.salaryType
+    }}
+  }, null, 2);
+
+  const prefRow    = v.preferred   ? `<tr><th>歓迎条件</th><td>${nl2br(v.preferred)}</td></tr>` : "";
+  const hoursRow   = v.hours       ? `<tr><th>勤務時間</th><td>${nl2br(v.hours)}</td></tr>` : "";
+  const holidayRow = v.holidays    ? `<tr><th>休日・休暇</th><td>${nl2br(v.holidays)}</td></tr>` : "";
+  const reqRow     = v.requirements? `<tr><th>応募資格</th><td>${v.requirements}</td></tr>` : "";
+  const salaryNote = v.salaryNote  ? `<div class="recruit-note">※${v.salaryNote}</div>` : "";
 
   return `<!DOCTYPE html>
 <!-- recruit/${v.filename}.html 自動生成 -->
@@ -699,35 +672,12 @@ function generateHTML(v) {
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>${v.title}｜高知市 放課後等デイサービス ハピネスキッズ 求人</title>
-${v.metaDesc ? `<meta name="description" content="${v.metaDesc.replace(/"/g, '&quot;')}">` : ""}
+<meta name="description" content="${metaDesc.replace(/"/g, '&quot;')}">
 <link rel="stylesheet" href="../assets/css/common.css">
 
 <!-- Google しごと検索用 構造化データ -->
 <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "JobPosting",
-  "title": "${v.title}",
-  "description": "${description.replace(/"/g, '\\"')}",
-  "employmentType": "${v.employment}",
-  "datePosted": "${v.start}",
-  "validThrough": "${v.end}",
-  "hiringOrganization": {
-    "@type": "Organization",
-    "name": "合同会社足人"
-  },
-  "jobLocation": {
-    "@type": "Place",
-    "address": {
-      "@type": "PostalAddress",
-      "postalCode": "780-0931",
-      "addressCountry": "JP",
-      "addressRegion": "高知県",
-      "addressLocality": "高知市",
-      "streetAddress": "玉水町5 岩貞ビル"
-    }
-  }${jsonLdSalary}
-}
+${jsonLd}
 <\/script>
 </head>
 <body>
@@ -745,15 +695,12 @@ ${v.metaDesc ? `<meta name="description" content="${v.metaDesc.replace(/"/g, '&q
   <h1>${v.title}</h1>
   <p>${nl2br(intro)}</p>
 </section>
-
+${v.jobContent ? `
 <!-- 仕事内容 -->
-${v.jobContent ? `<section class="recruit-detail-section">
+<section class="recruit-detail-section">
   <h2>仕事内容</h2>
   <table class="recruit-table">
-    <tr>
-      <th>業務内容</th>
-      <td>${nl2br(v.jobContent)}</td>
-    </tr>
+    <tr><th>業務内容</th><td>${nl2br(v.jobContent)}</td></tr>
   </table>
 </section>` : ""}
 
@@ -761,24 +708,17 @@ ${v.jobContent ? `<section class="recruit-detail-section">
 <section class="recruit-detail-section">
   <h2>応募条件・勤務条件</h2>
   <table class="recruit-table">
-    ${v.requirements ? `<tr><th>応募資格</th><td>${v.requirements}</td></tr>` : ""}
-    ${v.preferred ? `<tr><th>歓迎条件</th><td>${nl2br(v.preferred)}</td></tr>` : ""}
-    ${v.hours ? `<tr><th>勤務時間</th><td>${nl2br(v.hours)}</td></tr>` : ""}
-    ${v.holidays ? `<tr><th>休日・休暇</th><td>${nl2br(v.holidays)}</td></tr>` : ""}
+    ${reqRow}
+    ${prefRow}
+    ${hoursRow}
+    ${holidayRow}
     <tr>
       <th>給与</th>
-      <td>
-        ${salaryRange}
-        ${v.salaryNote ? `<div class="recruit-note">※${v.salaryNote}</div>` : ""}
-      </td>
+      <td>${sd}${salaryNote}</td>
     </tr>
     <tr>
       <th>勤務地</th>
-      <td>
-        〒780-0931<br>
-        高知県高知市玉水町5 岩貞ビル<br>
-        放課後等デイサービス ハピネスキッズ
-      </td>
+      <td>〒780-0931<br>高知県高知市玉水町5 岩貞ビル<br>放課後等デイサービス ハピネスキッズ</td>
     </tr>
   </table>
 </section>
@@ -791,9 +731,7 @@ ${v.jobContent ? `<section class="recruit-detail-section">
       メールで応募する
     </a>
   </p>
-  <p class="recruit-apply-phone">
-    お電話でのお問い合わせ：<a href="tel:0888248810">088-824-8810</a>
-  </p>
+  <p class="recruit-apply-phone">お電話でのお問い合わせ：<a href="tel:0888248810">088-824-8810</a></p>
   <p class="recruit-note">担当：豊永</p>
 </section>
 
@@ -808,157 +746,215 @@ ${v.jobContent ? `<section class="recruit-detail-section">
 </footer>
 
 </body>
-</html>
-`;
+</html>`;
 }
 
 function downloadHTML() {
   const v = getFormValues();
-  if (!v.title || !v.filename) {
-    showMsg("msg-form", "職種名とファイル名は必須です。", "err");
-    return;
-  }
-  if (v.metaDesc.length > 120) {
-    showMsg("msg-form", `meta descriptionが${v.metaDesc.length - 120}文字オーバーしています。修正してください。`, "err");
-    return;
+  if (!v.title || !v.filename) { showMsg("msg-form", "職種名とファイル名は必須です。", "err"); return; }
+  const html = generateHTML(v);
+  lastGenHtml = html; lastGenFilename = v.filename + ".html";
+  dlBlob(html, lastGenFilename, "text/html");
+  showMsg("msg-form", `「${lastGenFilename}」をダウンロードしました。recruit/ フォルダに配置してください。`, "ok");
+  checkFormReady();
+}
+
+async function uploadHTML(msgId) {
+  const v = getFormValues();
+  if (!v.title || !v.filename) { showMsg(msgId, "職種名とファイル名は必須です。", "err"); return; }
+  const path = `recruit/${v.filename}.html`;
+  showMsg(msgId, "確認中…", "ok");
+  let sha = null;
+  try { const f = await ghGetFile(path); sha = f.sha; } catch {}
+  if (sha && !confirm(`「${v.filename}.html」はすでにGitHubに存在します。上書きしますか？`)) {
+    showMsg(msgId, "キャンセルしました。", "err"); return;
   }
   const html = generateHTML(v);
-  const blob = new Blob([html], { type: "text/html;charset=utf-8" });
-  const a = document.createElement("a");
-  a.href = URL.createObjectURL(blob);
-  a.download = v.filename + ".html";
-  a.click();
-  showMsg("msg-form", `「${v.filename}.html」をダウンロードしました。recruit/ フォルダに配置してください。`, "ok");
-}
-
-async function uploadHTML() {
-  const v = getFormValues();
-  if (!v.title || !v.filename) {
-    showMsg("msg-form", "職種名とファイル名は必須です。", "err");
-    return;
-  }
-  const path = `recruit/${v.filename}.html`;
-  showMsg("msg-form", "確認中…", "ok");
-
-  let sha = null;
+  lastGenHtml = html; lastGenFilename = v.filename + ".html";
+  showMsg(msgId, "アップロード中…", "ok");
   try {
-    const existing = await ghGetFile(path);
-    sha = existing.sha;
-  } catch (e) {
-    // ファイルが存在しない場合はそのまま新規作成
-  }
-
-  if (v.metaDesc.length > 120) {
-    showMsg("msg-form", `meta descriptionが${v.metaDesc.length - 120}文字オーバーしています。修正してください。`, "err");
-    return;
-  }
-
-  if (sha) {
-    if (!confirm(`「${v.filename}.html」はすでにGitHubに存在します。上書きしますか？`)) {
-      showMsg("msg-form", "アップロードをキャンセルしました。", "err");
-      return;
-    }
-  }
-
-  showMsg("msg-form", "アップロード中…", "ok");
-  try {
-    const html = generateHTML(v);
     await ghPutFile(path, html, `recruit/${v.filename}.html を更新`, sha);
-    showMsg("msg-form", `「${v.filename}.html」をGitHubにアップロードしました！recruit/ フォルダに配置されています。`, "ok");
-  } catch (e) {
-    showMsg("msg-form", "アップロードエラー: " + e.message, "err");
+    showMsg(msgId, `「${v.filename}.html」をGitHubにアップロードしました！`, "ok");
+    checkFormReady();
+  } catch(e) {
+    showMsg(msgId, "アップロードエラー: " + e.message, "err");
   }
 }
 
-function addToCSV() {
+function addToJobs() {
   const v = getFormValues();
-  const filename = v.filename.endsWith(".html") ? v.filename : v.filename + ".html";
-
-  // 重複チェック
-  const dup = csvRows.findIndex((r) => r.filename === filename);
-  if (dup >= 0) {
-    if (!confirm(`「${filename}」はすでにCSVにあります。上書きしますか？`)) return;
-    csvRows.splice(dup, 1);
-  }
-
-  csvRows.push({
-    start:    v.start,
-    end:      v.end,
-    title:    v.title,
-    filename: filename,
-    comment:  v.comment,
-  });
-
-  // タブを一覧に切り替えて表示
+  const dup = jobs.findIndex(j => j.filename === v.filename);
+  if (dup >= 0 && !confirm(`「${v.filename}」はすでに存在します。上書きしますか？`)) return;
+  if (dup >= 0) jobs[dup] = v; else jobs.push(v);
+  saveJobs(); renderJobList();
   switchTab("tab-list", document.querySelectorAll(".tab-btn")[0]);
-  renderJobList();
-  document.getElementById("btn-upload-csv").disabled = false;
-  showMsg("msg-list", `「${v.title}」をCSVに追加しました。「CSV を GitHub にアップロード」で保存してください。`, "ok");
+  showMsg("msg-list", `「${v.title}」を保存しました。`, "ok");
 }
 
 /* =====================================================
-   CSVパーサー
+   XML / CSV 生成
 ===================================================== */
-function parseCSV(text) {
-  const lines = text.trim().split(/\r?\n/);
-  if (lines.length < 2) return [];
-  return lines.slice(1)
-    .filter((l) => l.trim() !== "")
-    .map((l) => {
-      const cols = splitCSVLine(l);
-      return {
-        start:    cols[0] || "",
-        end:      cols[1] || "",
-        title:    cols[2] || "",
-        filename: cols[3] || "",
-        comment:  cols[4] || "",
-      };
-    });
+function buildXml() {
+  const today = new Date().toISOString().slice(0, 10);
+  const active = jobs.filter(j => j.start <= today && today <= j.end);
+  const cd = s => `<![CDATA[${s || ""}]]>`;
+  const fmt = n => (n || 0).toLocaleString("ja-JP");
+  const jmap = { FULL_TIME:"fulltime", PART_TIME:"parttime", CONTRACTOR:"contractor" };
+  const jobsXml = active.map(j => {
+    const ul = j.salaryType === "MONTH" ? "月給" : "時給";
+    return `  <job>
+    <title>${cd(j.title)}</title>
+    <date>${cd(j.start)}</date>
+    <referencenumber>${cd(j.filename)}</referencenumber>
+    <url>${cd("https://happiness-kids.github.io/recruit/" + j.filename + ".html")}</url>
+    <company>${cd("放課後等デイサービス ハピネスキッズ（合同会社足人）")}</company>
+    <city>${cd("高知市")}</city>
+    <state>${cd("高知県")}</state>
+    <country>${cd("JP")}</country>
+    <postalcode>${cd("780-0931")}</postalcode>
+    <description>${cd(j.metaDesc || "")}</description>
+    <salary>${cd(ul + " " + fmt(j.salaryMin) + "円〜" + fmt(j.salaryMax) + "円")}</salary>
+    <jobtype>${cd(jmap[j.employment] || "parttime")}</jobtype>
+    <email>${cd("mail@happiness-kids.net")}</email>
+    <phone>${cd("088-824-8810")}</phone>
+    <expirationdate>${cd(j.end)}</expirationdate>
+  </job>`;
+  }).join("\n\n");
+
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<source>
+  <publisher>合同会社足人</publisher>
+  <publisherurl>https://happiness-kids.github.io</publisherurl>
+  <lastBuildDate>${today}</lastBuildDate>
+
+${jobsXml}
+
+</source>`;
 }
 
-function splitCSVLine(line) {
-  const result = [];
-  let cur = "", inQ = false;
-  for (let i = 0; i < line.length; i++) {
-    const ch = line[i];
-    if (ch === '"') {
-      if (inQ && line[i+1] === '"') { cur += '"'; i++; }
-      else inQ = !inQ;
-    } else if (ch === "," && !inQ) {
-      result.push(cur); cur = "";
-    } else {
-      cur += ch;
-    }
-  }
-  result.push(cur);
-  return result;
+function buildCsvText() {
+  const lines = ["datePosted,validThrough,title,filename,comment"];
+  jobs.forEach(j => {
+    const c = (j.comment || "").includes(",") ? `"${j.comment}"` : (j.comment || "");
+    lines.push(`${j.start},${j.end},${j.title},${j.filename},${c}`);
+  });
+  return lines.join("\n") + "\n";
 }
 
 /* =====================================================
-   UI ヘルパー
+   出力表示
+===================================================== */
+function renderOutputs() {
+  document.getElementById("out-html").textContent = lastGenHtml || "（求人編集タブで「HTMLをダウンロード」または「HTMLをGitHubにアップロード」を押してください）";
+  document.getElementById("btn-dl-html").disabled = !lastGenHtml;
+  document.getElementById("btn-up-html").disabled = !lastGenHtml;
+  document.getElementById("out-xml").textContent = buildXml();
+  document.getElementById("out-csv").textContent = buildCsvText();
+}
+
+/* =====================================================
+   ダウンロード
+===================================================== */
+function dlBlob(content, filename, mime) {
+  const b = new Blob([content], { type: mime || "text/plain;charset=utf-8" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(b); a.download = filename; a.click();
+}
+function dlHtml() { if (lastGenHtml) dlBlob(lastGenHtml, lastGenFilename, "text/html"); }
+function dlXml()  { dlBlob(buildXml(),     "indeed-feed.xml", "application/xml"); }
+function dlCsv()  { dlBlob(buildCsvText(), "jobs.csv",        "text/csv"); }
+
+/* =====================================================
+   ハローワーク
+===================================================== */
+function renderHwSel() {
+  document.getElementById("hw-sel").innerHTML = jobs.map((j, i) =>
+    `<option value="${i}">${j.title}</option>`).join("");
+  renderHw();
+}
+
+function renderHw() {
+  const i = parseInt(document.getElementById("hw-sel").value);
+  const j = jobs[i]; if (!j) return;
+  const ul = j.salaryType === "MONTH" ? "月給" : "時給";
+  const fmt = n => (n || 0).toLocaleString("ja-JP");
+  const emp = j.employment === "FULL_TIME" ? "正社員" : "パートタイム労働者";
+  document.getElementById("hw-text").textContent =
+`【事業所名】
+放課後等デイサービス ハピネスキッズ（合同会社足人）
+
+【所在地】
+〒780-0931 高知県高知市玉水町5 岩貞ビル
+
+【職種】
+${j.title}
+
+【雇用形態】
+${emp}
+
+【仕事内容】
+${j.jobContent || ""}
+
+【応募資格】
+${j.requirements || ""}
+
+【歓迎条件】
+${j.preferred || ""}
+
+【就業時間】
+${j.hours || ""}
+
+【休日・休暇】
+${j.holidays || ""}
+
+【給与】
+${ul} ${fmt(j.salaryMin)}円 〜 ${fmt(j.salaryMax)}円
+${j.salaryNote || ""}
+
+【応募方法】
+メール：mail@happiness-kids.net
+電話：088-824-8810（担当：豊永）`;
+}
+
+function copyHw() {
+  navigator.clipboard.writeText(document.getElementById("hw-text").textContent)
+    .then(() => showMsg("msg-hw", "コピーしました。", "ok"))
+    .catch(() => showMsg("msg-hw", "コピーに失敗しました。テキストを手動で選択してください。", "err"));
+}
+
+/* =====================================================
+   タブ切り替え
 ===================================================== */
 function switchTab(id, btn) {
-  document.querySelectorAll(".tab-panel").forEach((p) => p.classList.remove("active"));
-  document.querySelectorAll(".tab-btn").forEach((b) => b.classList.remove("active"));
+  document.querySelectorAll(".tab-panel").forEach(p => p.classList.remove("active"));
+  document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
   document.getElementById(id).classList.add("active");
-  btn.classList.add("active");
+  if (btn) btn.classList.add("active");
+  if (id === "tab-list")   renderJobList();
+  if (id === "tab-output") renderOutputs();
+  if (id === "tab-hw")     renderHwSel();
 }
 
+/* =====================================================
+   メッセージ
+===================================================== */
 function showMsg(id, text, type) {
   const el = document.getElementById(id);
+  if (!el) return;
   el.textContent = text;
   el.className = `msg ${type} show`;
+  if (type === "ok") setTimeout(() => { el.className = "msg"; el.textContent = ""; }, 6000);
 }
 
 /* =====================================================
    初期化
 ===================================================== */
 loadSettings();
-
-// トークンが未設定なら設定パネルを開く
-if (!localStorage.getItem("gh_token")) {
-  document.getElementById("settings-detail").open = true;
-}
+loadJobs();
+renderJobList();
+updateSalaryLabels();
+updateMetaDescCounter();
+if (!localStorage.getItem("gh_token")) document.getElementById("settings-detail").open = true;
 </script>
 </body>
 </html>
