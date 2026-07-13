@@ -833,10 +833,10 @@ ${jobsXml}
 }
 
 function buildCsvText() {
-  const lines = ["datePosted,validThrough,title,filename,comment"];
+  const lines = ["掲載開始日,掲載終了日,募集職種名,リンク先ファイル名,コメント"];
   jobs.forEach(j => {
     const c = (j.comment || "").includes(",") ? `"${j.comment}"` : (j.comment || "");
-    lines.push(`${j.start},${j.end},${j.title},${j.filename},${c}`);
+    lines.push(`${j.start},${j.end},${j.title},${j.filename}.html,${c}`);
   });
   return lines.join("\n") + "\n";
 }
