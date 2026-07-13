@@ -185,8 +185,8 @@ details summary { cursor:pointer; font-weight:bold; font-size:.9rem; color:var(-
       <input type="text" id="f-requirements" placeholder="例：保育士資格 または 児童指導員任用資格">
       <label>歓迎条件</label>
       <textarea id="f-preferred" placeholder="例：・保育士経験5年以上の方&#10;・発達障がい児支援の経験がある方"></textarea>
-      <label>meta description / Indeed 説明文（120文字以内推奨）</label>
-      <textarea id="f-meta-desc" rows="3" placeholder="検索結果の説明文。HTMLのmetaタグとIndeedの説明文に使用されます。"></textarea>
+      <label>meta description（120文字以内推奨）</label>
+      <textarea id="f-meta-desc" rows="3" placeholder="検索結果の説明文。HTMLのmetaタグに使用されます。"></textarea>
       <div style="display:flex;justify-content:space-between;margin-top:4px;">
         <span id="meta-desc-error" style="font-size:.8rem;color:var(--danger);flex:1;"></span>
         <span id="meta-desc-counter" style="font-size:.8rem;color:var(--sub);white-space:nowrap;margin-left:8px;">0 / 120文字</span>
@@ -216,19 +216,6 @@ details summary { cursor:pointer; font-weight:bold; font-size:.9rem; color:var(-
       <div class="btn-group">
         <button class="btn btn-primary btn-s" id="btn-dl-html" onclick="dlHtml()" disabled>HTMLをダウンロード</button>
         <button class="btn btn-green btn-s" id="btn-up-html" onclick="uploadHTML('msg-output')" disabled>GitHubにアップロード</button>
-      </div>
-    </div>
-
-    <div class="card">
-      <h2>indeed-feed.xml（掲載中の求人のみ）</h2>
-      <div class="notice">
-        このXMLを <code>recruit/indeed-feed.xml</code> としてGitHubにデプロイしてください。<br>
-        IndeedにXMLフィードとしてURLを登録すると、約24時間以内に求人が反映されます。
-      </div>
-      <div id="out-xml" class="code-out"></div>
-      <div class="btn-group">
-        <button class="btn btn-blue btn-s" onclick="dlXml()">XMLをダウンロード</button>
-        <button class="btn btn-green btn-s" onclick="uploadXml()">GitHubにアップロード</button>
       </div>
     </div>
 
@@ -452,18 +439,6 @@ async function uploadCSV(msgId) {
     showMsg(msgId, "jobs.csv をGitHubにアップロードしました！", "ok");
   } catch(e) {
     showMsg(msgId, "アップロードエラー: " + e.message, "err");
-  }
-}
-
-async function uploadXml() {
-  showMsg("msg-output", "XMLをGitHubにアップロード中…", "ok");
-  try {
-    let sha = null;
-    try { const f = await ghGetFile("recruit/indeed-feed.xml"); sha = f.sha; } catch {}
-    await ghPutFile("recruit/indeed-feed.xml", buildXml(), "indeed-feed.xml を更新", sha);
-    showMsg("msg-output", "indeed-feed.xml をGitHubにアップロードしました！", "ok");
-  } catch(e) {
-    showMsg("msg-output", "アップロードエラー: " + e.message, "err");
   }
 }
 
@@ -792,46 +767,8 @@ function addToJobs() {
 }
 
 /* =====================================================
-   XML / CSV 生成
+   CSV 生成
 ===================================================== */
-function buildXml() {
-  const today = new Date().toISOString().slice(0, 10);
-  const active = jobs.filter(j => j.start <= today && today <= j.end);
-  const cd = s => `<![CDATA[${s || ""}]]>`;
-  const fmt = n => (n || 0).toLocaleString("ja-JP");
-  const jmap = { FULL_TIME:"fulltime", PART_TIME:"parttime", CONTRACTOR:"contractor" };
-  const jobsXml = active.map(j => {
-    const ul = j.salaryType === "MONTH" ? "月給" : "時給";
-    return `  <job>
-    <title>${cd(j.title)}</title>
-    <date>${cd(j.start)}</date>
-    <referencenumber>${cd(j.filename)}</referencenumber>
-    <url>${cd("https://happiness-kids.github.io/recruit/" + j.filename + ".html")}</url>
-    <company>${cd("放課後等デイサービス ハピネスキッズ（合同会社足人）")}</company>
-    <city>${cd("高知市")}</city>
-    <state>${cd("高知県")}</state>
-    <country>${cd("JP")}</country>
-    <postalcode>${cd("780-0931")}</postalcode>
-    <description>${cd(j.metaDesc || "")}</description>
-    <salary>${cd(ul + " " + fmt(j.salaryMin) + "円〜" + fmt(j.salaryMax) + "円")}</salary>
-    <jobtype>${cd(jmap[j.employment] || "parttime")}</jobtype>
-    <email>${cd("mail@happiness-kids.net")}</email>
-    <phone>${cd("088-824-8810")}</phone>
-    <expirationdate>${cd(j.end)}</expirationdate>
-  </job>`;
-  }).join("\n\n");
-
-  return `<?xml version="1.0" encoding="UTF-8"?>
-<source>
-  <publisher>合同会社足人</publisher>
-  <publisherurl>https://happiness-kids.github.io</publisherurl>
-  <lastBuildDate>${today}</lastBuildDate>
-
-${jobsXml}
-
-</source>`;
-}
-
 function buildCsvText() {
   const lines = ["掲載開始日,掲載終了日,募集職種名,リンク先ファイル名,コメント"];
   jobs.forEach(j => {
@@ -848,7 +785,6 @@ function renderOutputs() {
   document.getElementById("out-html").textContent = lastGenHtml || "（求人編集タブで「HTMLをダウンロード」または「HTMLをGitHubにアップロード」を押してください）";
   document.getElementById("btn-dl-html").disabled = !lastGenHtml;
   document.getElementById("btn-up-html").disabled = !lastGenHtml;
-  document.getElementById("out-xml").textContent = buildXml();
   document.getElementById("out-csv").textContent = buildCsvText();
 }
 
@@ -861,8 +797,7 @@ function dlBlob(content, filename, mime) {
   a.href = URL.createObjectURL(b); a.download = filename; a.click();
 }
 function dlHtml() { if (lastGenHtml) dlBlob(lastGenHtml, lastGenFilename, "text/html"); }
-function dlXml()  { dlBlob(buildXml(),     "indeed-feed.xml", "application/xml"); }
-function dlCsv()  { dlBlob(buildCsvText(), "jobs.csv",        "text/csv"); }
+function dlCsv()  { dlBlob(buildCsvText(), "jobs.csv", "text/csv"); }
 
 /* =====================================================
    ハローワーク
