@@ -1037,6 +1037,15 @@ img.index-contact-cta-icon{
   text-decoration: none;
 }
 
+.recruit-hw {
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid #eee;
+  font-size: 0.9rem;
+  color: var(--sub-text);
+  line-height: 1.9;
+}
+
 @media screen and (max-width: 768px) {
   .recruit-intro,
   .recruit-jobs,

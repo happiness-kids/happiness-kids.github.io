@@ -8,10 +8,11 @@ assets/data/jobs.json
 filename, title, employment, start, end,
 salaryType, salaryMin, salaryMax, salaryNote,
 intro, jobContent, requirements, preferred, hours, holidays,
-comment, metaDesc
+comment, hwNumber, metaDesc
 
 - filename には .html を含めない
 - 配列の並び順がそのまま一覧の表示順
+- hwNumber（ハローワーク求人番号）は任意項目。入力されている場合のみ、詳細ページの「応募方法」にハローワークでの応募案内（求人番号・お詫び文・ハローワークインターネットサービスへのリンク）を表示する
 - 求人一覧ページ（recruit/index.html）・各求人詳細ページ（recruit/job-*.html）ともに、この1ファイルを唯一のデータソースとする
 
 上記内容は、求人ページ生成ブラウザアプリ（tools/job-generator.html）上で入力・管理する。

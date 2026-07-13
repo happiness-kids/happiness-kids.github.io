@@ -149,6 +149,9 @@ details summary { cursor:pointer; font-weight:bold; font-size:.9rem; color:var(-
       <input type="text" id="f-filename" placeholder="例：job-hoikushi-p">
       <label>一覧カード用コメント</label>
       <input type="text" id="f-comment" placeholder="例：ブランクのある方も歓迎。">
+      <label>ハローワーク求人番号（任意）</label>
+      <input type="text" id="f-hw-number" placeholder="例：12345-67890123">
+      <p class="setting-note">入力すると、詳細ページの「応募方法」にハローワークでの応募案内が表示されます。空欄なら表示されません。</p>
       <div class="row2">
         <div><label>掲載開始日 <span style="color:red">*</span></label><input type="date" id="f-start"></div>
         <div><label>掲載終了日 <span style="color:red">*</span></label><input type="date" id="f-end"></div>
@@ -291,6 +294,7 @@ const DEFAULT_JOBS = [
     "hours": "平日：９:30～18:30\n\n土曜：8:30～17:30\n\n※子育て世代の場合は、例えば保育園のお迎え時間に間に合うよう、勤務時間は考慮いたしますので、ご相談ください。",
     "holidays": "日曜・祝日、年末年始（12月29日～1月3日）\n週休2日",
     "comment": "ハローワークからの応募に限り、入社祝い金（10万円）の制度があります。",
+    "hwNumber": "",
     "metaDesc": "高知市の放課後等デイサービス ハピネスキッズで保育士（正社員）を募集。月給191,700円〜、賞与年2回あり。子育て世代の勤務時間考慮あり。発達障がい児支援経験者歓迎。"
   },
   {
@@ -310,6 +314,7 @@ const DEFAULT_JOBS = [
     "hours": "平日：９:30～18:30\n\n土曜：8:30～17:30\n\n※子育て世代の場合は、例えば保育園のお迎え時間に間に合うよう、勤務時間は考慮いたしますので、ご相談ください。",
     "holidays": "日曜・祝日、年末年始（12月29日～1月3日）\n週休2日",
     "comment": "ハローワークからの応募に限り、入社祝い金（10万円）の制度あります。",
+    "hwNumber": "",
     "metaDesc": "高知市の放課後等デイサービス ハピネスキッズで児童指導員（正社員）を募集。月給181,700円〜、賞与年2回あり。子育て世代の勤務時間考慮あり。発達障がい児支援経験者歓迎。"
   },
   {
@@ -329,6 +334,7 @@ const DEFAULT_JOBS = [
     "hours": "平日：13:00～18:30の間で4時間以上\n※午前からの勤務を希望される場合は、お気軽にご相談ください\n\n土曜：8:30～17:30の間で4～8時間\n\n長期休暇：9:30～18:30の間で4～8時間\n※休憩は労働条件により、法定通り付与します",
     "holidays": "日曜・祝日、年末年始（12月29日～1月3日）\n週休2日",
     "comment": "",
+    "hwNumber": "",
     "metaDesc": "高知市の放課後等デイサービス ハピネスキッズで保育士（パート）を募集。時給1,110円〜、賞与年2回あり。ブランク歓迎。発達障がい児支援に携わりたい方もぜひ。"
   },
   {
@@ -348,6 +354,7 @@ const DEFAULT_JOBS = [
     "hours": "平日：13:00～18:30の間で4時間以上\n※午前からの勤務を希望される場合は、お気軽にご相談ください\n\n土曜：8:30～17:30の間で4～8時間\n\n長期休暇：9:30～18:30の間で4～8時間\n※休憩は労働条件により、法定通り付与します",
     "holidays": "日曜・祝日、年末年始（12月29日～1月3日）\n週休2日",
     "comment": "",
+    "hwNumber": "",
     "metaDesc": "高知市の放課後等デイサービス ハピネスキッズで児童指導員（パート）を募集。時給1,100円〜、賞与年2回あり。ブランク歓迎。発達障がい児支援に携わりたい方もぜひ。"
   },
   {
@@ -367,6 +374,7 @@ const DEFAULT_JOBS = [
     "hours": "平日：15：００～１７：００程度",
     "holidays": "日曜・祝日、年末年始（12月29日～1月3日）\n週休2日以上",
     "comment": "",
+    "hwNumber": "",
     "metaDesc": "高知市の放課後等デイサービス ハピネスキッズで送迎職員（アルバイト）を募集。時給1,200円〜。普通免許必須。平日15〜17時の短時間勤務。2種免許保持者歓迎。"
   }
 ];
@@ -550,7 +558,7 @@ async function checkGitHubSync() {
 }
 
 function fieldLabel(k) {
-  return { start: "掲載開始日", end: "掲載終了日", title: "募集職種名", comment: "コメント" }[k] || k;
+  return { start: "掲載開始日", end: "掲載終了日", title: "募集職種名", comment: "コメント", hwNumber: "ハローワーク求人番号" }[k] || k;
 }
 
 function showSyncConflict(diff, githubJobs) {
@@ -704,7 +712,7 @@ function applySortOrder() {
   jobs = ordered.map(o => jobs[o.index]);
   saveJobs();
   renderJobList();
-  showMsg("msg-list", "順番を変更しました。「CSVをGitHubにアップロード」で反映できます。", "ok");
+  showMsg("msg-list", "順番を変更しました。「jobs.jsonをGitHubにアップロード」で反映できます。", "ok");
 }
 
 function editJob(i) {
@@ -714,6 +722,7 @@ function editJob(i) {
   set("f-title",       j.title);
   set("f-filename",    j.filename);
   set("f-comment",     j.comment);
+  set("f-hw-number",   j.hwNumber);
   set("f-start",       j.start);
   set("f-end",         j.end);
   document.getElementById("f-employment").value  = j.employment  || "PART_TIME";
@@ -749,6 +758,7 @@ function getFormValues() {
     title:        document.getElementById("f-title").value.trim(),
     filename:     document.getElementById("f-filename").value.trim().replace(/\.html$/, ""),
     comment:      document.getElementById("f-comment").value.trim(),
+    hwNumber:     document.getElementById("f-hw-number").value.trim(),
     start:        document.getElementById("f-start").value,
     end:          document.getElementById("f-end").value,
     employment:   document.getElementById("f-employment").value,
@@ -768,7 +778,7 @@ function getFormValues() {
 
 function clrForm() {
   editIdx = -1;
-  ["f-title","f-filename","f-comment","f-start","f-end",
+  ["f-title","f-filename","f-comment","f-hw-number","f-start","f-end",
    "f-salary-min","f-salary-max","f-salary-note","f-hours","f-holidays",
    "f-intro","f-job-content","f-requirements","f-preferred","f-meta-desc"]
     .forEach(id => { document.getElementById(id).value = ""; });

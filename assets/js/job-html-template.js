@@ -41,6 +41,14 @@ function generateHTML(v) {
   const reqRow     = v.requirements? `<tr><th>応募資格</th><td>${escapeHtml(v.requirements)}</td></tr>` : "";
   const salaryNote = v.salaryNote  ? `<div class="recruit-note">※${escapeHtml(v.salaryNote)}</div>` : "";
 
+  const hwBlock = v.hwNumber ? `
+  <p class="recruit-hw">
+    ハローワークでの応募も受け付けています。<br>
+    ハローワーク求人番号：${escapeHtml(v.hwNumber)}<br>
+    <a href="https://www.hellowork.mhlw.go.jp/" target="_blank" rel="noopener" class="button-link">ハローワークインターネットサービスで確認する</a>
+  </p>
+  <p class="recruit-note">※ハローワークでの掲載期間が終了し、求人票が確認できない場合がございます。あらかじめご了承ください。</p>` : "";
+
   return `<!DOCTYPE html>
 <!-- recruit/${v.filename}.html 自動生成 -->
 <html lang="ja">
@@ -108,7 +116,7 @@ ${v.jobContent ? `
     </a>
   </p>
   <p class="recruit-apply-phone">お電話でのお問い合わせ：<a href="tel:0888248810">088-824-8810</a></p>
-  <p class="recruit-note">担当：豊永</p>
+  <p class="recruit-note">担当：豊永</p>${hwBlock}
 </section>
 
 <!-- フッターリンク -->
