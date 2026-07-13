@@ -210,7 +210,6 @@ details summary { cursor:pointer; font-weight:bold; font-size:.9rem; color:var(-
       <p style="font-size:.85rem;color:var(--sub);">職種名・ファイル名・開始日・終了日を入力すると操作できます。</p>
       <div class="btn-group">
         <button class="btn btn-primary" id="btn-dl" onclick="downloadHTML()" disabled>HTMLをダウンロード</button>
-        <button class="btn btn-green" id="btn-upload-html" onclick="uploadHTML('msg-form')" disabled>HTMLをGitHubにアップロード</button>
         <button class="btn btn-sub" id="btn-add-jobs" onclick="addToJobs()" disabled>保存して一覧に追加</button>
       </div>
     </div>
@@ -221,12 +220,11 @@ details summary { cursor:pointer; font-weight:bold; font-size:.9rem; color:var(-
     <div id="msg-output" class="msg"></div>
 
     <div class="card">
-      <h2>HTMLページ（最後に生成した求人）</h2>
-      <div class="notice">「求人編集」タブで「HTMLをダウンロード」または「HTMLをGitHubにアップロード」を押した後に表示されます。</div>
+      <h2>HTMLページ（最後に生成した求人・確認用）</h2>
+      <div class="notice">「求人編集」タブで「HTMLをダウンロード」を押した後に表示されます。実際に公開ページへ反映するには「求人一覧」タブで「保存して一覧に追加」→「jobs.jsonをGitHubにアップロード」を行ってください（詳細ページはGitHub Actionsが自動生成します）。</div>
       <div id="out-html" class="code-out">（求人編集タブでHTMLを生成してください）</div>
       <div class="btn-group">
         <button class="btn btn-primary btn-s" id="btn-dl-html" onclick="dlHtml()" disabled>HTMLをダウンロード</button>
-        <button class="btn btn-green btn-s" id="btn-up-html" onclick="uploadHTML('msg-output')" disabled>GitHubにアップロード</button>
       </div>
     </div>
 
@@ -798,10 +796,8 @@ function checkFormReady() {
   const v = getFormValues();
   const ok = !!(v.title && v.filename && v.start && v.end);
   document.getElementById("btn-dl").disabled          = !ok;
-  document.getElementById("btn-upload-html").disabled = !ok;
   document.getElementById("btn-add-jobs").disabled    = !ok;
   document.getElementById("btn-dl-html").disabled     = !lastGenHtml;
-  document.getElementById("btn-up-html").disabled     = !lastGenHtml;
 }
 
 ["f-title","f-filename","f-start","f-end"].forEach(id => {
@@ -844,30 +840,8 @@ function downloadHTML() {
   const html = generateHTML(v);
   lastGenHtml = html; lastGenFilename = v.filename + ".html";
   dlBlob(html, lastGenFilename, "text/html");
-  showMsg("msg-form", `「${lastGenFilename}」をダウンロードしました。recruit/ フォルダに配置してください。`, "ok");
+  showMsg("msg-form", `「${lastGenFilename}」をダウンロードしました（内容確認用）。公開するには「保存して一覧に追加」→ jobs.jsonのアップロードを行ってください。`, "ok");
   checkFormReady();
-}
-
-async function uploadHTML(msgId) {
-  const v = getFormValues();
-  if (!v.title || !v.filename) { showMsg(msgId, "職種名とファイル名は必須です。", "err"); return; }
-  const path = `recruit/${v.filename}.html`;
-  showMsg(msgId, "確認中…", "ok");
-  let sha = null;
-  try { const f = await ghGetFile(path); sha = f.sha; } catch {}
-  if (sha && !confirm(`「${v.filename}.html」はすでにGitHubに存在します。上書きしますか？`)) {
-    showMsg(msgId, "キャンセルしました。", "err"); return;
-  }
-  const html = generateHTML(v);
-  lastGenHtml = html; lastGenFilename = v.filename + ".html";
-  showMsg(msgId, "アップロード中…", "ok");
-  try {
-    await ghPutFile(path, html, `recruit/${v.filename}.html を更新`, sha);
-    showMsg(msgId, `「${v.filename}.html」をGitHubにアップロードしました！`, "ok");
-    checkFormReady();
-  } catch(e) {
-    showMsg(msgId, "アップロードエラー: " + e.message, "err");
-  }
 }
 
 function addToJobs() {
@@ -884,9 +858,8 @@ function addToJobs() {
    出力表示
 ===================================================== */
 function renderOutputs() {
-  document.getElementById("out-html").textContent = lastGenHtml || "（求人編集タブで「HTMLをダウンロード」または「HTMLをGitHubにアップロード」を押してください）";
+  document.getElementById("out-html").textContent = lastGenHtml || "（求人編集タブで「HTMLをダウンロード」を押してください）";
   document.getElementById("btn-dl-html").disabled = !lastGenHtml;
-  document.getElementById("btn-up-html").disabled = !lastGenHtml;
   document.getElementById("out-json").textContent = buildJobsJsonText();
 }
 
