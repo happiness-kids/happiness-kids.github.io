@@ -129,7 +129,7 @@ details summary { cursor:pointer; font-weight:bold; font-size:.9rem; color:var(-
       <div id="msg-list" class="msg"></div>
       <div id="sync-conflict" class="card" style="display:none; border:2px solid var(--danger); margin-bottom:16px;">
         <h2>⚠ ローカルとGitHubの内容が異なります</h2>
-        <p style="font-size:.85rem;color:var(--sub);">求人ごとに、どちらの内容を使うか選んでください。「適用」を押すまで一覧は更新されません。</p>
+        <p style="font-size:.85rem;color:var(--sub);">ローカル（このパソコンに保存されている内容）と、GitHub（Web上に公開されている内容）が食い違っています。求人ごとに、どちらの内容を使うか選んでください。「適用」を押すまで一覧は更新されません。</p>
         <div id="sync-conflict-body"></div>
         <div class="btn-group">
           <button class="btn btn-primary btn-s" onclick="applySyncResolution()">適用</button>
@@ -565,24 +565,24 @@ function showSyncConflict(diff, githubJobs) {
         <strong>${d.local.title || d.remote.title}</strong>（${d.filename}）
         ${rows}
         <div class="btn-group" style="margin-top:8px;">
-          <label><input type="radio" name="res-${i}" value="local" checked> ローカルを使う</label>
-          <label style="margin-left:12px;"><input type="radio" name="res-${i}" value="remote"> GitHubを使う</label>
+          <label><input type="radio" name="res-${i}" value="local" checked> ローカル（このパソコン）を使う</label>
+          <label style="margin-left:12px;"><input type="radio" name="res-${i}" value="remote"> GitHub（Web上）を使う</label>
         </div>
       </div>`;
     }
     if (d.kind === "local-only") {
       return `<div class="card" style="padding:12px;margin-bottom:10px;">
-        <strong>${d.local.title}</strong>（${d.filename}）— ローカルのみに存在します
+        <strong>${d.local.title}</strong>（${d.filename}）— このパソコンにしかまだ無い内容です
         <div class="btn-group" style="margin-top:8px;">
-          <label><input type="radio" name="res-${i}" value="local" checked> ローカルを使う（一覧に残す）</label>
+          <label><input type="radio" name="res-${i}" value="local" checked> ローカル（このパソコン）の内容を使う（一覧に残す）</label>
           <label style="margin-left:12px;"><input type="radio" name="res-${i}" value="remove"> 削除する</label>
         </div>
       </div>`;
     }
     return `<div class="card" style="padding:12px;margin-bottom:10px;">
-      <strong>${d.remote.title}</strong>（${d.filename}）— GitHubのみに存在します
+      <strong>${d.remote.title}</strong>（${d.filename}）— GitHub（Web上）にしか無い内容です
       <div class="btn-group" style="margin-top:8px;">
-        <label><input type="radio" name="res-${i}" value="remote" checked> GitHubに残す（一覧に追加）</label>
+        <label><input type="radio" name="res-${i}" value="remote" checked> GitHub（Web上）の内容を使う（一覧に追加）</label>
         <label style="margin-left:12px;"><input type="radio" name="res-${i}" value="remove"> 追加しない</label>
       </div>
     </div>`;
