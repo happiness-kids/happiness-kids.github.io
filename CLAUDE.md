@@ -44,6 +44,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 | 06 Page - about | 施設紹介ページ専用スタイル |
 | 07 Page - contact | お問い合わせページ専用スタイル |
 | 08 Page - disclosure | 情報公開ページ（将来実装） |
+| 09 Page - recruit | 採用情報ページ・求人詳細ページ専用スタイル |
 
 **保守ルール：**
 - 新しいUIは「03 Components」へ追加
@@ -53,11 +54,13 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## CSS適用対象ページとスタンドアロンページ
 
-`common.css` を読み込むページ：`index.html`、`about/index.html`
+`common.css` を読み込むページ：`index.html`、`about/index.html`、`recruit/index.html`、`recruit/job-*.html`（job-generator.htmlが自動生成する求人詳細ページ）
 
-スタンドアロンCSS（`<style>` タグ内に独自スタイルを持つ）：`recruit/index.html`、`recruit/job-hoikushi-jidoushidouin.html`
+スタンドアロンCSS（`<style>` タグ内に独自スタイルを持つ）：`recruit/job-hoikushi-jidoushidouin.html`（自動生成の仕組みより前に作られたレガシーページ）、`tools/job-generator.html`
 
-recruitページは `common.css` を使わず、ページ内スタイルで完結している。
+## 求人情報（recruit）の仕組み
+
+`assets/data/jobs.json` が求人一覧・詳細ページ共通の唯一のデータソース。`assets/js/jobs.js` が一覧ページ用に読み込み、`assets/js/job-html-template.js`（ブラウザの`tools/job-generator.html`とNode.jsの`scripts/regenerate-pages.js`の両方から共有）が詳細ページ（`recruit/job-*.html`）を生成する。`assets/data/jobs.json`がmainにpushされると`.github/workflows/regenerate-job-pages.yml`が自動的に詳細ページを再生成・commitする。詳しくは `recruit/recruit.md` を参照。
 
 ## Instagramセクションの仕組み
 

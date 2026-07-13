@@ -121,12 +121,20 @@ details summary { cursor:pointer; font-weight:bold; font-size:.9rem; color:var(-
       <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:16px;">
         <div class="btn-group" style="margin-top:0;">
           <button class="btn btn-primary btn-s" onclick="switchTab('tab-form',document.querySelectorAll('.tab-btn')[1]);clrForm()">＋ 新規作成</button>
-          <button class="btn btn-sub btn-s" onclick="loadCSVFromGH()">GitHubからCSVを確認</button>
-          <button class="btn btn-green btn-s" onclick="uploadCSV('msg-list')">CSVをGitHubにアップロード</button>
+          <button class="btn btn-sub btn-s" onclick="checkGitHubSync()">GitHubの最新状態を確認</button>
+          <button class="btn btn-green btn-s" onclick="uploadJobsJson('msg-list')">jobs.jsonをGitHubにアップロード</button>
         </div>
         <button class="btn btn-sub" onclick="resetDefaults()" style="font-size:.75rem;padding:4px 12px;color:var(--sub);border-color:var(--border);">初期データに戻す</button>
       </div>
       <div id="msg-list" class="msg"></div>
+      <div id="sync-conflict" class="card" style="display:none; border:2px solid var(--danger); margin-bottom:16px;">
+        <h2>⚠ ローカルとGitHubの内容が異なります</h2>
+        <p style="font-size:.85rem;color:var(--sub);">求人ごとに、どちらの内容を使うか選んでください。「適用」を押すまで一覧は更新されません。</p>
+        <div id="sync-conflict-body"></div>
+        <div class="btn-group">
+          <button class="btn btn-primary btn-s" onclick="applySyncResolution()">適用</button>
+        </div>
+      </div>
       <div id="job-list-area"><p style="color:var(--sub);font-size:.9rem;">読み込み中…</p></div>
     </div>
   </div>
@@ -220,12 +228,12 @@ details summary { cursor:pointer; font-weight:bold; font-size:.9rem; color:var(-
     </div>
 
     <div class="card">
-      <h2>jobs.csv（求人一覧ページ用）</h2>
-      <div class="notice">ウェブサイトの採用情報ページ（recruit/index.html）が参照するCSVファイルです。</div>
-      <div id="out-csv" class="code-out"></div>
+      <h2>jobs.json（求人一覧・詳細ページ共通データ）</h2>
+      <div class="notice">ウェブサイトの採用情報ページ（recruit/index.html）と、詳細ページの自動生成（GitHub Actions）が参照するデータファイルです。アップロードすると、詳細ページ（recruit/job-*.html）はGitHub Actionsが自動で再生成します。</div>
+      <div id="out-json" class="code-out"></div>
       <div class="btn-group">
-        <button class="btn btn-sub btn-s" onclick="dlCsv()">CSVをダウンロード</button>
-        <button class="btn btn-green btn-s" onclick="uploadCSV('msg-output')">GitHubにアップロード</button>
+        <button class="btn btn-sub btn-s" onclick="dlJobsJson()">JSONをダウンロード</button>
+        <button class="btn btn-green btn-s" onclick="uploadJobsJson('msg-output')">GitHubにアップロード</button>
       </div>
     </div>
 
@@ -260,65 +268,106 @@ details summary { cursor:pointer; font-weight:bold; font-size:.9rem; color:var(-
 
 </div><!-- /wrap -->
 
+<script src="../assets/js/job-html-template.js"></script>
 <script>
 /* =====================================================
    DEFAULT_JOBS（初期データ）
 ===================================================== */
 const DEFAULT_JOBS = [
   {
-    filename:"job-hoikushi-p", title:"保育士（パート）", employment:"PART_TIME",
-    start:"2026-05-01", end:"2026-08-31", salaryType:"HOUR", salaryMin:1110, salaryMax:1250,
-    salaryNote:"処遇改善手当として、賞与年2回（計1.5か月分程度）支給実績あり",
-    intro:"高知市の放課後等デイサービス ハピネスキッズは、発達障がいのある子どもたち一人ひとりのペースを大切にしながら、「できた」「やってみたい」を一緒に増やしていく支援を行っています。\n\n経験やブランクよりも、子どもに寄り添う気持ちを大切にしています。\nまずは職場の雰囲気を知りたい、という方も歓迎です。",
-    jobContent:"・子どもたちの見守り、声かけ、活動サポート\n・日常生活や遊びを通じた自立支援\n・簡単な記録業務\n・送迎業務（社用車を使用）\n※業務内容は、会社の定める範囲で変更となる場合があります",
-    requirements:"保育士", preferred:"・保育士経験5年以上の方\n・発達障がい児支援の経験がある方",
-    hours:"平日：13:00〜18:30の間で4時間以上\n※午前からの勤務を希望される場合は、お気軽にご相談ください\n\n土曜：8:30〜17:30の間で4〜8時間\n\n長期休暇：9:30〜18:30の間で4〜8時間\n※休憩は労働条件により、法定通り付与します",
-    holidays:"日曜・祝日、年末年始（12月29日〜1月3日）\n週休2日", comment:"",
-    metaDesc:"高知市の放課後等デイサービス ハピネスキッズで保育士（パート）を募集しています。発達障がいのある子どもたちへの療育・自立支援に携わりたい方へ。ブランクのある方も歓迎します。"
+    "filename": "job-hoikushi-s",
+    "title": "保育士（正社員）",
+    "employment": "FULL_TIME",
+    "start": "2026-07-09",
+    "end": "2026-08-31",
+    "salaryType": "MONTH",
+    "salaryMin": 191700,
+    "salaryMax": 229700,
+    "salaryNote": "処遇改善手当として、賞与年2回（計1.5か月分程度）支給実績あり",
+    "intro": "高知市の放課後等デイサービス ハピネスキッズは、発達障がいのある子どもたち一人ひとりのペースを大切にしながら、「できた」「やってみたい」を一緒に増やしていく支援を行っています。\n\n経験やブランクよりも、子どもに寄り添う気持ちを大切にしています。\nまずは職場の雰囲気を知りたい、という方も歓迎です。",
+    "jobContent": "・子どもたちの見守り、声かけ、活動サポート\n・日常生活や遊びを通じた自立支援\n・簡単な記録業務\n・送迎業務（社用車を使用）\n※業務内容は、会社の定める範囲で変更となる場合があります",
+    "requirements": "保育士（必須）",
+    "preferred": "・保育士経験5年以上の方\n・発達障がい児支援の経験がある方",
+    "hours": "平日：９:30～18:30\n\n土曜：8:30～17:30\n\n※子育て世代の場合は、例えば保育園のお迎え時間に間に合うよう、勤務時間は考慮いたしますので、ご相談ください。",
+    "holidays": "日曜・祝日、年末年始（12月29日～1月3日）\n週休2日",
+    "comment": "ハローワークからの応募に限り、入社祝い金（10万円）の制度があります。",
+    "metaDesc": "高知市の放課後等デイサービス ハピネスキッズで保育士（正社員）を募集。月給191,700円〜、賞与年2回あり。子育て世代の勤務時間考慮あり。発達障がい児支援経験者歓迎。"
   },
   {
-    filename:"job-hoikushi-s", title:"保育士（正社員）", employment:"FULL_TIME",
-    start:"2026-05-01", end:"2026-08-31", salaryType:"MONTH", salaryMin:191700, salaryMax:229700,
-    salaryNote:"処遇改善手当として、賞与年2回（計1.5か月分程度）支給実績あり",
-    intro:"高知市の放課後等デイサービス ハピネスキッズは、発達障がいのある子どもたち一人ひとりのペースを大切にしながら、「できた」「やってみたい」を一緒に増やしていく支援を行っています。\n\n経験やブランクよりも、子どもに寄り添う気持ちを大切にしています。\nまずは職場の雰囲気を知りたい、という方も歓迎です。",
-    jobContent:"・子どもたちの見守り、声かけ、活動サポート\n・日常生活や遊びを通じた自立支援\n・簡単な記録業務\n・送迎業務（社用車を使用）\n※業務内容は、会社の定める範囲で変更となる場合があります",
-    requirements:"保育士（必須）", preferred:"・保育士経験5年以上の方\n・発達障がい児支援の経験がある方",
-    hours:"平日：9:30〜18:30\n\n土曜：8:30〜17:30\n\n※子育て世代の場合は、例えば保育園のお迎え時間に間に合うよう、勤務時間は考慮いたしますので、ご相談ください。",
-    holidays:"日曜・祝日、年末年始（12月29日〜1月3日）\n週休2日", comment:"",
-    metaDesc:"高知市の放課後等デイサービス ハピネスキッズで保育士（正社員）を募集。月給191,700円〜、賞与年2回あり。子育て世代の勤務時間考慮あり。発達障がい児支援経験者歓迎。"
+    "filename": "job-jidoushidouin-s",
+    "title": "児童指導員（正社員）",
+    "employment": "FULL_TIME",
+    "start": "2026-07-09",
+    "end": "2026-08-31",
+    "salaryType": "MONTH",
+    "salaryMin": 181700,
+    "salaryMax": 219700,
+    "salaryNote": "処遇改善手当として、賞与年2回（計1.5か月分程度）支給実績あり",
+    "intro": "高知市の放課後等デイサービス ハピネスキッズは、発達障がいのある子どもたち一人ひとりのペースを大切にしながら、「できた」「やってみたい」を一緒に増やしていく支援を行っています。\n\n経験やブランクよりも、子どもに寄り添う気持ちを大切にしています。\nまずは職場の雰囲気を知りたい、という方も歓迎です。",
+    "jobContent": "・子どもたちの見守り、声かけ、活動サポート\n・日常生活や遊びを通じた自立支援\n・簡単な記録業務\n・送迎業務（社用車を使用）\n※業務内容は、会社の定める範囲で変更となる場合があります",
+    "requirements": "児童指導員任用資格（必須）",
+    "preferred": "・保育士経験5年以上の方\n・発達障がい児支援の経験がある方",
+    "hours": "平日：９:30～18:30\n\n土曜：8:30～17:30\n\n※子育て世代の場合は、例えば保育園のお迎え時間に間に合うよう、勤務時間は考慮いたしますので、ご相談ください。",
+    "holidays": "日曜・祝日、年末年始（12月29日～1月3日）\n週休2日",
+    "comment": "ハローワークからの応募に限り、入社祝い金（10万円）の制度あります。",
+    "metaDesc": "高知市の放課後等デイサービス ハピネスキッズで児童指導員（正社員）を募集。月給181,700円〜、賞与年2回あり。子育て世代の勤務時間考慮あり。発達障がい児支援経験者歓迎。"
   },
   {
-    filename:"job-jidoushidouin-p", title:"児童指導員（パート）", employment:"PART_TIME",
-    start:"2026-05-01", end:"2026-08-31", salaryType:"HOUR", salaryMin:1100, salaryMax:1200,
-    salaryNote:"処遇改善手当として、賞与年2回（計1.5か月分程度）支給実績あり",
-    intro:"高知市の放課後等デイサービス ハピネスキッズは、発達障がいのある子どもたち一人ひとりのペースを大切にしながら、「できた」「やってみたい」を一緒に増やしていく支援を行っています。\n\n経験やブランクよりも、子どもに寄り添う気持ちを大切にしています。\nまずは職場の雰囲気を知りたい、という方も歓迎です。",
-    jobContent:"・子どもたちの見守り、声かけ、活動サポート\n・日常生活や遊びを通じた自立支援\n・簡単な記録業務\n・送迎業務（社用車を使用）\n※業務内容は、会社の定める範囲で変更となる場合があります",
-    requirements:"児童指導員任用資格", preferred:"・経験が5年以上の方\n・発達障がい児支援の経験がある方",
-    hours:"平日：13:00〜18:30の間で4時間以上\n※午前からの勤務を希望される場合は、お気軽にご相談ください\n\n土曜：8:30〜17:30の間で4〜8時間\n\n長期休暇：9:30〜18:30の間で4〜8時間\n※休憩は労働条件により、法定通り付与します",
-    holidays:"日曜・祝日、年末年始（12月29日〜1月3日）\n週休2日", comment:"",
-    metaDesc:"高知市の放課後等デイサービス ハピネスキッズで児童指導員（パート）を募集しています。発達障がいのある子どもたちへの療育・活動支援や自立支援業務です。ブランクのある方も歓迎します。"
+    "filename": "job-hoikushi-p",
+    "title": "保育士（パート）",
+    "employment": "PART_TIME",
+    "start": "2026-05-01",
+    "end": "2026-08-31",
+    "salaryType": "HOUR",
+    "salaryMin": 1110,
+    "salaryMax": 1250,
+    "salaryNote": "処遇改善手当として、賞与年2回（計1.5か月分程度）支給実績あり",
+    "intro": "高知市の放課後等デイサービス ハピネスキッズは、発達障がいのある子どもたち一人ひとりのペースを大切にしながら、「できた」「やってみたい」を一緒に増やしていく支援を行っています。\n\n経験やブランクよりも、子どもに寄り添う気持ちを大切にしています。\nまずは職場の雰囲気を知りたい、という方も歓迎です。",
+    "jobContent": "・子どもたちの見守り、声かけ、活動サポート\n・日常生活や遊びを通じた自立支援\n・簡単な記録業務\n・送迎業務（社用車を使用）\n※業務内容は、会社の定める範囲で変更となる場合があります",
+    "requirements": "保育士",
+    "preferred": "・保育士経験5年以上の方\n・発達障がい児支援の経験がある方",
+    "hours": "平日：13:00～18:30の間で4時間以上\n※午前からの勤務を希望される場合は、お気軽にご相談ください\n\n土曜：8:30～17:30の間で4～8時間\n\n長期休暇：9:30～18:30の間で4～8時間\n※休憩は労働条件により、法定通り付与します",
+    "holidays": "日曜・祝日、年末年始（12月29日～1月3日）\n週休2日",
+    "comment": "",
+    "metaDesc": "高知市の放課後等デイサービス ハピネスキッズで保育士（パート）を募集。時給1,110円〜、賞与年2回あり。ブランク歓迎。発達障がい児支援に携わりたい方もぜひ。"
   },
   {
-    filename:"job-jidoushidouin-s", title:"児童指導員（正社員）", employment:"FULL_TIME",
-    start:"2026-05-01", end:"2026-08-31", salaryType:"MONTH", salaryMin:181700, salaryMax:219700,
-    salaryNote:"処遇改善手当として、賞与年2回（計1.5か月分程度）支給実績あり",
-    intro:"高知市の放課後等デイサービス ハピネスキッズは、発達障がいのある子どもたち一人ひとりのペースを大切にしながら、「できた」「やってみたい」を一緒に増やしていく支援を行っています。\n\n経験やブランクよりも、子どもに寄り添う気持ちを大切にしています。\nまずは職場の雰囲気を知りたい、という方も歓迎です。",
-    jobContent:"・子どもたちの見守り、声かけ、活動サポート\n・日常生活や遊びを通じた自立支援\n・簡単な記録業務\n・送迎業務（社用車を使用）\n※業務内容は、会社の定める範囲で変更となる場合があります",
-    requirements:"児童指導員任用資格（必須）", preferred:"・保育士経験5年以上の方\n・発達障がい児支援の経験がある方",
-    hours:"平日：9:30〜18:30\n\n土曜：8:30〜17:30\n\n※子育て世代の場合は、例えば保育園のお迎え時間に間に合うよう、勤務時間は考慮いたしますので、ご相談ください。",
-    holidays:"日曜・祝日、年末年始（12月29日〜1月3日）\n週休2日", comment:"",
-    metaDesc:"高知市の放課後等デイサービス ハピネスキッズで児童指導員（正社員）を募集。月給181,700円〜、賞与年2回あり。子育て世代の勤務時間考慮あり。発達障がい児支援経験者歓迎。"
+    "filename": "job-jidoushidouin-p",
+    "title": "児童指導員（パート）",
+    "employment": "PART_TIME",
+    "start": "2026-05-01",
+    "end": "2026-08-31",
+    "salaryType": "HOUR",
+    "salaryMin": 1100,
+    "salaryMax": 1200,
+    "salaryNote": "処遇改善手当として、賞与年2回（計1.5か月分程度）支給実績あり",
+    "intro": "高知市の放課後等デイサービス ハピネスキッズは、発達障がいのある子どもたち一人ひとりのペースを大切にしながら、「できた」「やってみたい」を一緒に増やしていく支援を行っています。\n\n経験やブランクよりも、子どもに寄り添う気持ちを大切にしています。\nまずは職場の雰囲気を知りたい、という方も歓迎です。",
+    "jobContent": "・子どもたちの見守り、声かけ、活動サポート\n・日常生活や遊びを通じた自立支援\n・簡単な記録業務\n・送迎業務（社用車を使用）\n※業務内容は、会社の定める範囲で変更となる場合があります",
+    "requirements": "児童指導員任用資格",
+    "preferred": "・経験が5年以上の方\n・発達障がい児支援の経験がある方",
+    "hours": "平日：13:00～18:30の間で4時間以上\n※午前からの勤務を希望される場合は、お気軽にご相談ください\n\n土曜：8:30～17:30の間で4～8時間\n\n長期休暇：9:30～18:30の間で4～8時間\n※休憩は労働条件により、法定通り付与します",
+    "holidays": "日曜・祝日、年末年始（12月29日～1月3日）\n週休2日",
+    "comment": "",
+    "metaDesc": "高知市の放課後等デイサービス ハピネスキッズで児童指導員（パート）を募集。時給1,100円〜、賞与年2回あり。ブランク歓迎。発達障がい児支援に携わりたい方もぜひ。"
   },
   {
-    filename:"job-sougei-a", title:"送迎職員（アルバイト）", employment:"PART_TIME",
-    start:"2026-05-01", end:"2026-08-31", salaryType:"HOUR", salaryMin:1200, salaryMax:1250,
-    salaryNote:"賞与なし",
-    intro:"高知市の放課後等デイサービス ハピネスキッズは、発達障がいのある子どもたちが通う療育施設です。\n\n今回は、利用児童の送迎を担う職員を募集しています。普通自動車免許があればOK。子どもたちの「いってきます」「ただいま」を支える大切なお仕事です。",
-    jobContent:"利用児童の学校から施設までの送迎業務\n子どもたちの見守りなど、支援の補助業務",
-    requirements:"普通自動車運転免許　必須", preferred:"2種免許をお持ちの方歓迎",
-    hours:"平日：15:00〜17:00程度",
-    holidays:"日曜・祝日、年末年始（12月29日〜1月3日）\n週休2日以上", comment:"",
-    metaDesc:"高知市の放課後等デイサービス ハピネスキッズで送迎職員（アルバイト）を募集しています。利用児童の学校・自宅から施設間の送迎が主な業務です。普通自動車免許があればOK。"
+    "filename": "job-sougei-a",
+    "title": "送迎職員（アルバイト）",
+    "employment": "PART_TIME",
+    "start": "2026-05-01",
+    "end": "2026-08-31",
+    "salaryType": "HOUR",
+    "salaryMin": 1200,
+    "salaryMax": 1250,
+    "salaryNote": "賞与なし",
+    "intro": "高知市の放課後等デイサービス ハピネスキッズは、発達障がいのある子どもたちが通う療育施設です。\n\n今回は、利用児童の送迎を担う職員を募集しています。普通自動車免許があればOK。子どもたちの「いってきます」「ただいま」を支える大切なお仕事です。",
+    "jobContent": "利用児童の学校から施設までの送迎業務\n子どもたちの見守りなど、支援の補助業務",
+    "requirements": "普通自動車運転免許　必須",
+    "preferred": "2種免許をお持ちの方歓迎",
+    "hours": "平日：15：００～１７：００程度",
+    "holidays": "日曜・祝日、年末年始（12月29日～1月3日）\n週休2日以上",
+    "comment": "",
+    "metaDesc": "高知市の放課後等デイサービス ハピネスキッズで送迎職員（アルバイト）を募集。時給1,200円〜。普通免許必須。平日15〜17時の短時間勤務。2種免許保持者歓迎。"
   }
 ];
 
@@ -329,11 +378,9 @@ let jobs = [];
 let editIdx = -1;
 let lastGenHtml = "";
 let lastGenFilename = "";
+let jobsSha = null;
+let pendingDiff = null;
 
-function loadJobs() {
-  const s = localStorage.getItem("hk-jobs");
-  try { jobs = s ? JSON.parse(s) : [...DEFAULT_JOBS]; } catch(e) { jobs = [...DEFAULT_JOBS]; }
-}
 function saveJobs() { localStorage.setItem("hk-jobs", JSON.stringify(jobs)); }
 function resetDefaults() {
   if (!confirm("初期データに戻しますか？（現在のデータは消えます）")) return;
@@ -389,9 +436,9 @@ async function testConnection() {
 ===================================================== */
 async function ghGetFile(path) {
   const { token, owner, repo, branch } = getSettings();
-  const res = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${path}?ref=${branch}`, {
-    headers: { Authorization: `Bearer ${token}`, Accept: "application/vnd.github+json" },
-  });
+  const headers = { Accept: "application/vnd.github+json" };
+  if (token) headers.Authorization = `Bearer ${token}`;
+  const res = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${path}?ref=${branch}`, { headers });
   if (!res.ok) throw new Error(`取得失敗: ${res.status}`);
   return res.json();
 }
@@ -400,12 +447,11 @@ async function ghPutFile(path, content, message, sha) {
   const { token, owner, repo, branch } = getSettings();
   const body = { message, content: btoa(unescape(encodeURIComponent(content))), branch };
   if (sha) body.sha = sha;
+  const headers = { Accept: "application/vnd.github+json", "Content-Type": "application/json" };
+  if (token) headers.Authorization = `Bearer ${token}`;
   const res = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${path}`, {
     method: "PUT",
-    headers: {
-      Authorization: `Bearer ${token}`, Accept: "application/vnd.github+json",
-      "Content-Type": "application/json",
-    },
+    headers,
     body: JSON.stringify(body),
   });
   if (!res.ok) {
@@ -416,31 +462,192 @@ async function ghPutFile(path, content, message, sha) {
 }
 
 /* =====================================================
-   CSV GitHubから読み込み・アップロード
+   jobs.json 同期（GitHub読み込み・差分検出・アップロード）
 ===================================================== */
-async function loadCSVFromGH() {
-  showMsg("msg-list", "GitHub上のCSVを確認中…", "ok");
+async function fetchGithubJobs() {
+  const file = await ghGetFile("assets/data/jobs.json");
+  const text = decodeURIComponent(escape(atob(file.content.replace(/\n/g, ""))));
+  return { jobs: JSON.parse(text), sha: file.sha };
+}
+
+function diffJobs(local, remote) {
+  const byFn = arr => Object.fromEntries(arr.map(j => [j.filename, j]));
+  const L = byFn(local), R = byFn(remote);
+  const report = [];
+  for (const fn of new Set([...Object.keys(L), ...Object.keys(R)])) {
+    if (L[fn] && !R[fn]) {
+      report.push({ filename: fn, kind: "local-only", local: L[fn] });
+    } else if (!L[fn] && R[fn]) {
+      report.push({ filename: fn, kind: "github-only", remote: R[fn] });
+    } else {
+      const changedFields = Object.keys({ ...L[fn], ...R[fn] })
+        .filter(k => JSON.stringify(L[fn][k]) !== JSON.stringify(R[fn][k]));
+      if (changedFields.length) {
+        report.push({ filename: fn, kind: "changed", local: L[fn], remote: R[fn], changedFields });
+      }
+    }
+  }
+  return report;
+}
+
+async function initJobs() {
+  const s = localStorage.getItem("hk-jobs");
+  let localJobs = null;
+  try { localJobs = s ? JSON.parse(s) : null; } catch { localJobs = null; }
+
+  let githubJobs = null;
   try {
-    const file = await ghGetFile("assets/csv/jobs.csv");
-    const text = decodeURIComponent(escape(atob(file.content.replace(/\n/g, ""))));
-    const lines = text.trim().split(/\r?\n/).slice(1).filter(l => l.trim());
-    showMsg("msg-list", `GitHub上のCSV: ${lines.length}件。（表示は下の「ファイル出力」タブのCSVプレビューと比較してください）`, "ok");
-  } catch(e) {
-    showMsg("msg-list", "読み込みエラー: " + e.message, "err");
+    const r = await fetchGithubJobs();
+    githubJobs = r.jobs;
+    jobsSha = r.sha;
+  } catch (e) {
+    // GitHub取得に失敗（未設定・オフライン・ファイル未作成など）
+  }
+
+  if (githubJobs === null) {
+    jobs = localJobs !== null ? localJobs : [...DEFAULT_JOBS];
+    if (localJobs === null) {
+      showMsg("msg-list", "GitHubからの求人データ取得に失敗したため、初期データを表示しています。GitHub設定を確認してください。", "err");
+    }
+    saveJobs();
+    renderJobList();
+    return;
+  }
+
+  if (localJobs === null) {
+    // 新しいPC：GitHub上の内容をそのまま採用
+    jobs = githubJobs;
+    saveJobs();
+    renderJobList();
+    return;
+  }
+
+  jobs = localJobs;
+  const diff = diffJobs(localJobs, githubJobs);
+  if (diff.length === 0) {
+    renderJobList();
+  } else {
+    renderJobList();
+    showSyncConflict(diff, githubJobs);
   }
 }
 
-async function uploadCSV(msgId) {
-  showMsg(msgId, "CSVをGitHubにアップロード中…", "ok");
+async function checkGitHubSync() {
+  showMsg("msg-list", "GitHubの最新状態を確認中…", "ok");
   try {
-    let sha = null;
-    try { const f = await ghGetFile("assets/csv/jobs.csv"); sha = f.sha; } catch {}
-    await ghPutFile("assets/csv/jobs.csv", buildCsvText(), "jobs.csv を更新", sha);
-    showMsg(msgId, "jobs.csv をGitHubにアップロードしました！", "ok");
-  } catch(e) {
+    const { jobs: githubJobs, sha } = await fetchGithubJobs();
+    jobsSha = sha;
+    const diff = diffJobs(jobs, githubJobs);
+    if (diff.length === 0) {
+      showMsg("msg-list", "GitHubと一致しています。", "ok");
+    } else {
+      showMsg("msg-list", "", "err");
+      showSyncConflict(diff, githubJobs);
+    }
+  } catch (e) {
+    showMsg("msg-list", "確認エラー: " + e.message, "err");
+  }
+}
+
+function fieldLabel(k) {
+  return { start: "掲載開始日", end: "掲載終了日", title: "募集職種名", comment: "コメント" }[k] || k;
+}
+
+function showSyncConflict(diff, githubJobs) {
+  pendingDiff = { diff, githubJobs };
+  const body = document.getElementById("sync-conflict-body");
+  body.innerHTML = diff.map((d, i) => {
+    if (d.kind === "changed") {
+      const rows = d.changedFields.map(k =>
+        `<div style="font-size:.82rem;color:var(--sub);">${fieldLabel(k)}: ${JSON.stringify(d.local[k])} → ${JSON.stringify(d.remote[k])}</div>`
+      ).join("");
+      return `<div class="card" style="padding:12px;margin-bottom:10px;">
+        <strong>${d.local.title || d.remote.title}</strong>（${d.filename}）
+        ${rows}
+        <div class="btn-group" style="margin-top:8px;">
+          <label><input type="radio" name="res-${i}" value="local" checked> ローカルを使う</label>
+          <label style="margin-left:12px;"><input type="radio" name="res-${i}" value="remote"> GitHubを使う</label>
+        </div>
+      </div>`;
+    }
+    if (d.kind === "local-only") {
+      return `<div class="card" style="padding:12px;margin-bottom:10px;">
+        <strong>${d.local.title}</strong>（${d.filename}）— ローカルのみに存在します
+        <div class="btn-group" style="margin-top:8px;">
+          <label><input type="radio" name="res-${i}" value="local" checked> ローカルを使う（一覧に残す）</label>
+          <label style="margin-left:12px;"><input type="radio" name="res-${i}" value="remove"> 削除する</label>
+        </div>
+      </div>`;
+    }
+    return `<div class="card" style="padding:12px;margin-bottom:10px;">
+      <strong>${d.remote.title}</strong>（${d.filename}）— GitHubのみに存在します
+      <div class="btn-group" style="margin-top:8px;">
+        <label><input type="radio" name="res-${i}" value="remote" checked> GitHubに残す（一覧に追加）</label>
+        <label style="margin-left:12px;"><input type="radio" name="res-${i}" value="remove"> 追加しない</label>
+      </div>
+    </div>`;
+  }).join("");
+  document.getElementById("sync-conflict").style.display = "block";
+}
+
+function applySyncResolution() {
+  const { diff, githubJobs } = pendingDiff;
+  const byFnLocal = Object.fromEntries(jobs.map(j => [j.filename, j]));
+  const byFnRemote = Object.fromEntries(githubJobs.map(j => [j.filename, j]));
+
+  diff.forEach((d, i) => {
+    const choice = document.querySelector(`input[name="res-${i}"]:checked`).value;
+    if (d.kind === "changed" || d.kind === "github-only") {
+      if (choice === "remote") byFnLocal[d.filename] = byFnRemote[d.filename];
+      if (choice === "remove") delete byFnLocal[d.filename];
+    } else if (d.kind === "local-only" && choice === "remove") {
+      delete byFnLocal[d.filename];
+    }
+  });
+
+  const order = githubJobs.map(j => j.filename);
+  jobs.forEach(j => { if (!order.includes(j.filename)) order.push(j.filename); });
+  jobs = order.map(fn => byFnLocal[fn]).filter(Boolean);
+
+  saveJobs();
+  pendingDiff = null;
+  document.getElementById("sync-conflict").style.display = "none";
+  renderJobList();
+  showMsg("msg-list", "反映しました。内容を確認のうえ、必要であればアップロードしてください。", "ok");
+}
+
+function buildJobsJsonText() {
+  return JSON.stringify(jobs, null, 2) + "\n";
+}
+
+async function uploadJobsJson(msgId) {
+  showMsg(msgId, "最新状態を確認中…", "ok");
+  let currentSha = null, githubJobsNow = null;
+  try {
+    const r = await fetchGithubJobs();
+    currentSha = r.sha; githubJobsNow = r.jobs;
+  } catch (e) {
+    // 取得できない場合はshaチェックを省略してそのままアップロードを試みる
+  }
+
+  if (currentSha && jobsSha && currentSha !== jobsSha) {
+    showMsg(msgId, "GitHub上の内容が、前回確認した後に変更されています。内容を確認してください。", "err");
+    showSyncConflict(diffJobs(jobs, githubJobsNow), githubJobsNow);
+    switchTab("tab-list", document.querySelectorAll(".tab-btn")[0]);
+    return;
+  }
+
+  showMsg(msgId, "jobs.jsonをGitHubにアップロード中…", "ok");
+  try {
+    const result = await ghPutFile("assets/data/jobs.json", buildJobsJsonText(), "jobs.json を更新", currentSha || jobsSha);
+    jobsSha = result.content && result.content.sha ? result.content.sha : jobsSha;
+    showMsg(msgId, "jobs.json をGitHubにアップロードしました！詳細ページはGitHub Actionsが自動で更新します。", "ok");
+  } catch (e) {
     showMsg(msgId, "アップロードエラー: " + e.message, "err");
   }
 }
+
+function dlJobsJson() { dlBlob(buildJobsJsonText(), "jobs.json", "application/json"); }
 
 /* =====================================================
    求人一覧
@@ -611,119 +818,9 @@ document.getElementById("f-intro").addEventListener("input", function() {
 
 /* =====================================================
    HTML 生成
+   （generateHTML() は ../assets/js/job-html-template.js を参照。
+    ブラウザとGitHub Actions双方で同じ実装を共有するため。）
 ===================================================== */
-function nl2br(s) { return (s || "").replace(/\n/g, "<br>\n"); }
-
-function generateHTML(v) {
-  const ul = v.salaryType === "MONTH" ? "月給" : "時給";
-  const fmt = n => (n || 0).toLocaleString("ja-JP");
-  const sd = `${ul} ${fmt(v.salaryMin)}円 〜 ${fmt(v.salaryMax)}円`;
-  const intro = v.intro || "ハピネスキッズでは、子どもたちの成長を一緒に支えるスタッフを募集しています。";
-  const metaDesc = v.metaDesc || `高知市の放課後等デイサービス ハピネスキッズで${v.title}を募集しています。`;
-  const jsonLd = JSON.stringify({
-    "@context": "https://schema.org", "@type": "JobPosting",
-    "title": v.title, "description": metaDesc,
-    "employmentType": v.employment, "datePosted": v.start, "validThrough": v.end,
-    "hiringOrganization": { "@type": "Organization", "name": "合同会社足人" },
-    "jobLocation": { "@type": "Place", "address": {
-      "@type": "PostalAddress", "postalCode": "780-0931", "addressCountry": "JP",
-      "addressRegion": "高知県", "addressLocality": "高知市", "streetAddress": "玉水町5 岩貞ビル"
-    }},
-    "baseSalary": { "@type": "MonetaryAmount", "currency": "JPY", "value": {
-      "@type": "QuantitativeValue", "minValue": v.salaryMin, "maxValue": v.salaryMax, "unitText": v.salaryType
-    }}
-  }, null, 2);
-
-  const prefRow    = v.preferred   ? `<tr><th>歓迎条件</th><td>${nl2br(v.preferred)}</td></tr>` : "";
-  const hoursRow   = v.hours       ? `<tr><th>勤務時間</th><td>${nl2br(v.hours)}</td></tr>` : "";
-  const holidayRow = v.holidays    ? `<tr><th>休日・休暇</th><td>${nl2br(v.holidays)}</td></tr>` : "";
-  const reqRow     = v.requirements? `<tr><th>応募資格</th><td>${v.requirements}</td></tr>` : "";
-  const salaryNote = v.salaryNote  ? `<div class="recruit-note">※${v.salaryNote}</div>` : "";
-
-  return `<!DOCTYPE html>
-<!-- recruit/${v.filename}.html 自動生成 -->
-<html lang="ja">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>${v.title}｜高知市 放課後等デイサービス ハピネスキッズ 求人</title>
-<meta name="description" content="${metaDesc.replace(/"/g, '&quot;')}">
-<link rel="stylesheet" href="../assets/css/common.css">
-
-<!-- Google しごと検索用 構造化データ -->
-<script type="application/ld+json">
-${jsonLd}
-<\/script>
-</head>
-<body>
-
-<!-- ヘッダー -->
-<header class="site-header">
-  <div class="site-header-inner">
-    <img src="../assets/images/icon.png" class="site-icon" alt="">
-    <span class="site-title">放課後等デイサービス　ハピネスキッズ</span>
-  </div>
-</header>
-
-<!-- 紹介文 -->
-<section class="recruit-detail-intro">
-  <h1>${v.title}</h1>
-  <p>${nl2br(intro)}</p>
-</section>
-${v.jobContent ? `
-<!-- 仕事内容 -->
-<section class="recruit-detail-section">
-  <h2>仕事内容</h2>
-  <table class="recruit-table">
-    <tr><th>業務内容</th><td>${nl2br(v.jobContent)}</td></tr>
-  </table>
-</section>` : ""}
-
-<!-- 応募・勤務条件 -->
-<section class="recruit-detail-section">
-  <h2>応募条件・勤務条件</h2>
-  <table class="recruit-table">
-    ${reqRow}
-    ${prefRow}
-    ${hoursRow}
-    ${holidayRow}
-    <tr>
-      <th>給与</th>
-      <td>${sd}${salaryNote}</td>
-    </tr>
-    <tr>
-      <th>勤務地</th>
-      <td>〒780-0931<br>高知県高知市玉水町5 岩貞ビル<br>放課後等デイサービス ハピネスキッズ</td>
-    </tr>
-  </table>
-</section>
-
-<!-- 応募方法 -->
-<section class="recruit-apply">
-  <h2>応募方法</h2>
-  <p>
-    <a href="mailto:mail@happiness-kids.net?subject=求人応募について（${encodeURIComponent(v.title)}）" class="button-link">
-      メールで応募する
-    </a>
-  </p>
-  <p class="recruit-apply-phone">お電話でのお問い合わせ：<a href="tel:0888248810">088-824-8810</a></p>
-  <p class="recruit-note">担当：豊永</p>
-</section>
-
-<!-- フッターリンク -->
-<section class="footer-nav">
-  <a href="./" class="footer-button">採用情報</a>
-</section>
-
-<!-- フッター -->
-<footer class="site-footer">
-  <p>&copy; ハピネスキッズ</p>
-</footer>
-
-</body>
-</html>`;
-}
-
 function downloadHTML() {
   const v = getFormValues();
   if (!v.title || !v.filename) { showMsg("msg-form", "職種名とファイル名は必須です。", "err"); return; }
@@ -767,25 +864,13 @@ function addToJobs() {
 }
 
 /* =====================================================
-   CSV 生成
-===================================================== */
-function buildCsvText() {
-  const lines = ["掲載開始日,掲載終了日,募集職種名,リンク先ファイル名,コメント"];
-  jobs.forEach(j => {
-    const c = (j.comment || "").includes(",") ? `"${j.comment}"` : (j.comment || "");
-    lines.push(`${j.start},${j.end},${j.title},${j.filename}.html,${c}`);
-  });
-  return lines.join("\n") + "\n";
-}
-
-/* =====================================================
    出力表示
 ===================================================== */
 function renderOutputs() {
   document.getElementById("out-html").textContent = lastGenHtml || "（求人編集タブで「HTMLをダウンロード」または「HTMLをGitHubにアップロード」を押してください）";
   document.getElementById("btn-dl-html").disabled = !lastGenHtml;
   document.getElementById("btn-up-html").disabled = !lastGenHtml;
-  document.getElementById("out-csv").textContent = buildCsvText();
+  document.getElementById("out-json").textContent = buildJobsJsonText();
 }
 
 /* =====================================================
@@ -797,7 +882,6 @@ function dlBlob(content, filename, mime) {
   a.href = URL.createObjectURL(b); a.download = filename; a.click();
 }
 function dlHtml() { if (lastGenHtml) dlBlob(lastGenHtml, lastGenFilename, "text/html"); }
-function dlCsv()  { dlBlob(buildCsvText(), "jobs.csv", "text/csv"); }
 
 /* =====================================================
    ハローワーク
@@ -885,11 +969,10 @@ function showMsg(id, text, type) {
    初期化
 ===================================================== */
 loadSettings();
-loadJobs();
-renderJobList();
 updateSalaryLabels();
 updateMetaDescCounter();
 if (!localStorage.getItem("gh_token")) document.getElementById("settings-detail").open = true;
+initJobs();
 </script>
 </body>
 </html>
