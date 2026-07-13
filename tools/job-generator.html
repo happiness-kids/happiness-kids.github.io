@@ -660,8 +660,15 @@ function dlJobsJson() { dlBlob(buildJobsJsonText(), "jobs.json", "application/js
 /* =====================================================
    求人一覧
 ===================================================== */
+function localDateStr(d) {
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  return `${y}-${m}-${day}`;
+}
+
 function jobStatus(j) {
-  const t = new Date().toISOString().slice(0, 10);
+  const t = localDateStr(new Date());
   if (j.end < t)   return ["badge-expired", "終了"];
   if (j.start > t) return ["badge-future",  "掲載前"];
   return ["badge-active", "掲載中"];
