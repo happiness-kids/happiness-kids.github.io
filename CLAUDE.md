@@ -43,7 +43,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 | 05 Page - index | トップページ専用スタイル |
 | 06 Page - about | 施設紹介ページ専用スタイル |
 | 07 Page - contact | お問い合わせページ専用スタイル |
-| 08 Page - disclosure | 情報公開ページ（将来実装） |
+| 08 Page - disclosure | 情報公開ページ専用スタイル |
 | 09 Page - recruit | 採用情報ページ・求人詳細ページ専用スタイル |
 
 **保守ルール：**
@@ -54,7 +54,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## CSS適用対象ページとスタンドアロンページ
 
-`common.css` を読み込むページ：`index.html`、`about/index.html`、`recruit/index.html`、`recruit/job-*.html`（job-generator.htmlが自動生成する求人詳細ページ）
+`common.css` を読み込むページ：`index.html`、`about/index.html`、`contact/index.html`、`disclosure/index.html`、`recruit/index.html`、`recruit/job-*.html`（GitHub Actionsが自動生成する求人詳細ページ）
 
 スタンドアロンCSS（`<style>` タグ内に独自スタイルを持つ）：`recruit/job-hoikushi-jidoushidouin.html`（自動生成の仕組みより前に作られたレガシーページ）、`tools/job-generator.html`
 
@@ -110,16 +110,16 @@ Instagram投稿を更新する際は `parts/instagram.txt` の内容を差し替
 
 ## 現在の懸念点（未対応・要検討）
 
-サイト全体レビュー（2026-07-14）で見つかった問題のうち、優先度が高い3点（求人掲載開始日のタイムゾーンずれ／掲載終了後も求人詳細ページが残る問題／recruit/index.htmlのメタ情報欠落）は対応予定・対応済み。以下はそれ以外の未対応事項。
+サイト全体レビュー（2026-07-14）で見つかった問題のうち、優先度が高い3点（求人掲載開始日のタイムゾーンずれ／掲載終了後も求人詳細ページが残る問題／recruit/index.htmlのメタ情報欠落）は対応済み。あわせて手間の少ない改善（favicon追加・アイコンパス統一・mailto件名エンコード修正・iframe title追加・全角数字統一・死んだCSS削除・`recruit/index1.html`削除）も同日対応済み。以下は残りの未対応事項。
 
-- **`recruit/index1.html` が旧デザインの残骸のまま公開されている**
-  現行の `recruit/index.html` とは無関係の旧ページ。誰でも `/recruit/index1.html` でアクセス可能。内容も古い（Google Sites への外部リンク等）。削除を検討。
+- **Instagramの「続きを読む」ボタンに競合状態（レースコンディション）がある**
+  `assets/js/instagram.js` は埋め込み挿入の800ms後に一度だけ高さを判定し、低ければボタンを非表示にする。Instagramのembed.jsの描画が800msより遅い場合（遅い回線など）、判定時点ではまだ高さが低い→ボタンが消される→その後コンテンツが300pxを超えて伸びる、という順序になると、**下部がフェードで隠れたまま展開手段がなくなる**。修正案：`ResizeObserver` でプレビュー内の高さ変化を監視して判定し直す。
 
 - **求人詳細ページ（`recruit/job-*.html`）に OGP・canonical がない**
   `assets/js/job-html-template.js` の `generateHTML()` が生成する head に OGP タグ・canonical タグが含まれていない。SNSシェア時のプレビューやSEO面で不利。
 
-- **favicon が未設定**
-  全ページで `<link rel="icon">` が指定されておらず、ブラウザタブにアイコンが出ない。`assets/images/icon.png` を流用可能。
+- **`recruit/index.html` 冒頭のHTMLコメントが古い**
+  「index2.html」「完成・テスト後に index.html と差し替える」という下書き時代のコメントが残っている。実態（このファイルが本番）に合わせて書き換えるべき。
 
 - **`recruit/googleee3cadb9d04adf36.html`（Search Console確認ファイル）が `/recruit/` 配下にある**
   サイト全体でプロパティ登録しているなら、本来はルート直下に置くべき。登録単位を要確認。
