@@ -618,9 +618,6 @@ img.index-contact-cta-icon{
   text-align: left;
   color: var(--text-color);
 }
-.contact-hero-intro p:first-child {
-  font-weight: bold;
-}
 .contact-hero-intro p:last-child {
   margin-bottom: 0;
 }
@@ -750,8 +747,8 @@ img.index-contact-cta-icon{
   color: #fff;
 }
 
-/* 見学案内もカード化（オレンジ枠なし） */
-.contact-visit, .contact-closing {
+/* クロージング文言のカード化 */
+.contact-closing {
   /* 連絡方法との心理距離を少し近づける */
   background: #fff;
   border-radius: var(--radius-card);
@@ -791,7 +788,6 @@ img.index-contact-cta-icon{
   .contact-hero-intro,
   .contact-faq,
   .contact-methods-wrapper,
-  .contact-visit,
   .contact-closing {
     margin-left: 4vw;
     margin-right: 4vw;

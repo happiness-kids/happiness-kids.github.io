@@ -15,12 +15,18 @@ function nl2br(s) {
   return escapeHtml(s).replace(/\n/g, "<br>\n");
 }
 
+function todayStr() {
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+}
+
 function generateHTML(v) {
   const ul = v.salaryType === "MONTH" ? "月給" : "時給";
   const fmt = n => (n || 0).toLocaleString("ja-JP");
   const sd = `${ul} ${fmt(v.salaryMin)}円 〜 ${fmt(v.salaryMax)}円`;
   const intro = v.intro || "ハピネスキッズでは、子どもたちの成長を一緒に支えるスタッフを募集しています。";
   const metaDesc = v.metaDesc || `高知市の放課後等デイサービス ハピネスキッズで${v.title}を募集しています。`;
+  const isExpired = !!(v.end && v.end < todayStr());
   const jsonLd = JSON.stringify({
     "@context": "https://schema.org", "@type": "JobPosting",
     "title": v.title, "description": metaDesc,
@@ -49,6 +55,17 @@ function generateHTML(v) {
   </p>
   <p class="recruit-note">※ハローワークでの掲載期間が終了し、求人票が確認できない場合がございます。あらかじめご了承ください。</p>` : "";
 
+  const robotsTag = isExpired ? `\n<meta name="robots" content="noindex">` : "";
+  const jsonLdBlock = isExpired ? "" : `
+<!-- Google しごと検索用 構造化データ -->
+<script type="application/ld+json">
+${jsonLd}
+<\/script>`;
+  const expiredNotice = isExpired ? `
+<section class="recruit-detail-intro">
+  <p class="recruit-note">※この求人の募集は終了しました。現在募集中の求人は<a href="./">採用情報一覧</a>をご覧ください。</p>
+</section>` : "";
+
   return `<!DOCTYPE html>
 <!-- recruit/${v.filename}.html 自動生成 -->
 <html lang="ja">
@@ -56,13 +73,10 @@ function generateHTML(v) {
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>${escapeHtml(v.title)}｜高知市 放課後等デイサービス ハピネスキッズ 求人</title>
-<meta name="description" content="${metaDesc.replace(/"/g, '&quot;')}">
+<meta name="description" content="${metaDesc.replace(/"/g, '&quot;')}">${robotsTag}
+<link rel="icon" href="../assets/images/icon.png">
 <link rel="stylesheet" href="../assets/css/common.css">
-
-<!-- Google しごと検索用 構造化データ -->
-<script type="application/ld+json">
-${jsonLd}
-<\/script>
+${jsonLdBlock}
 </head>
 <body>
 
@@ -73,7 +87,7 @@ ${jsonLd}
     <span class="site-title">放課後等デイサービス　ハピネスキッズ</span>
   </div>
 </header>
-
+${expiredNotice}
 <!-- 紹介文 -->
 <section class="recruit-detail-intro">
   <h1>${escapeHtml(v.title)}</h1>
@@ -111,7 +125,7 @@ ${v.jobContent ? `
 <section class="recruit-apply">
   <h2>応募方法</h2>
   <p>
-    <a href="mailto:mail@happiness-kids.net?subject=求人応募について（${encodeURIComponent(v.title)}）" class="button-link">
+    <a href="mailto:mail@happiness-kids.net?subject=${encodeURIComponent(`求人応募について（${v.title}）`)}" class="button-link">
       メールで応募する
     </a>
   </p>

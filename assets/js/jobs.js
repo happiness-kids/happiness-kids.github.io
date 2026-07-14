@@ -14,15 +14,10 @@ document.addEventListener("DOMContentLoaded", () => {
       return res.json();
     })
     .then((jobs) => {
-      const today = new Date();
-      today.setHours(0, 0, 0, 0);
+      const now = new Date();
+      const today = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")}`;
 
-      const active = jobs.filter((job) => {
-        const start = new Date(job.start);
-        const end   = new Date(job.end);
-        end.setHours(23, 59, 59, 999);
-        return today >= start && today <= end;
-      });
+      const active = jobs.filter((job) => job.start <= today && today <= job.end);
 
       if (active.length === 0) {
         const li = document.createElement("li");

@@ -62,6 +62,21 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 `assets/data/jobs.json` が求人一覧・詳細ページ共通の唯一のデータソース。`assets/js/jobs.js` が一覧ページ用に読み込み、`assets/js/job-html-template.js`（ブラウザの`tools/job-generator.html`とNode.jsの`scripts/regenerate-pages.js`の両方から共有）が詳細ページ（`recruit/job-*.html`）を生成する。`assets/data/jobs.json`がmainにpushされると`.github/workflows/regenerate-job-pages.yml`が自動的に詳細ページを再生成・commitする。詳しくは `recruit/recruit.md` を参照。
 
+**掲載終了求人の扱い（2026-07-14〜）：**
+- `scripts/regenerate-pages.js` は、掲載終了日を過ぎた求人でも `jobs.json` にエントリが残っている限りページを再生成し続ける（`noindex` を付与し、JobPosting構造化データは出力しない）。
+- `jobs.json` からエントリが削除された場合のみ、対応する `recruit/job-*.html`（自動生成マーカー付きのファイルのみ）を削除する。
+- ワークフローは jobs.json の変更時に加え、毎日0時（UTC）にも実行される（掲載終了日の到来だけでページを更新するため）。
+- **この日次cronについての判断（2026-07-14）：** GitHub Actionsの`schedule`トリガーは、リポジトリに一定期間（目安90日）pushがないと自動的に無効化されることがある。無効化された場合、実質的に「jobs.json更新時のみ再生成」という状態に戻るだけであり、これは壊れているのではなく安全に降格しているだけと判断した。理由：GoogleのJobPosting構造化データは`validThrough`を見て自動的にしごと検索から除外するため、日次cronが止まっていても実害（しごと検索への表示継続）は起きない。そのため、`workflow_dispatch`（手動実行ボタン）やリマインダー通知の追加は不要と判断し、見送った。
+
+**今後の実装予定：求人データのアーカイブ機構（未着手）**
+
+現状、`tools/job-generator.html` の「削除」操作は `jobs.json` からエントリを完全に消す。掲載終了後にエントリを消すと、そのHTMLページも（上記の仕組みにより）削除され、過去の求人内容を参照する手段がなくなる。
+
+今後、以下の方針で仕組みを作る予定（設計・実装は別途行う）：
+- 掲載終了・削除された求人のデータは、サイト上には表示しない（一覧にも出さない・HTMLも公開しない）が、**運営者が後から参照・再利用できる形で保持**しておく（例：`jobs.json`とは別にアーカイブ用のJSONを設ける、または`jobs.json`内にアーカイブフラグを持たせる等）。
+- 目的は、以前と同じ・似た求人を再度掲載する際に、過去の記載内容（仕事内容・給与・条件文言など）をコピー可能にすること。
+- この方針が固まるまでは、運営者は掲載終了した求人エントリを `jobs.json` から安易に削除しないよう注意する（削除するとページも消え、参照できなくなるため）。
+
 ## Instagramセクションの仕組み
 
 `about/index.html` の Instagram表示は以下の構成：
@@ -84,11 +99,33 @@ Instagram投稿を更新する際は `parts/instagram.txt` の内容を差し替
 `disclosure/index.html` は `disclosure/files.json` を JavaScript で読み込んでPDFリンクを自動生成する。HTMLは触らずに運用できる。
 
 **PDFを追加するときの手順：**
-1. `disclosure/files/` に PDF ファイルを追加
+1. `disclosure/` に PDF ファイルを追加（`disclosure/index.html` と同じ階層）
 2. `disclosure/files.json` にエントリを追記
 
 ```json
 [
-  { "title": "資料タイトル", "file": "files/filename.pdf" }
+  { "title": "資料タイトル", "file": "filename.pdf" }
 ]
 ```
+
+## 現在の懸念点（未対応・要検討）
+
+サイト全体レビュー（2026-07-14）で見つかった問題のうち、優先度が高い3点（求人掲載開始日のタイムゾーンずれ／掲載終了後も求人詳細ページが残る問題／recruit/index.htmlのメタ情報欠落）は対応予定・対応済み。以下はそれ以外の未対応事項。
+
+- **`recruit/index1.html` が旧デザインの残骸のまま公開されている**
+  現行の `recruit/index.html` とは無関係の旧ページ。誰でも `/recruit/index1.html` でアクセス可能。内容も古い（Google Sites への外部リンク等）。削除を検討。
+
+- **求人詳細ページ（`recruit/job-*.html`）に OGP・canonical がない**
+  `assets/js/job-html-template.js` の `generateHTML()` が生成する head に OGP タグ・canonical タグが含まれていない。SNSシェア時のプレビューやSEO面で不利。
+
+- **favicon が未設定**
+  全ページで `<link rel="icon">` が指定されておらず、ブラウザタブにアイコンが出ない。`assets/images/icon.png` を流用可能。
+
+- **`recruit/googleee3cadb9d04adf36.html`（Search Console確認ファイル）が `/recruit/` 配下にある**
+  サイト全体でプロパティ登録しているなら、本来はルート直下に置くべき。登録単位を要確認。
+
+- **`tools/job-generator.html`（求人管理ツール）が公開サイト上に存在する**
+  `https://happiness-kids.github.io/tools/job-generator.html` として誰でも閲覧でき、管理画面の存在・操作方法・リポジトリ構成が外部に晒される。また GitHub Personal Access Token を同一オリジンの `localStorage` に保存しているため、将来サイトにXSSが発生した場合にトークン漏洩のリスクがある。リポジトリ外のローカル専用ファイルに移すか、最低限 `noindex` を付与すべき。
+
+- **アクセシビリティの細部**
+  Instagramの「続きを読む」ボタンに `aria-expanded` がない。`tools/job-generator.html` の `renderJobList()` / `showSyncConflict()` が求人タイトルを未エスケープで `innerHTML` に挿入している（自分のデータのみが対象のため実害は低いが、習慣として要改善）。
