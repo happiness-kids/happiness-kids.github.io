@@ -7,28 +7,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 放課後等デイサービス「ハピネスキッズ」（高知市）の公式Webサイト。GitHub Pages で静的ホスティング。ビルドツール・パッケージマネージャー・テストフレームワークは一切なし。
 
 **運営会社：** 合同会社足人
-**現在の公開URL：** `https://happiness-kids.github.io/`
-**移行予定ドメイン：** `https://happiness-kids.net/`
+**公開URL：** `https://happiness-kids.net/`（独自ドメイン移行済み、2026-07-19）
+**旧URL：** `https://happiness-kids.github.io/`（`happiness-kids.net` へ自動301リダイレクト。CNAMEファイルにより維持）
 
-## ドメイン移行時にやること
-
-独自ドメイン（`happiness-kids.net`）に移行する際は、以下を対応すること。
-
-- `recruit/index.html` の canonical タグを書き換える
-  ```html
-  <!-- 移行後 -->
-  <link rel="canonical" href="https://happiness-kids.net/recruit/">
-  ```
-
-- 全ページの OGP タグ（`og:url` と `og:image`）を書き換える。対象ファイルと書き換え内容：
-
-  | ファイル | og:url | og:image |
-  |---|---|---|
-  | `index.html` | `https://happiness-kids.net/` | `https://happiness-kids.net/assets/images/icon.png` |
-  | `about/index.html` | `https://happiness-kids.net/about/` | 同上 |
-  | `contact/index.html` | `https://happiness-kids.net/contact/` | 同上 |
-  | `disclosure/index.html` | `https://happiness-kids.net/disclosure/` | 同上 |
-  | `recruit/index.html` | `https://happiness-kids.net/recruit/` | 同上 |
+独自ドメインへの移行は完了済み。DNS設定・GitHub Pages設定・OGP/canonical書き換え・Search Console・旧Google Sitesの後始末等、移行の詳細な経緯と現在の状態は [docs/domain-migration-runbook.md](docs/domain-migration-runbook.md) を参照。
 
 ## CSS設計ルール（common.css v4）
 

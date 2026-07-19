@@ -21,7 +21,7 @@
 - [x] **job-generator.html**：リポジトリからは移動せず**現状維持のまま`noindex`を付与**（外出先からの編集利便性を優先。XSS経由のトークン漏洩リスクは残存＝既知の懸念点として保留）。
 - [x] **404ページ**：**作成する**（サイトデザインに合わせたカスタム404.html）。
 - [x] **旧 Google Sites の後始末**：トップページ1枚だけ残し「引っ越しました」表示＋新サイトへのリンクを設置。**それ以外の全サブページ（求人情報・支援プログラム公表・安全計画・職場環境等要件・事業所自己評価等）は削除**し、新サイト（happiness-kids.net）に一本化する。
-  - ※Google Sites はページ単位の真の301リダイレクトを設定できないため、「リダイレクト」はトップページに埋め込みHTML（Embed）でJavaScriptによる自動転送を仕込み、JS不発火時の保険として手動リンクも併記する形で実現する（フェーズ4-4参照）。
+  - ※Google Sites はページ単位の真の301リダイレクトを設定できない。当初はJavaScriptによる自動転送の埋め込みも検討したが、**埋め込みHTMLはサンドボックス化されたiframe内で実行されるため、ページ全体を移動させる処理は機能しない可能性が高いと判断し撤回**（2026-07-19）。トップページに分かりやすい手動リンク（ボタン）のみを設置する方式に変更。
   - ※これにより「情報公開系ページの二重管理」問題も解消される（Sites側の独自PDF埋め込みが消え、github.io/disclosure/ が唯一の情報源になる）。
 - [x] **Search Console**：新ドメインでは**ドメインプロパティ（DNS TXT認証）で新規登録**する（サイト全体を1回でカバー。現状 `/recruit/` のURLプレフィックス型のみ検証済みで、ルートは未確認のまま放置されていたため）。
 
@@ -107,8 +107,8 @@
       - `robots.txt` の `Sitemap:` 行も同時に削除済み。
 - [x] **2-4. `404.html` 作成**：[404.html](../404.html) 作成済み。既存の共通クラス（`site-header`/`container`/`button-link`/`site-footer`）で構成し、`noindex`を付与。CSS設計ルールに沿って「04 Utilities」セクションに `.text-center` を追加（コメントで例示されていたクラス）。
 - [x] **2-5.** [tools/job-generator.html](../tools/job-generator.html) に `noindex` 付与済み（配置は変更せず）。
-- [ ] **2-6. ドメインプロパティ用 TXT 値**を Search Console で発行しておく（DNS 追加はフェーズ3で）。**要ログイン（運営者作業）**。
-- [x] **2-7. `robots.txt` 作成**：[robots.txt](../robots.txt) 作成済み。`/tools/` を除外、`sitemap.xml` の場所を明示。
+- [x] **2-6/検証. Search Console ドメインプロパティ**：`happiness-kids.net` を追加し、TXTレコード（`google-site-verification=3yj1TgWH2IupHX3lLdQTen3kEN-9dCQA0OYFdKduxRM`）をSquarespaceに追加→**所有権の自動確認が完了**（2026-07-19）。サイト全体（トップ・about・contact・disclosure・recruit）を1プロパティでカバーする体制が整った。
+- [x] **2-7. `robots.txt` 作成**：[robots.txt](../robots.txt) 作成済み。`/tools/` を除外（sitemap.xmlは作成しない方針のためSitemap行は無し）。
 - [ ] **2-8.（任意）GitHub Organization の Verified domains 設定**：ドメイン乗っ取り防止のセキュリティ強化。Organization Settings → Verified & approved domains でTXTレコードを追加するだけ。**要GitHub組織管理者権限（運営者作業）**。
 
 ---
@@ -117,61 +117,52 @@
 
 > できれば低トラフィックの時間帯に。DNS切替の瞬間に旧サイトは見えなくなる。
 
-- [ ] **3-1. （フェーズ1-4でマッピングが確認された場合のみ）Google Sites 側のカスタムドメイン・マッピングを解除**。※2026-07-19時点のDNS調査ではapexに既存レコードが無く、マッピングは存在しない可能性が高い（1-4の最終確認待ち）。
-- [ ] **3-2. DNS を書き換え**（**MX・SPF(TXT)・DKIM(CNAME) は絶対に触らない**）：
-      - [ ] apex `happiness-kids.net` の **A レコード4件**：
-        ```
-        185.199.108.153
-        185.199.109.153
-        185.199.110.153
-        185.199.111.153
-        ```
-      - [ ] （任意）AAAA 4件：`2606:50c0:8000::153` / `8001::153` / `8002::153` / `8003::153`
-      - [ ] `www` の **CNAME → happiness-kids.github.io.**（apexへ自動301）
-      - [ ] Search Console 用 **TXT レコード**を追加（2-6の値）。**既存のSPF等のTXTレコードを上書きせず「追加」になっていることを確認**（DNS管理画面によっては同一ホストの既存TXTを編集扱いしてしまう場合がある）。
-      - [ ] 旧 Google Sites 向けの不要な A/CNAME を削除。
-- [ ] **3-3. GitHub Pages 設定**：Settings → Pages → Custom domain に `happiness-kids.net` を入力 →「DNS check successful」の緑を確認。
-- [ ] **3-4. フェーズ2の作業ブランチを main にマージ**（URL書き換え・CNAME・sitemap）。求人ページ自動再生成ワークフローが成功で完了するのを確認。
-- [ ] **3-5. 伝播待ち**（通常数十分、最大48h）。
-- [ ] **3-6. 証明書の発行を待って `Enforce HTTPS` を ON**（発行前にONにするとエラーになる）。
-- [ ] **3-7. フェーズ5の動作確認チェックリストを実施**。
+- [x] **3-1. Google Sites 側のカスタムドメイン・マッピング解除は不要**（1-4で確認済み、マッピングは存在しない）。
+- [x] **3-2. DNS を書き換え**（実施：2026-07-19、レジストラ＝Squarespace Domains、実施者＝運営者）：
+      - [x] apex `happiness-kids.net` の **A レコード4件**すべて追加済み。公開DNSで反映確認済み（185.199.108/109/110/111.153）。
+      - [x] `www` の **CNAME → happiness-kids.github.io.** 追加済み。反映確認済み（apexへ301リダイレクトも動作確認済み）。
+      - [x] MX・SPF(TXT)・DKIM(TXT)・`MS=ms13725814`(TXT)・Google verification CNAME は無変更のまま維持を確認（DNS.pdf screenshotで目視確認済み）。
+      - [x] Search Console 用 **TXT レコード**：追加・所有権自動確認済み（2-6/検証 参照）。
+      - [x] 旧 Google Sites 向けの不要な A/CNAME を削除：**該当レコードが元々存在しなかったため対応不要**。
+      - ⚠️**注記**：本来この手順はフェーズ2（リポジトリのCNAME/OGP反映）と同時に行う想定だったが、実際にはPhase2のpushが先行し、GitHub PagesがCNAMEファイルを検知して `happiness-kids.github.io` を新ドメインへ自動リダイレクトを開始→この間（DNS追加までの約1時間）**サイトに一時的にアクセスできない状態が発生**。低トラフィックサイトのため実害は軽微と判断し許容。今回のようにPhase2とPhase3を同日に行う場合は、CNAMEファイルのpushとDNS追加をできるだけ間を空けずに行うこと。
+- [x] **3-3. GitHub Pages 設定**：CNAMEファイルのpush検知により自動的にカスタムドメインが設定された状態。HTTP経由での配信は確認済み（200 OK）。Settings→Pagesでの「DNS check successful」表示は運営者側で目視確認を推奨。
+- [x] **3-4. フェーズ2の変更を main にマージ**：完了（コミット872a5e0、2026-07-19）。求人ページ自動再生成ワークフローは今回jobs.json変更が無いためトリガーされず（想定通り）。
+- [x] **3-5. 伝播待ち**：完了。DNS追加からほぼ即時に反映（公開DNS照会・HTTP経由アクセスとも確認済み）。
+- [x] **3-6. 証明書発行・`Enforce HTTPS`**：証明書発行を確認（apex・www ともHTTPS到達確認済み）。運営者がEnforce HTTPSを有効化済み（2026-07-19）。DNS追加からここまで1時間未満で完了。
+- [x] **3-7. フェーズ5の動作確認チェックリストを実施**：下記フェーズ5参照。
 
 ---
 
 ## フェーズ4：切替後（SEO・外部・旧サイトの後始末）
 
-- [ ] **4-1. Search Console**：ドメインプロパティの検証完了 → 主要URL（トップ・recruit/・公開中の求人詳細ページ）を「URL検査」ツールで個別に「インデックス登録をリクエスト」（sitemap.xmlは作らない方針のため、再クロール促進はこの手動操作で代替）。
-- [ ] **4-2. Google しごと検索**：リッチリザルトテストで求人ページの JobPosting が有効か確認。
-- [ ] **4-3. 旧 `happiness-kids.github.io` → 新ドメインへの 301 リダイレクトを確認**（GitHubが自動で行う）。
-- [ ] **4-4. 旧 Google Sites の後始末**（決定済み方針：トップページのみ残し新サイトへ一本化）：
-      - [ ] **サブページを全削除**（削除前にフェーズ1-8b/1-8cを完了させておくこと）：
-            - 求人情報（`/home/kyujin`）
-            - 支援プログラム公表（2025）（`/home/支援プログラム公表2025`）
-            - 2025年度安全計画（`/home/2025年度安全計画`）
-            - 職場環境等要件（`/home/syokubakankyou`）
-            - 2026年事業所自己評価／アンケート結果（`/home/2026年アンケート結果`）
-      - [ ] **トップページを「引っ越しました」案内に置き換え**：
-            - 本文に「サイトを移転しました → https://happiness-kids.net/」のリンクを明記（手動クリック用の保険）。
-            - あわせて「埋め込み」要素でJavaScriptによる自動転送（例：`window.location.replace("https://happiness-kids.net/")`）を仕込み、自動遷移させる。
-      - [ ] メニュー（ナビゲーション）も上記削除後の構成に合わせて整理する。
-- [ ] **4-5. Google ビジネスプロフィール**：ウェブサイト欄を `https://sites.google.com/happiness-kids.net/happiness-kids/home` → `https://happiness-kids.net/` へ更新。
-- [ ] **4-6. Instagramプロフィールの短縮URL（`00m.in/happiness-kids`）を修正**：現在「更新漏れで遷移できない」既存の別問題も合わせて、遷移先を `https://happiness-kids.net/` に設定し直す（短縮URLサービス側の管理画面で変更）。
-- [ ] **4-7. 障害福祉サービス等情報公表システム**：登録URLを `https://sites.google.com/happiness-kids.net/happiness-kids/` → `https://happiness-kids.net/` へ更新。
+- [x] **4-1. Search Console**：ドメインプロパティ検証完了→主要URL10件（トップ・about・contact・disclosure・recruit/・求人詳細5件全部）で「インデックス登録をリクエスト」実施済み（2026-07-19）。
+- [x] **4-2. Google しごと検索**：新ドメインの求人詳細ページでJSON-LD（JobPosting）が正しく配信されていることを確認済み（フェーズ5参照）。
+- [x] **4-3. 旧 `happiness-kids.github.io` → 新ドメインへの 301 リダイレクトを確認**：確認済み（curlで動作確認済み）。
+- [x] **4-4. 旧 Google Sites の後始末**：完了（2026-07-19）。サブページ5件（求人情報・支援プログラム公表・安全計画・職場環境等要件・事業所自己評価）を全削除。ナビゲーションはホームのみの構成になった（追加整理不要）。トップページを「サイトを移転しました」案内＋`https://happiness-kids.net/`へのボタンに置き換え、公開済み。運営者がボタン動作を確認済み。
+- [x] **4-5. Google ビジネスプロフィール**：ウェブサイト欄を `https://happiness-kids.net/` へ更新済み（2026-07-19）。
+- [ ] **4-6. Instagramプロフィール**：方針決定済み（2026-07-19）。新ドメインは短いため短縮URL（`00m.in/happiness-kids`）を廃止し、**プロフィールのウェブサイト欄に `https://happiness-kids.net/` を直接記載**する形に変更する。**PCから編集不可のため後日（モバイルアプリ等で）対応**。旧短縮URLは既に機能していなかったため、対応が後日になっても実害なし。
+- [x] **4-7. 障害福祉サービス等情報公表システム（ワムネット）**：URL更新済み（2026-07-19）。
 - [ ] **4-7b. パンフレット（紙媒体）の記載URL**：印刷物のため即時修正は不可。次回刷り直し時に `https://happiness-kids.net/` へ変更する前提で控えておく（それまではSitesトップページの「引っ越しました」導線が受け皿になる）。
-- [ ] **4-7c. その他外部掲載サイト**：フェーズ1-8の5番（後日確認）の結果が出次第、該当URLを更新。
+- [ ] **4-7c. その他外部掲載サイト**：
+      - [x] 高知くらしつながるネット（Licoネット／ayamu）：URL更新済み（2026-07-19）。
+      - [ ] ジョブメドレー（job-medley.com/facility/260050/）：未対応。
 
 ---
 
 ## フェーズ5：動作確認チェックリスト（切替直後に実施）
 
-- [ ] `https://happiness-kids.net/` が表示され、ブラウザに鍵マーク（HTTPS）が出る。
-- [ ] `https://www.happiness-kids.net/` にアクセスすると apex へ301リダイレクトされる。
-- [ ] 全ページ表示：トップ / about / contact / disclosure / recruit。
-- [ ] 求人一覧（`/recruit/`）に募集中の求人が正しく出る。
-- [ ] 求人詳細ページが表示され、**リッチリザルトテストで JobPosting が有効**。
-- [ ] OGP：SNSシェアデバッガ（例：各SNSのカードチェッカー）で **og:url / og:image が新ドメイン**になっている。
-- [ ] **メール `mail@happiness-kids.net` の送受信が生きている**（＝ MX 無事）。← 最重要。
-- [ ] 旧 `https://happiness-kids.github.io/` が新ドメインへ 301 で飛ぶ。
+2026-07-19、技術面はClaude Codeが自動確認済み。ブラウザでの目視・実地確認のみ運営者に残っている。
+
+- [x] `https://happiness-kids.net/` が表示され、証明書が有効（curlでHTTPS到達確認済み）。**ブラウザで鍵マーク表示を目視確認推奨**。
+- [x] `https://www.happiness-kids.net/` にアクセスすると apex へ301リダイレクトされる（確認済み）。
+- [x] 全ページ表示：トップ / about / contact / disclosure / recruit、すべてHTTP 200確認済み。
+- [x] 求人一覧（`/recruit/`）に募集中の求人が正しく表示されることを運営者がブラウザで確認済み（2026-07-19）。
+- [x] 求人詳細ページのJSON-LD（JobPosting構造化データ）が新ドメインでも正しく配信されていることを確認済み。
+- [x] OGP：`og:url`が全ページで新ドメインになっていることを確認済み（canonical含む）。
+- [x] メール `mail@happiness-kids.net` の送受信を運営者が実地確認済み（2026-07-19、受信確認OK）。
+- [x] 旧 `https://happiness-kids.github.io/` が新ドメインへ 301 で飛ぶことを確認済み。
+- [x] カスタム404ページ（[404.html](../404.html)）が正しく配信されていることを確認済み。
+- [x] [tools/job-generator.html](../tools/job-generator.html) の `noindex` が配信されていることを確認済み。
 
 ---
 
