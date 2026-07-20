@@ -971,6 +971,27 @@ img.index-contact-cta-icon{
   font-weight: 600;
 }
 
+/* 求人のポイント（冒頭のキャッチ枠） */
+.recruit-point {
+  background: #fff8e6;
+  border: 1px solid #f0d9a0;
+  border-left: 5px solid var(--accent-color);
+  border-radius: var(--radius-card);
+  padding: 14px 16px;
+  margin: 16px 0;
+  font-size: 0.95rem;
+  line-height: 1.8;
+}
+
+/* 特徴・歓迎キーワード（中黒区切りの自然文） */
+.recruit-keywords {
+  margin: 12px 0 0;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--accent-color);
+  line-height: 1.7;
+}
+
 .recruit-detail-section {
   background: #fff;
   border-radius: var(--radius-large);

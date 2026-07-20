@@ -42,7 +42,15 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## 求人情報（recruit）の仕組み
 
-`assets/data/jobs.json` が求人一覧・詳細ページ共通の唯一のデータソース。`assets/js/jobs.js` が一覧ページ用に読み込み、`assets/js/job-html-template.js`（ブラウザの`tools/job-generator.html`とNode.jsの`scripts/regenerate-pages.js`の両方から共有）が詳細ページ（`recruit/job-*.html`）を生成する。`assets/data/jobs.json`がmainにpushされると`.github/workflows/regenerate-job-pages.yml`が自動的に詳細ページを再生成・commitする。詳しくは `recruit/recruit.md` を参照。
+`assets/data/jobs.json` が求人一覧・詳細ページ共通の唯一のデータソース。`assets/js/jobs.js` が一覧ページ用に読み込み、`assets/js/job-html-template.js`（ブラウザの`tools/job-generator.html`とNode.jsの`scripts/regenerate-pages.js`の両方から共有）が詳細ページ（`recruit/job-*.html`）を生成する。`assets/data/jobs.json`または`assets/data/profile.json`がmainにpushされると`.github/workflows/regenerate-job-pages.yml`が自動的に詳細ページを再生成・commitする。詳しくは `recruit/recruit.md` を参照。
+
+**共通プロフィールと description（2026-07-20〜）：**
+- `assets/data/profile.json` が「共通プロフィール」（会社名・住所・電話・メール・担当者・施設形態・定員・スタッフ構成・設立・営業日・送迎、および 職場の特徴/福利厚生/研修/選考フロー の共通初期値）の唯一の管理点。従来テンプレートにハードコードしていた会社情報もここへ移設済み。`job-generator.html`の「共通プロフィール」タブで編集・アップロードする。
+- `job-html-template.js` の `buildSections(v, profile)` が**出力順序と内容を1か所で定義**し、①JobPostingの`description`（Googleしごと検索の詳細パネル用の長文求人票）と②表示ページのHTML本文、の**2出力を同じデータから生成**する（単一ソース・2出力）。`description`はもう`metaDesc`の使い回しではない。
+- 求人フォームは、必須以外の各項目をチェックボックスで「記載する/しない」選択できる。職場の特徴・福利厚生・研修・選考フローは共通プロフィールを既定値とし、求人ごとに`<key>Override`で上書き可能（「共通に戻す」ボタンあり）。
+- 給与は「基本給（min/max）＋昇給・賞与＋諸手当（自由記述）」に分割。旧`salaryNote`は`raiseBonus`として後方互換で読まれる。
+- 設計・決定の経緯は [docs/job-posting-description-spec.md](docs/job-posting-description-spec.md) 第7章を参照。
+- ハローワーク入力用テキスト生成タブ（旧`renderHw`）は廃止済み（「共通プロフィール」タブに置換）。
 
 **掲載終了求人の扱い（2026-07-14〜）：**
 - `scripts/regenerate-pages.js` は、掲載終了日を過ぎた求人でも `jobs.json` にエントリが残っている限りページを再生成し続ける（`noindex` を付与し、JobPosting構造化データは出力しない）。

@@ -33,8 +33,10 @@ header { background:var(--accent); color:#fff; padding:12px 24px; font-size:1rem
 .card { background:var(--card-bg); border-radius:12px; padding:24px; margin-bottom:20px; box-shadow:0 2px 8px rgba(0,0,0,.06); }
 .card h2 { margin:0 0 16px; font-size:1rem; border-left:4px solid var(--accent); padding-left:10px; }
 
-label { display:block; font-size:.85rem; font-weight:bold; margin-bottom:4px; margin-top:14px; }
+label { display:block; font-size:.85rem; font-weight:bold; margin-bottom:4px; margin-top:14px; color:#111; }
 label:first-of-type { margin-top:0; }
+label.label-web { color:var(--sub); font-weight:normal; }
+label.label-web::before { content:"* "; }
 input[type="text"],input[type="date"],input[type="number"],input[type="password"],textarea,select {
   width:100%; padding:8px 10px; border:1px solid var(--border); border-radius:6px; font-size:.9rem; font-family:inherit; background:#fafafa;
 }
@@ -76,8 +78,16 @@ details summary { cursor:pointer; font-weight:bold; font-size:.9rem; color:var(-
 .setting-note { font-size:.8rem; color:var(--sub); margin-top:4px; }
 
 .code-out { background:#1e1e1e; color:#d4d4d4; padding:14px; border-radius:8px; font-size:.77rem; font-family:monospace; white-space:pre-wrap; overflow:auto; max-height:220px; margin-bottom:8px; }
-.hw-out { background:#fff8e6; border:1px solid var(--border); border-radius:8px; padding:14px; white-space:pre-wrap; font-size:.85rem; line-height:1.9; }
 .notice { background:#dbeafe; border:1px solid #93c5fd; border-radius:8px; padding:10px 14px; font-size:.83rem; line-height:1.6; margin-bottom:12px; }
+
+.field-block { border-top:1px dashed var(--border); padding:12px 0 4px; }
+.field-block:first-child { border-top:none; }
+.field-toggle { display:flex; align-items:center; gap:8px; font-size:.9rem; font-weight:bold; color:#111; margin:0; cursor:pointer; }
+.field-toggle input { width:auto; }
+.field-wrap { margin-top:8px; }
+.ov-inherit { margin-top:8px; font-size:.83rem; color:var(--sub); background:#fafafa; border:1px dashed var(--border); border-radius:6px; padding:8px 10px; white-space:pre-wrap; }
+.ov-inherit .ov-empty { color:var(--danger); }
+.ov-reset-row { margin-top:6px; }
 </style>
 </head>
 <body>
@@ -112,7 +122,7 @@ details summary { cursor:pointer; font-weight:bold; font-size:.9rem; color:var(-
     <button class="tab-btn active" onclick="switchTab('tab-list',this)">求人一覧</button>
     <button class="tab-btn" onclick="switchTab('tab-form',this)">求人編集</button>
     <button class="tab-btn" onclick="switchTab('tab-output',this)">ファイル出力</button>
-    <button class="tab-btn" onclick="switchTab('tab-hw',this)">ハローワーク</button>
+    <button class="tab-btn" onclick="switchTab('tab-profile',this)">共通プロフィール</button>
   </div>
 
   <!-- ========== タブ1: 求人一覧 ========== -->
@@ -142,15 +152,21 @@ details summary { cursor:pointer; font-weight:bold; font-size:.9rem; color:var(-
 
   <!-- ========== タブ2: 求人編集 ========== -->
   <div id="tab-form" class="tab-panel">
+    <div class="notice">
+      入力した内容は、<strong style="color:#111;">会社ホームページの求人詳細ページ</strong>と、<strong style="color:#111;">Googleしごと検索の求人詳細（description）</strong>の<strong>両方</strong>に反映されます。<br>
+      チェックを入れた項目だけが出力されます（空欄・チェックなしの項目は自動で省略されます）。<br>
+      <strong style="color:var(--sub);">■ * 付き灰色のラベル</strong>：ホームページ内部の管理・検索スニペット用で、求人本文（description）には出ません。
+    </div>
+
     <div class="card">
       <h2>基本情報</h2>
       <label>募集職種名 <span style="color:red">*</span></label>
       <input type="text" id="f-title" placeholder="例：保育士（パート）">
-      <label>ファイル名（.html 不要）<span style="color:red">*</span></label>
+      <label class="label-web">ファイル名（.html 不要）<span style="color:red">*</span></label>
       <input type="text" id="f-filename" placeholder="例：job-hoikushi-p">
-      <label>一覧カード用コメント</label>
+      <label class="label-web">一覧カード用コメント</label>
       <input type="text" id="f-comment" placeholder="例：ブランクのある方も歓迎。">
-      <label>ハローワーク求人番号（任意）</label>
+      <label class="label-web">ハローワーク求人番号（任意）</label>
       <input type="text" id="f-hw-number" placeholder="例：12345-67890123">
       <p class="setting-note">入力すると、詳細ページの「応募方法」にハローワークでの応募案内が表示されます。空欄なら表示されません。</p>
       <div class="row2">
@@ -165,8 +181,23 @@ details summary { cursor:pointer; font-weight:bold; font-size:.9rem; color:var(-
       </select>
     </div>
 
+    <!-- A. つかみ -->
     <div class="card">
-      <h2>給与・勤務条件</h2>
+      <h2>① つかみ（最初に読まれる部分）</h2>
+      <label class="label-web">ページ冒頭の紹介文</label>
+      <textarea id="f-intro" rows="4" placeholder="例：ハピネスキッズは、子どもたち一人ひとりのペースを大切にしながら…"></textarea>
+      <div id="fields-a" class="dyn-fields"></div>
+    </div>
+
+    <!-- B. 応募条件 -->
+    <div class="card">
+      <h2>② 応募条件</h2>
+      <div id="fields-b" class="dyn-fields"></div>
+    </div>
+
+    <!-- C. 給与・勤務条件 -->
+    <div class="card">
+      <h2>③ 給与・勤務条件</h2>
       <div class="row2">
         <div><label>給与形態</label>
           <select id="f-salary-type">
@@ -179,29 +210,55 @@ details summary { cursor:pointer; font-weight:bold; font-size:.9rem; color:var(-
         <div><label id="label-salary-min">時給・下限（円）</label><input type="number" id="f-salary-min" placeholder="1050"></div>
         <div><label id="label-salary-max">時給・上限（円）</label><input type="number" id="f-salary-max" placeholder="1200"></div>
       </div>
-      <label>給与補足（賞与・手当など）</label>
-      <input type="text" id="f-salary-note" placeholder="例：処遇改善手当として、賞与年2回（計1.5か月分程度）支給実績あり">
-      <label>勤務時間</label>
-      <textarea id="f-hours" placeholder="例：平日：13:00〜18:30の間で4時間以上&#10;土曜：8:30〜17:30の間で4〜8時間"></textarea>
-      <label>休日・休暇</label>
-      <textarea id="f-holidays" placeholder="例：日曜・祝日、年末年始（12月29日〜1月3日）&#10;週休2日"></textarea>
+      <div id="fields-c" class="dyn-fields"></div>
+    </div>
+
+    <!-- D. 企業・応募 -->
+    <div class="card">
+      <h2>④ 職場・企業アピール</h2>
+      <div id="fields-d" class="dyn-fields"></div>
     </div>
 
     <div class="card">
-      <h2>仕事内容・応募条件</h2>
-      <label>ページ冒頭の紹介文</label>
-      <textarea id="f-intro" rows="4" placeholder="例：ハピネスキッズは、子どもたち一人ひとりのペースを大切にしながら…"></textarea>
-      <label>仕事内容</label>
-      <textarea id="f-job-content" placeholder="例：・子どもたちの見守り、声かけ、活動サポート&#10;・日常生活や遊びを通じた自立支援"></textarea>
-      <label>応募資格</label>
-      <input type="text" id="f-requirements" placeholder="例：保育士資格 または 児童指導員任用資格">
-      <label>歓迎条件</label>
-      <textarea id="f-preferred" placeholder="例：・保育士経験5年以上の方&#10;・発達障がい児支援の経験がある方"></textarea>
+      <h2>検索スニペット（meta description）</h2>
       <label>meta description（120文字以内推奨）</label>
-      <textarea id="f-meta-desc" rows="3" placeholder="検索結果の説明文。HTMLのmetaタグに使用されます。"></textarea>
+      <textarea id="f-meta-desc" rows="3" placeholder="検索結果一覧に出る短い説明文。求人本文（description）とは別物です。"></textarea>
       <div style="display:flex;justify-content:space-between;margin-top:4px;">
         <span id="meta-desc-error" style="font-size:.8rem;color:var(--danger);flex:1;"></span>
         <span id="meta-desc-counter" style="font-size:.8rem;color:var(--sub);white-space:nowrap;margin-left:8px;">0 / 120文字</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>学歴・経験要件（任意・一部職種のみ）</h2>
+      <p class="setting-note">Googleしごと検索のベータ項目です。特定の職種で必要な場合のみチェックを入れて設定してください。チェックを外すとGoogleへは何も渡りません。</p>
+
+      <label style="display:flex;align-items:center;gap:6px;margin-top:0;font-weight:normal;">
+        <input type="checkbox" id="f-edu-enabled" style="width:auto;"> 学歴要件を設定する
+      </label>
+      <div id="edu-fields" style="display:none;margin-top:8px;">
+        <label>必要な学歴レベル（複数選択可）</label>
+        <div style="display:flex;flex-wrap:wrap;gap:6px 16px;font-size:.85rem;">
+          <label style="display:flex;align-items:center;gap:4px;font-weight:normal;margin-top:0;"><input type="checkbox" class="f-edu-cred" value="high school" style="width:auto;">高校卒</label>
+          <label style="display:flex;align-items:center;gap:4px;font-weight:normal;margin-top:0;"><input type="checkbox" class="f-edu-cred" value="associate degree" style="width:auto;">短大・専門学校卒</label>
+          <label style="display:flex;align-items:center;gap:4px;font-weight:normal;margin-top:0;"><input type="checkbox" class="f-edu-cred" value="bachelor degree" style="width:auto;">大学卒</label>
+          <label style="display:flex;align-items:center;gap:4px;font-weight:normal;margin-top:0;"><input type="checkbox" class="f-edu-cred" value="professional certificate" style="width:auto;">専門資格</label>
+          <label style="display:flex;align-items:center;gap:4px;font-weight:normal;margin-top:0;"><input type="checkbox" class="f-edu-cred" value="postgraduate degree" style="width:auto;">大学院卒</label>
+        </div>
+      </div>
+
+      <label style="display:flex;align-items:center;gap:6px;margin-top:14px;font-weight:normal;">
+        <input type="checkbox" id="f-exp-enabled" style="width:auto;"> 経験要件を設定する
+      </label>
+      <div id="exp-fields" style="display:none;margin-top:8px;">
+        <label>必要な経験月数</label>
+        <input type="number" id="f-exp-months" placeholder="例：12">
+      </div>
+
+      <div id="exp-in-place-wrap" style="display:none;margin-top:14px;">
+        <label style="display:flex;align-items:center;gap:6px;font-weight:normal;margin-top:0;">
+          <input type="checkbox" id="f-exp-in-place" style="width:auto;"> 学歴要件を実務経験で代替可とする
+        </label>
       </div>
     </div>
 
@@ -252,19 +309,21 @@ details summary { cursor:pointer; font-weight:bold; font-size:.9rem; color:var(-
     </div>
   </div><!-- /tab-output -->
 
-  <!-- ========== タブ4: ハローワーク ========== -->
-  <div id="tab-hw" class="tab-panel">
+  <!-- ========== タブ4: 共通プロフィール ========== -->
+  <div id="tab-profile" class="tab-panel">
     <div class="card">
-      <h2>ハローワーク入力用テキスト</h2>
-      <div style="margin-bottom:12px;">
-        <label>対象求人</label>
-        <select id="hw-sel" onchange="renderHw()" style="width:auto;min-width:200px;"></select>
+      <h2>共通プロフィール（全求人で共通の情報）</h2>
+      <div class="notice">
+        ここで設定した会社・施設情報は、すべての求人ページと、Googleしごと検索の求人本文（施設情報・勤務地・応募先など）に自動で使われます。<br>
+        「職場の特徴」「福利厚生」「教育・研修体制」「選考の流れ」は、ここに入れた内容が全求人の初期値になります（各求人で個別に上書きも可能です）。<br>
+        変更したら <strong>「保存してGitHubにアップロード」</strong> を押してください。詳細ページはGitHub Actionsが自動で再生成します。
       </div>
-      <div id="hw-text" class="hw-out">（求人を選択してください）</div>
+      <div id="msg-profile" class="msg"></div>
+      <div id="profile-form"></div>
       <div class="btn-group">
-        <button class="btn btn-sub btn-s" onclick="copyHw()">テキストをコピー</button>
+        <button class="btn btn-sub btn-s" onclick="checkProfileSync()">GitHubの最新状態を確認</button>
+        <button class="btn btn-green btn-s" onclick="saveAndUploadProfile()">保存してGitHubにアップロード</button>
       </div>
-      <div id="msg-hw" class="msg"></div>
     </div>
   </div>
 
@@ -387,6 +446,60 @@ let lastGenHtml = "";
 let lastGenFilename = "";
 let jobsSha = null;
 let pendingDiff = null;
+let PROFILE = Object.assign({}, (typeof DEFAULT_PROFILE !== "undefined" ? DEFAULT_PROFILE : {}));
+let profileSha = null;
+
+/* =====================================================
+   フォーム項目定義（出力順に対応）
+   OPT: チェックで記載する自由記述欄
+   OV : 共通プロフィールを既定値にし、求人ごとに上書き可能な欄
+===================================================== */
+const OPT_FIELDS = [
+  { key:"point",           group:"a", label:"求人のポイント（冒頭のキャッチ）", rows:3, ph:"例：未経験・ブランクの方も歓迎。子育てと両立しながら働いている職員が多数在籍しています。" },
+  { key:"keywords",        group:"a", label:"特徴・歓迎キーワード（スペース区切り。「・」でつないで表示されます）", rows:2, ph:"例：未経験可 ブランクOK 子育て中の方歓迎 車通勤OK" },
+  { key:"jobContent",      group:"a", label:"仕事内容", rows:4, ph:"例：・子どもたちの見守り、声かけ、活動サポート&#10;・日常生活や遊びを通じた自立支援" },
+  { key:"requirements",    group:"b", label:"応募資格", rows:2, ph:"例：保育士 または 児童指導員任用資格" },
+  { key:"preferred",       group:"b", label:"歓迎条件", rows:3, ph:"例：・発達障がい児支援の経験がある方&#10;・ブランクのある方" },
+  { key:"suitableFor",     group:"b", label:"こんな方に向いています", rows:3, ph:"例：・子どもの小さな成長を一緒に喜べる方&#10;・チームで協力して働ける方" },
+  { key:"raiseBonus",      group:"c", label:"昇給・賞与", rows:2, ph:"例：賞与年2回（計1.5か月分程度）支給実績あり／昇給あり（年1回）" },
+  { key:"allowances",      group:"c", label:"諸手当（詳細に）", rows:3, ph:"例：処遇改善手当、通勤手当（上限あり）、時間外手当 など" },
+  { key:"hours",           group:"c", label:"勤務時間", rows:3, ph:"例：平日：13:00〜18:30の間で4時間以上&#10;土曜：8:30〜17:30の間で4〜8時間" },
+  { key:"workSystem",      group:"c", label:"勤務体制", rows:2, ph:"例：シフト制／週3日〜応相談" },
+  { key:"holidays",        group:"c", label:"休日・休暇", rows:2, ph:"例：日曜・祝日、年末年始（12月29日〜1月3日）&#10;週休2日" },
+  { key:"longHoliday",     group:"c", label:"長期休暇", rows:2, ph:"例：夏季・冬季休暇あり" },
+  { key:"staffVoice",      group:"d", label:"スタッフの声", rows:3, ph:"例：未経験で入職しましたが、先輩が丁寧に教えてくれて安心して働けています。" },
+  { key:"recruiterMessage",group:"d", label:"採用担当者からのメッセージ", rows:3, ph:"例：まずは見学だけでも歓迎です。お気軽にご連絡ください。" },
+];
+const OV_FIELDS = [
+  { key:"appeal",           group:"a", label:"職場の特徴・支援方針", rows:3 },
+  { key:"benefits",         group:"c", label:"福利厚生・待遇", rows:3 },
+  { key:"training",         group:"d", label:"教育・研修体制", rows:3 },
+  { key:"selectionProcess", group:"d", label:"選考の流れ", rows:3 },
+];
+
+/* 共通プロフィールの編集フィールド定義 */
+const PROFILE_FIELDS = [
+  { key:"companyName",      label:"会社名（Googleしごと検索に表示される事業者名）", type:"text" },
+  { key:"facilityName",     label:"施設名", type:"text" },
+  { key:"postalCode",       label:"郵便番号（ハイフンなし可）", type:"text" },
+  { key:"addressRegion",    label:"都道府県", type:"text" },
+  { key:"addressLocality",  label:"市区町村", type:"text" },
+  { key:"streetAddress",    label:"番地・建物", type:"text" },
+  { key:"email",            label:"応募先メールアドレス", type:"text" },
+  { key:"phone",            label:"電話番号", type:"text" },
+  { key:"contactName",      label:"応募担当者名", type:"text" },
+  { key:"facilityType",     label:"施設形態", type:"text" },
+  { key:"capacity",         label:"利用者定員", type:"text" },
+  { key:"targetUsers",      label:"対象", type:"text" },
+  { key:"staffComposition", label:"スタッフ構成", type:"textarea" },
+  { key:"established",      label:"設立年月日", type:"text" },
+  { key:"businessDays",    label:"営業日", type:"text" },
+  { key:"transport",       label:"送迎", type:"text" },
+  { key:"appeal",          label:"職場の特徴・支援方針（全求人共通の初期値）", type:"textarea" },
+  { key:"benefits",        label:"福利厚生・待遇（全求人共通の初期値）", type:"textarea" },
+  { key:"training",        label:"教育・研修体制（全求人共通の初期値）", type:"textarea" },
+  { key:"selectionProcess",label:"選考の流れ（全求人共通の初期値）", type:"textarea" },
+];
 
 function saveJobs() { localStorage.setItem("hk-jobs", JSON.stringify(jobs)); }
 function resetDefaults() {
@@ -693,6 +806,7 @@ function renderJobList() {
       <td><span class="badge ${cls}">${lbl}</span></td>
       <td>
         <button class="btn btn-sub btn-s" onclick="editJob(${i})">編集</button>
+        <button class="btn btn-sub btn-s" onclick="dupJob(${i})">複製</button>
         <button class="btn btn-danger" onclick="deleteJob(${i})">削除</button>
       </td>
     </tr>`;
@@ -721,33 +835,138 @@ function applySortOrder() {
   showMsg("msg-list", "順番を変更しました。「jobs.jsonをGitHubにアップロード」で反映できます。", "ok");
 }
 
+/* =====================================================
+   動的フィールド（記載チェック欄・共通上書き欄）
+===================================================== */
+// 出力順に対応した描画順。t: opt=記載チェック欄 / ov=共通上書き欄
+const FIELD_ORDER = [
+  { t:"opt", k:"point" }, { t:"opt", k:"keywords" }, { t:"opt", k:"jobContent" }, { t:"ov", k:"appeal" },
+  { t:"opt", k:"requirements" }, { t:"opt", k:"preferred" }, { t:"opt", k:"suitableFor" },
+  { t:"opt", k:"raiseBonus" }, { t:"opt", k:"allowances" }, { t:"opt", k:"hours" }, { t:"opt", k:"workSystem" },
+  { t:"opt", k:"holidays" }, { t:"opt", k:"longHoliday" }, { t:"ov", k:"benefits" }, { t:"ov", k:"training" },
+  { t:"opt", k:"staffVoice" }, { t:"ov", k:"selectionProcess" }, { t:"opt", k:"recruiterMessage" },
+];
+function optCfg(k) { return OPT_FIELDS.find(f => f.key === k); }
+function ovCfg(k)  { return OV_FIELDS.find(f => f.key === k); }
+
+function renderDynamicFields() {
+  ["a","b","c","d"].forEach(g => { document.getElementById("fields-" + g).innerHTML = ""; });
+  FIELD_ORDER.forEach(entry => {
+    const c = entry.t === "opt" ? optCfg(entry.k) : ovCfg(entry.k);
+    const cont = document.getElementById("fields-" + c.group);
+    cont.insertAdjacentHTML("beforeend", entry.t === "opt" ? optFieldHtml(c) : ovFieldHtml(c));
+  });
+  document.querySelectorAll(".opt-chk").forEach(chk => chk.addEventListener("change", () => toggleOpt(chk.dataset.key)));
+  document.querySelectorAll(".ov-chk").forEach(chk => chk.addEventListener("change", () => toggleOv(chk.dataset.key)));
+  document.querySelectorAll("[data-reset]").forEach(btn => btn.addEventListener("click", () => resetOv(btn.dataset.reset)));
+}
+function optFieldHtml(c) {
+  return `<div class="field-block">
+  <label class="field-toggle"><input type="checkbox" class="opt-chk" data-key="${c.key}"> ${c.label}</label>
+  <div class="field-wrap" id="wrap-${c.key}" style="display:none">
+    <textarea id="f-${c.key}" rows="${c.rows}" placeholder="${c.ph || ""}"></textarea>
+  </div>
+</div>`;
+}
+function ovFieldHtml(c) {
+  return `<div class="field-block">
+  <label class="field-toggle"><input type="checkbox" class="ov-chk" data-key="${c.key}"> ${c.label}：この求人だけ内容を変える（上書き）</label>
+  <div class="ov-inherit" id="inherit-${c.key}"></div>
+  <div class="field-wrap" id="wrap-${c.key}" style="display:none">
+    <textarea id="f-${c.key}" rows="${c.rows}"></textarea>
+    <div class="ov-reset-row"><button type="button" class="btn btn-sub btn-s" data-reset="${c.key}">共通に戻す</button></div>
+  </div>
+</div>`;
+}
+function toggleOpt(key) {
+  const chk = document.querySelector(`.opt-chk[data-key="${key}"]`);
+  document.getElementById("wrap-" + key).style.display = chk.checked ? "block" : "none";
+}
+function toggleOv(key) {
+  const chk = document.querySelector(`.ov-chk[data-key="${key}"]`);
+  document.getElementById("wrap-" + key).style.display = chk.checked ? "block" : "none";
+  const inherit = document.getElementById("inherit-" + key);
+  inherit.style.display = chk.checked ? "none" : "block";
+  updateOvInherit(key);
+}
+function updateOvInherit(key) {
+  const inherit = document.getElementById("inherit-" + key);
+  if (!inherit) return;
+  const val = (PROFILE[key] || "").trim();
+  inherit.innerHTML = val
+    ? "共通プロフィールの内容を使用中：\n" + val.replace(/&/g, "&amp;").replace(/</g, "&lt;")
+    : '<span class="ov-empty">共通プロフィール未設定（このままだと出力されません）</span>';
+}
+function refreshOvInherits() { OV_FIELDS.forEach(c => updateOvInherit(c.key)); }
+function resetOv(key) {
+  const chk = document.querySelector(`.ov-chk[data-key="${key}"]`);
+  chk.checked = false;
+  document.getElementById("f-" + key).value = "";
+  toggleOv(key);
+}
+
 function editJob(i) {
   editIdx = i;
-  const j = jobs[i];
+  loadJobIntoForm(jobs[i]);
+  switchTab("tab-form", document.querySelectorAll(".tab-btn")[1]);
+  showMsg("msg-form", "求人データを読み込みました。編集後に保存してください。", "ok");
+}
+
+// 複製して新規作成（内容を引き継ぎ、ファイル名は空にして別ファイル扱いにする）
+function dupJob(i) {
+  const copy = Object.assign({}, jobs[i]);
+  copy.filename = "";
+  editIdx = -1;
+  loadJobIntoForm(copy);
+  document.getElementById("f-title").value = (copy.title || "") + "（複製）";
+  switchTab("tab-form", document.querySelectorAll(".tab-btn")[1]);
+  checkFormReady();
+  showMsg("msg-form", "複製しました。ファイル名を新しく入力してから保存してください。", "ok");
+}
+
+function loadJobIntoForm(j) {
   const set = (id, val) => { document.getElementById(id).value = val || ""; };
-  set("f-title",       j.title);
-  set("f-filename",    j.filename);
-  set("f-comment",     j.comment);
-  set("f-hw-number",   j.hwNumber);
-  set("f-start",       j.start);
-  set("f-end",         j.end);
-  document.getElementById("f-employment").value  = j.employment  || "PART_TIME";
-  document.getElementById("f-salary-type").value = j.salaryType  || "HOUR";
-  set("f-salary-min",  j.salaryMin);
-  set("f-salary-max",  j.salaryMax);
-  set("f-salary-note", j.salaryNote);
-  set("f-hours",       j.hours);
-  set("f-holidays",    j.holidays);
-  set("f-intro",       j.intro);
-  set("f-job-content", j.jobContent);
-  set("f-requirements",j.requirements);
-  set("f-preferred",   j.preferred);
-  set("f-meta-desc",   j.metaDesc);
+  set("f-title",     j.title);
+  set("f-filename",  j.filename);
+  set("f-comment",   j.comment);
+  set("f-hw-number", j.hwNumber);
+  set("f-start",     j.start);
+  set("f-end",       j.end);
+  document.getElementById("f-employment").value  = j.employment || "PART_TIME";
+  document.getElementById("f-salary-type").value = j.salaryType || "HOUR";
+  set("f-salary-min", j.salaryMin);
+  set("f-salary-max", j.salaryMax);
+  set("f-intro",      j.intro);
+  set("f-meta-desc",  j.metaDesc);
+
+  OPT_FIELDS.forEach(c => {
+    let val = j[c.key] || "";
+    if (c.key === "raiseBonus" && !String(val).trim() && j.salaryNote) val = j.salaryNote; // 旧salaryNote互換
+    const has = !!String(val).trim();
+    const chk = document.querySelector(`.opt-chk[data-key="${c.key}"]`);
+    chk.checked = has;
+    document.getElementById("f-" + c.key).value = val;
+    toggleOpt(c.key);
+  });
+  OV_FIELDS.forEach(c => {
+    const val = j[c.key + "Override"] || "";
+    const chk = document.querySelector(`.ov-chk[data-key="${c.key}"]`);
+    chk.checked = !!val.trim();
+    document.getElementById("f-" + c.key).value = val;
+    toggleOv(c.key);
+  });
+
+  document.getElementById("f-edu-enabled").checked = !!j.eduEnabled;
+  document.querySelectorAll(".f-edu-cred").forEach(cb => {
+    cb.checked = !!(j.eduCredentials || []).includes(cb.value);
+  });
+  document.getElementById("f-exp-enabled").checked = !!j.expEnabled;
+  set("f-exp-months", j.expMonths);
+  document.getElementById("f-exp-in-place").checked = !!j.expInPlaceOfEdu;
+  updateEduExpVisibility();
   updateSalaryLabels();
   updateMetaDescCounter();
   checkFormReady();
-  switchTab("tab-form", document.querySelectorAll(".tab-btn")[1]);
-  showMsg("msg-form", "求人データを読み込みました。編集後に保存してください。", "ok");
 }
 
 function deleteJob(i) {
@@ -760,7 +979,7 @@ function deleteJob(i) {
    フォーム
 ===================================================== */
 function getFormValues() {
-  return {
+  const v = {
     title:        document.getElementById("f-title").value.trim(),
     filename:     document.getElementById("f-filename").value.trim().replace(/\.html$/, ""),
     comment:      document.getElementById("f-comment").value.trim(),
@@ -771,25 +990,54 @@ function getFormValues() {
     salaryType:   document.getElementById("f-salary-type").value,
     salaryMin:    parseInt(document.getElementById("f-salary-min").value) || 0,
     salaryMax:    parseInt(document.getElementById("f-salary-max").value) || 0,
-    salaryNote:   document.getElementById("f-salary-note").value.trim(),
-    hours:        document.getElementById("f-hours").value.trim(),
-    holidays:     document.getElementById("f-holidays").value.trim(),
     intro:        document.getElementById("f-intro").value.trim(),
-    jobContent:   document.getElementById("f-job-content").value.trim(),
-    requirements: document.getElementById("f-requirements").value.trim(),
-    preferred:    document.getElementById("f-preferred").value.trim(),
     metaDesc:     document.getElementById("f-meta-desc").value.trim(),
+    eduEnabled:   document.getElementById("f-edu-enabled").checked,
+    eduCredentials: Array.from(document.querySelectorAll(".f-edu-cred:checked")).map(cb => cb.value),
+    expEnabled:   document.getElementById("f-exp-enabled").checked,
+    expMonths:    parseInt(document.getElementById("f-exp-months").value) || 0,
+    expInPlaceOfEdu: document.getElementById("f-exp-in-place").checked,
   };
+  // 記載チェックが入り、かつ非空の項目だけを保存（空項目はjobs.jsonに残さない）
+  OPT_FIELDS.forEach(c => {
+    const chk = document.querySelector(`.opt-chk[data-key="${c.key}"]`);
+    const val = (chk && chk.checked) ? document.getElementById("f-" + c.key).value.trim() : "";
+    if (val) v[c.key] = val;
+  });
+  OV_FIELDS.forEach(c => {
+    const chk = document.querySelector(`.ov-chk[data-key="${c.key}"]`);
+    const val = (chk && chk.checked) ? document.getElementById("f-" + c.key).value.trim() : "";
+    if (val) v[c.key + "Override"] = val;
+  });
+  return v;
 }
 
 function clrForm() {
   editIdx = -1;
   ["f-title","f-filename","f-comment","f-hw-number","f-start","f-end",
-   "f-salary-min","f-salary-max","f-salary-note","f-hours","f-holidays",
-   "f-intro","f-job-content","f-requirements","f-preferred","f-meta-desc"]
+   "f-salary-min","f-salary-max","f-intro","f-meta-desc","f-exp-months"]
     .forEach(id => { document.getElementById(id).value = ""; });
   document.getElementById("f-employment").value  = "PART_TIME";
   document.getElementById("f-salary-type").value = "HOUR";
+  OPT_FIELDS.forEach(c => {
+    const chk = document.querySelector(`.opt-chk[data-key="${c.key}"]`);
+    if (chk) chk.checked = false;
+    const ta = document.getElementById("f-" + c.key);
+    if (ta) ta.value = "";
+    toggleOpt(c.key);
+  });
+  OV_FIELDS.forEach(c => {
+    const chk = document.querySelector(`.ov-chk[data-key="${c.key}"]`);
+    if (chk) chk.checked = false;
+    const ta = document.getElementById("f-" + c.key);
+    if (ta) ta.value = "";
+    toggleOv(c.key);
+  });
+  document.getElementById("f-edu-enabled").checked = false;
+  document.querySelectorAll(".f-edu-cred").forEach(cb => { cb.checked = false; });
+  document.getElementById("f-exp-enabled").checked = false;
+  document.getElementById("f-exp-in-place").checked = false;
+  updateEduExpVisibility();
   updateSalaryLabels(); updateMetaDescCounter(); checkFormReady();
 }
 
@@ -803,6 +1051,18 @@ function checkFormReady() {
 
 ["f-title","f-filename","f-start","f-end"].forEach(id => {
   document.getElementById(id).addEventListener("input", checkFormReady);
+});
+
+function updateEduExpVisibility() {
+  const eduOn = document.getElementById("f-edu-enabled").checked;
+  const expOn = document.getElementById("f-exp-enabled").checked;
+  document.getElementById("edu-fields").style.display = eduOn ? "block" : "none";
+  document.getElementById("exp-fields").style.display = expOn ? "block" : "none";
+  document.getElementById("exp-in-place-wrap").style.display = (eduOn && expOn) ? "block" : "none";
+  if (!(eduOn && expOn)) document.getElementById("f-exp-in-place").checked = false;
+}
+["f-edu-enabled","f-exp-enabled"].forEach(id => {
+  document.getElementById(id).addEventListener("change", updateEduExpVisibility);
 });
 
 function updateSalaryLabels() {
@@ -838,7 +1098,7 @@ document.getElementById("f-intro").addEventListener("input", function() {
 function downloadHTML() {
   const v = getFormValues();
   if (!v.title || !v.filename) { showMsg("msg-form", "職種名とファイル名は必須です。", "err"); return; }
-  const html = generateHTML(v);
+  const html = generateHTML(v, PROFILE);
   lastGenHtml = html; lastGenFilename = v.filename + ".html";
   dlBlob(html, lastGenFilename, "text/html");
   showMsg("msg-form", `「${lastGenFilename}」をダウンロードしました（内容確認用）。公開するには「保存して一覧に追加」→ jobs.jsonのアップロードを行ってください。`, "ok");
@@ -875,61 +1135,77 @@ function dlBlob(content, filename, mime) {
 function dlHtml() { if (lastGenHtml) dlBlob(lastGenHtml, lastGenFilename, "text/html"); }
 
 /* =====================================================
-   ハローワーク
+   共通プロフィール
 ===================================================== */
-function renderHwSel() {
-  document.getElementById("hw-sel").innerHTML = jobs.map((j, i) =>
-    `<option value="${i}">${j.title}</option>`).join("");
-  renderHw();
+async function fetchGithubProfile() {
+  const file = await ghGetFile("assets/data/profile.json");
+  const text = decodeURIComponent(escape(atob(file.content.replace(/\n/g, ""))));
+  return { profile: JSON.parse(text), sha: file.sha };
 }
 
-function renderHw() {
-  const i = parseInt(document.getElementById("hw-sel").value);
-  const j = jobs[i]; if (!j) return;
-  const ul = j.salaryType === "MONTH" ? "月給" : "時給";
-  const fmt = n => (n || 0).toLocaleString("ja-JP");
-  const emp = j.employment === "FULL_TIME" ? "正社員" : "パートタイム労働者";
-  document.getElementById("hw-text").textContent =
-`【事業所名】
-放課後等デイサービス ハピネスキッズ（合同会社足人）
-
-【所在地】
-〒780-0931 高知県高知市玉水町5 岩貞ビル
-
-【職種】
-${j.title}
-
-【雇用形態】
-${emp}
-
-【仕事内容】
-${j.jobContent || ""}
-
-【応募資格】
-${j.requirements || ""}
-
-【歓迎条件】
-${j.preferred || ""}
-
-【就業時間】
-${j.hours || ""}
-
-【休日・休暇】
-${j.holidays || ""}
-
-【給与】
-${ul} ${fmt(j.salaryMin)}円 〜 ${fmt(j.salaryMax)}円
-${j.salaryNote || ""}
-
-【応募方法】
-メール：mail@happiness-kids.net
-電話：088-824-8810（担当：豊永）`;
+async function loadProfile() {
+  // GitHub → localStorage → 既定値 の優先順で読み込む
+  try {
+    const r = await fetchGithubProfile();
+    PROFILE = Object.assign({}, DEFAULT_PROFILE, r.profile);
+    profileSha = r.sha;
+    localStorage.setItem("hk-profile", JSON.stringify(PROFILE));
+  } catch (e) {
+    const s = localStorage.getItem("hk-profile");
+    if (s) { try { PROFILE = Object.assign({}, DEFAULT_PROFILE, JSON.parse(s)); } catch {} }
+  }
+  refreshOvInherits();
 }
 
-function copyHw() {
-  navigator.clipboard.writeText(document.getElementById("hw-text").textContent)
-    .then(() => showMsg("msg-hw", "コピーしました。", "ok"))
-    .catch(() => showMsg("msg-hw", "コピーに失敗しました。テキストを手動で選択してください。", "err"));
+function renderProfileForm() {
+  const wrap = document.getElementById("profile-form");
+  wrap.innerHTML = PROFILE_FIELDS.map(f => {
+    const val = (PROFILE[f.key] || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
+    const input = f.type === "textarea"
+      ? `<textarea id="p-${f.key}" rows="3">${val}</textarea>`
+      : `<input type="text" id="p-${f.key}" value="${val}">`;
+    return `<label>${f.label}</label>${input}`;
+  }).join("");
+}
+
+function collectProfileForm() {
+  const p = {};
+  PROFILE_FIELDS.forEach(f => { p[f.key] = document.getElementById("p-" + f.key).value.trim(); });
+  return p;
+}
+
+function buildProfileJsonText() { return JSON.stringify(PROFILE, null, 2) + "\n"; }
+
+async function checkProfileSync() {
+  showMsg("msg-profile", "GitHubの最新状態を確認中…", "ok");
+  try {
+    const r = await fetchGithubProfile();
+    profileSha = r.sha;
+    const same = JSON.stringify(Object.assign({}, DEFAULT_PROFILE, r.profile)) === JSON.stringify(Object.assign({}, DEFAULT_PROFILE, collectProfileForm()));
+    showMsg("msg-profile", same ? "GitHubと一致しています。" : "GitHub上の内容と異なります。アップロードで上書きできます。", same ? "ok" : "err");
+  } catch (e) {
+    showMsg("msg-profile", "確認エラー: " + e.message, "err");
+  }
+}
+
+async function saveAndUploadProfile() {
+  PROFILE = Object.assign({}, DEFAULT_PROFILE, collectProfileForm());
+  localStorage.setItem("hk-profile", JSON.stringify(PROFILE));
+  refreshOvInherits();
+  showMsg("msg-profile", "最新状態を確認中…", "ok");
+  let currentSha = profileSha;
+  try {
+    const r = await fetchGithubProfile();
+    currentSha = r.sha;
+  } catch (e) { /* 未作成などはそのままPUT */ }
+  showMsg("msg-profile", "共通プロフィールをGitHubにアップロード中…", "ok");
+  try {
+    const result = await ghPutFile("assets/data/profile.json", buildProfileJsonText(), "profile.json を更新", currentSha);
+    profileSha = result.content && result.content.sha ? result.content.sha : profileSha;
+    showMsg("msg-profile", "共通プロフィールをアップロードしました！詳細ページはGitHub Actionsが自動で再生成します。", "ok");
+  } catch (e) {
+    showMsg("msg-profile", "アップロードエラー: " + e.message, "err");
+  }
 }
 
 /* =====================================================
@@ -940,9 +1216,9 @@ function switchTab(id, btn) {
   document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
   document.getElementById(id).classList.add("active");
   if (btn) btn.classList.add("active");
-  if (id === "tab-list")   renderJobList();
-  if (id === "tab-output") renderOutputs();
-  if (id === "tab-hw")     renderHwSel();
+  if (id === "tab-list")    renderJobList();
+  if (id === "tab-output")  renderOutputs();
+  if (id === "tab-profile") renderProfileForm();
 }
 
 /* =====================================================
@@ -960,9 +1236,12 @@ function showMsg(id, text, type) {
    初期化
 ===================================================== */
 loadSettings();
+renderDynamicFields();
 updateSalaryLabels();
 updateMetaDescCounter();
 if (!localStorage.getItem("gh_token")) document.getElementById("settings-detail").open = true;
+clrForm();
+loadProfile();
 initJobs();
 </script>
 </body>

@@ -5,6 +5,8 @@ on:
     branches: [main]
     paths:
       - "assets/data/jobs.json"
+      - "assets/data/profile.json"
+      - "assets/js/job-html-template.js"
   schedule:
     # 求人の掲載終了日が過ぎたページを noindex 化するため毎日実行する
     - cron: "0 0 * * *"

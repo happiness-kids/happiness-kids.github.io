@@ -11,9 +11,17 @@ const ROOT = path.join(__dirname, "..");
 const RECRUIT_DIR = path.join(ROOT, "recruit");
 const jobs = JSON.parse(fs.readFileSync(path.join(ROOT, "assets/data/jobs.json"), "utf8"));
 
+// 共通プロフィール（会社名・住所・施設情報など）。無ければテンプレート内の既定値を使う。
+let profile = {};
+try {
+  profile = JSON.parse(fs.readFileSync(path.join(ROOT, "assets/data/profile.json"), "utf8"));
+} catch (e) {
+  console.warn("profile.json を読み込めませんでした。既定値で生成します。");
+}
+
 jobs.forEach((job) => {
   const outPath = path.join(RECRUIT_DIR, `${job.filename}.html`);
-  fs.writeFileSync(outPath, generateHTML(job), "utf8");
+  fs.writeFileSync(outPath, generateHTML(job, profile), "utf8");
   console.log(`wrote recruit/${job.filename}.html`);
 });
 
