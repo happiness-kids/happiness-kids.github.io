@@ -1,2 +1,6 @@
 User-agent: *
 Disallow: /tools/
+# リポジトリ内の開発ドキュメント（GitHub Pagesがそのまま配信してしまうため除外）
+Disallow: /CLAUDE.md
+Disallow: /docs/
+Disallow: /recruit/recruit.md

@@ -27,7 +27,7 @@ jobs.forEach((job) => {
 
 // jobs.jsonから削除された求人の自動生成ページを掃除する。
 // job-html-template.js が出力する「自動生成」マーカーコメントを持つファイルのみ対象とし、
-// 手動管理のレガシーページ（例: job-hoikushi-jidoushidouin.html）は誤って削除しない。
+// 手動で置いた recruit/job-*.html は誤って削除しない（現在は該当ファイルなし）。
 const currentFilenames = new Set(jobs.map((job) => `${job.filename}.html`));
 fs.readdirSync(RECRUIT_DIR)
   .filter((file) => /^job-.*\.html$/.test(file) && !currentFilenames.has(file))

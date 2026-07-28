@@ -38,7 +38,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 `common.css` を読み込むページ：`index.html`、`about/index.html`、`contact/index.html`、`disclosure/index.html`、`recruit/index.html`、`recruit/job-*.html`（GitHub Actionsが自動生成する求人詳細ページ）
 
-スタンドアロンCSS（`<style>` タグ内に独自スタイルを持つ）：`recruit/job-hoikushi-jidoushidouin.html`（自動生成の仕組みより前に作られたレガシーページ）、`tools/job-generator.html`
+スタンドアロンCSS（`<style>` タグ内に独自スタイルを持つ）：`tools/job-generator.html`
 
 ## 求人情報（recruit）の仕組み
 
@@ -51,6 +51,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - 給与は「基本給（min/max）＋昇給・賞与＋諸手当（自由記述）」に分割。旧`salaryNote`は`raiseBonus`として後方互換で読まれる。
 - 設計・決定の経緯は [docs/job-posting-description-spec.md](docs/job-posting-description-spec.md) 第7章を参照。
 - ハローワーク入力用テキスト生成タブ（旧`renderHw`）は廃止済み（「共通プロフィール」タブに置換）。
+
+**canonical と OGP（2026-07-28〜）：**
+- `job-html-template.js` 冒頭の `SITE_ORIGIN`（`https://happiness-kids.net`）が**サイトの正規ドメインの唯一の定義点**。canonical・og:url・og:image はすべてここから組み立てられるため、新規求人ページを作れば自動で正しいURLが入る。**個々のHTMLに手書きしないこと。**
+- 自己参照 canonical は Google に「正規URLは happiness-kids.net 側」と伝えるためのもの（旧 `happiness-kids.github.io` が重複インデックスされていた問題への対応）。掲載終了ページでも `noindex` と併せて出力する。
+- og:url は canonical と必ず同一URLにする。ズレると SNS 共有時とクロール時で別ページ扱いになる。
 
 **掲載終了求人の扱い（2026-07-14〜）：**
 - `scripts/regenerate-pages.js` は、掲載終了日を過ぎた求人でも `jobs.json` にエントリが残っている限りページを再生成し続ける（`noindex` を付与し、JobPosting構造化データは出力しない）。
@@ -104,9 +109,6 @@ Instagram投稿を更新する際は `parts/instagram.txt` の内容を差し替
 
 - **Instagramの「続きを読む」ボタンに競合状態（レースコンディション）がある**
   `assets/js/instagram.js` は埋め込み挿入の800ms後に一度だけ高さを判定し、低ければボタンを非表示にする。Instagramのembed.jsの描画が800msより遅い場合（遅い回線など）、判定時点ではまだ高さが低い→ボタンが消される→その後コンテンツが300pxを超えて伸びる、という順序になると、**下部がフェードで隠れたまま展開手段がなくなる**。修正案：`ResizeObserver` でプレビュー内の高さ変化を監視して判定し直す。
-
-- **求人詳細ページ（`recruit/job-*.html`）に OGP・canonical がない**
-  `assets/js/job-html-template.js` の `generateHTML()` が生成する head に OGP タグ・canonical タグが含まれていない。SNSシェア時のプレビューやSEO面で不利。
 
 - **`recruit/index.html` 冒頭のHTMLコメントが古い**
   「index2.html」「完成・テスト後に index.html と差し替える」という下書き時代のコメントが残っている。実態（このファイルが本番）に合わせて書き換えるべき。

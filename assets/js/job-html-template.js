@@ -14,6 +14,11 @@
      <field>Override で上書き可能。空ならプロフィールの値を使う。
 */
 
+// 正規URL(canonical)の基点。独自ドメイン移行済みのため必ずこのドメインを使う。
+// 旧 happiness-kids.github.io は301リダイレクトされるが、Googleに正規URLを明示するため
+// 生成する全ページに自己参照canonicalを出力する。
+const SITE_ORIGIN = "https://happiness-kids.net";
+
 const DEFAULT_PROFILE = {
   companyName: "合同会社足人",
   facilityName: "放課後等デイサービス ハピネスキッズ",
@@ -244,6 +249,11 @@ ${tableBuf.map((s) => `    <tr><th>${escapeHtml(s.heading)}</th><td>${nl2br(s.bo
   <p class="recruit-note">※ハローワークでの掲載期間が終了し、求人票が確認できない場合がございます。あらかじめご了承ください。</p>` : "";
 
   const robotsTag = isExpired ? `\n<meta name="robots" content="noindex">` : "";
+  const canonicalUrl = `${SITE_ORIGIN}/recruit/${escapeHtml(v.filename)}.html`;
+  // OGP（SNS・LINEで共有された際のカード表示）。他ページ(index.html等)と同じ構成に揃える。
+  // og:url は canonical と必ず同じURLにする。
+  const pageTitle = `${escapeHtml(v.title)}｜高知市 放課後等デイサービス ハピネスキッズ 求人`;
+  const metaDescAttr = metaDesc.replace(/"/g, "&quot;");
   const jsonLdBlock = isExpired ? "" : `
 <!-- Google しごと検索用 構造化データ -->
 <script type="application/ld+json">
@@ -260,9 +270,19 @@ ${jsonLd}
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>${escapeHtml(v.title)}｜高知市 放課後等デイサービス ハピネスキッズ 求人</title>
-<meta name="description" content="${metaDesc.replace(/"/g, '&quot;')}">${robotsTag}
+<title>${pageTitle}</title>
+<meta name="description" content="${metaDescAttr}">${robotsTag}
+<link rel="canonical" href="${canonicalUrl}">
 <link rel="icon" href="../assets/images/icon.png">
+<!-- OGP -->
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="ハピネスキッズ｜放課後等デイサービス" />
+<meta property="og:title" content="${pageTitle}" />
+<meta property="og:description" content="${metaDescAttr}" />
+<meta property="og:url" content="${canonicalUrl}" />
+<meta property="og:image" content="${SITE_ORIGIN}/assets/images/icon.png" />
+<meta property="og:locale" content="ja_JP" />
+<meta name="twitter:card" content="summary" />
 <link rel="stylesheet" href="../assets/css/common.css">
 ${jsonLdBlock}
 </head>
